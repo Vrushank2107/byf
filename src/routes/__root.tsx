@@ -14,18 +14,16 @@ import { SiteLayout } from "@/components/layout/SiteLayout";
 
 function NotFoundComponent() {
   return (
-    <SiteLayout>
-      <div className="container-page grid min-h-[60vh] place-items-center py-20 text-center">
-        <div>
-          <p className="font-display text-[110px] font-bold leading-none gradient-text">404</p>
-          <h1 className="mt-2 font-display text-2xl font-bold text-foreground">Page not found</h1>
-          <p className="mt-2 text-sm text-muted-foreground">The page you're looking for doesn't exist or has been moved.</p>
-          <a href="/" className="mt-6 inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90">
-            Go home
-          </a>
-        </div>
+    <div className="container-page grid min-h-[60vh] place-items-center py-20 text-center">
+      <div>
+        <p className="font-display text-[110px] font-bold leading-none gradient-text">404</p>
+        <h1 className="mt-2 font-display text-2xl font-bold text-foreground">Page not found</h1>
+        <p className="mt-2 text-sm text-muted-foreground">The page you're looking for doesn't exist or has been moved.</p>
+        <a href="/" className="mt-6 inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90">
+          Go home
+        </a>
       </div>
-    </SiteLayout>
+    </div>
   );
 }
 
