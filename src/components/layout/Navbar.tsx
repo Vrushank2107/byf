@@ -5,8 +5,6 @@ import { ORG } from "@/lib/site-data";
 import { cn } from "@/lib/utils";
 import byfLogo from "@/assets/byf-logo.png.asset.json";
 
-
-
 const NAV = [
   { to: "/", label: "Home" },
   { to: "/about", label: "About" },
@@ -20,14 +18,8 @@ const NAV = [
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+
 
   return (
     <header
