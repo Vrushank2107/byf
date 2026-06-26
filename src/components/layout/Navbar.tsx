@@ -31,8 +31,7 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-300",
-        scrolled ? "glass shadow-soft" : "bg-transparent",
+        "fixed inset-x-0 top-0 z-50 border-b border-border bg-background/95 shadow-soft backdrop-blur-md",
       )}
     >
       <div className="container-page flex h-16 items-center justify-between gap-4 md:h-20">
@@ -40,7 +39,7 @@ export function Navbar() {
           <img
             src={byfLogo.url}
             alt={`${ORG.name} logo`}
-            className="h-10 w-10 shrink-0 rounded-xl object-cover shadow-soft"
+            className="h-10 w-10 shrink-0 rounded-full object-cover shadow-soft ring-1 ring-border"
           />
           <span className="flex flex-col leading-tight">
             <span className="font-display text-base font-bold tracking-tight text-foreground sm:text-lg">
