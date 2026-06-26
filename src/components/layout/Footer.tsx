@@ -53,9 +53,11 @@ export function Footer() {
       <div className="container-page grid gap-12 pb-10 md:grid-cols-12">
         <div className="md:col-span-4">
           <div className="flex items-center gap-2.5">
-            <span className="grid h-10 w-10 place-items-center rounded-xl bg-white/10 font-display font-bold text-white">
-              B
-            </span>
+            <img
+              src={byfLogo.url}
+              alt={`${ORG.name} logo`}
+              className="h-10 w-10 rounded-xl object-cover"
+            />
             <div>
               <div className="font-display text-lg font-bold">{ORG.short}</div>
               <div className="text-[11px] uppercase tracking-[0.18em] text-background/60">
