@@ -37,9 +37,11 @@ export function Navbar() {
     >
       <div className="container-page flex h-16 items-center justify-between gap-4 md:h-20">
         <Link to="/" className="flex min-w-0 items-center gap-2.5 group">
-          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl gradient-hero text-white font-display font-bold shadow-soft">
-            B
-          </span>
+          <img
+            src={byfLogo.url}
+            alt={`${ORG.name} logo`}
+            className="h-10 w-10 shrink-0 rounded-xl object-cover shadow-soft"
+          />
           <span className="flex flex-col leading-tight">
             <span className="font-display text-base font-bold tracking-tight text-foreground sm:text-lg">
               {ORG.short}
