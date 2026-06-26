@@ -197,7 +197,7 @@ export const TIMELINE = [
 ];
 
 export const LEADERSHIP = [
-  { name: "Rahul Patel", role: "Founder & President", bio: "Started BYF as a student volunteer in 2014. Leads strategy and partnerships." },
+  { name: "Rukmil Shah", role: "Founder & President", bio: "Founded BYF in 2014. Leads strategy, partnerships and the volunteer movement across Vadodara." },
   { name: "Priya Shah", role: "Director, Education", bio: "Drives Project Progress and Sankalp across 180 schools." },
   { name: "Amit Desai", role: "Director, Relief Operations", bio: "Coordinated the 2024 flood response and Roti Bank logistics." },
   { name: "Neha Joshi", role: "Director, Women & Health", bio: "Leads the menstrual-health curriculum and women's workshops." },
