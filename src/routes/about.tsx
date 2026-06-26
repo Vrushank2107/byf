@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { Eye, Target, Heart, ShieldCheck, Users, Sparkles } from "lucide-react";
+import { Eye, Target, Heart, ShieldCheck, Users, Sparkles, ExternalLink } from "lucide-react";
 import { PageHero } from "@/components/ui/PageHero";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ImpactStats } from "@/components/sections/ImpactStats";
-import { IMG, LEADERSHIP, TIMELINE } from "@/lib/site-data";
+import { IMG, LEADERSHIP, TIMELINE, ORG } from "@/lib/site-data";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -134,7 +134,9 @@ function AboutPage() {
         <div className="container-page">
           <SectionHeader eyebrow="Leadership" title={<>The people <span className="gradient-text">behind BYF.</span></>} description="A core team of six leads, supported by 8 program coordinators and 450+ active volunteers." />
           <div className="mt-12 grid gap-5 sm:grid-cols-2 md:grid-cols-3">
-            {LEADERSHIP.map((p, idx) => (
+            {LEADERSHIP.map((p, idx) => {
+              const isFounder = p.role.toLowerCase().includes("founder");
+              return (
               <motion.article
                 key={p.name}
                 initial={{ opacity: 0, y: 20 }}
@@ -149,8 +151,19 @@ function AboutPage() {
                 <h3 className="mt-5 font-display text-lg font-semibold text-foreground">{p.name}</h3>
                 <p className="text-xs font-semibold uppercase tracking-wider text-secondary">{p.role}</p>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{p.bio}</p>
+                {isFounder && ORG.founderPortfolioUrl && (
+                  <a
+                    href={ORG.founderPortfolioUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-5 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-xs font-semibold text-primary-foreground shadow-soft transition-transform hover:-translate-y-0.5"
+                  >
+                    View Founder's Portfolio <ExternalLink className="h-3.5 w-3.5" />
+                  </a>
+                )}
               </motion.article>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

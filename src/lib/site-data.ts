@@ -44,16 +44,18 @@ export const ORG = {
   short: "BYF",
   tagline: "Together We Can, Together We Care",
   email: "contact@barodayouthfederation.org",
-  phone: "+91 98765 43210",
-  whatsapp: "919876543210",
+  phone: "+91 97237 84628",
+  whatsapp: "919723784628",
+  whatsappName: "Rukmil Shah",
   address: "Vadodara, Gujarat, India",
   social: {
-    instagram: "https://instagram.com/",
-    facebook: "https://facebook.com/",
-    twitter: "https://twitter.com/",
-    youtube: "https://youtube.com/",
-    linkedin: "https://linkedin.com/",
+    instagram: "https://www.instagram.com/baroda_youth_federation/",
+    facebook: "https://www.facebook.com/p/Baroda-YOUTH-Federation-100072446950431/",
+    twitter: "https://x.com/BarodaYouth",
+    youtube: "https://www.youtube.com/@barodayouthfederation1956",
   },
+  /** Founder Rukmil Shah's personal portfolio URL. Leave empty to hide the button. */
+  founderPortfolioUrl: "" as string,
 };
 
 export const IMPACT_STATS = [
@@ -195,7 +197,7 @@ export const TIMELINE = [
 ];
 
 export const LEADERSHIP = [
-  { name: "Rahul Patel", role: "Founder & President", bio: "Started BYF as a student volunteer in 2014. Leads strategy and partnerships." },
+  { name: "Rukmil Shah", role: "Founder & President", bio: "Founded BYF in 2014. Leads strategy, partnerships and the volunteer movement across Vadodara." },
   { name: "Priya Shah", role: "Director, Education", bio: "Drives Project Progress and Sankalp across 180 schools." },
   { name: "Amit Desai", role: "Director, Relief Operations", bio: "Coordinated the 2024 flood response and Roti Bank logistics." },
   { name: "Neha Joshi", role: "Director, Women & Health", bio: "Leads the menstrual-health curriculum and women's workshops." },
