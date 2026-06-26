@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Instagram, Facebook, Twitter, Youtube, Mail, Phone, MapPin, Heart } from "lucide-react";
 import { ORG } from "@/lib/site-data";
-import byfLogo from "@/assets/byf-logo.png.asset.json";
+import byfLogo from "@/assets/byf-logo.png";
 
 
 const COL_LINKS = [
@@ -55,6 +55,7 @@ export function Footer() {
           <div className="flex items-center gap-2.5">
             <img
               src={byfLogo.url}
+              src="/assests/byf-logo.png"
               alt={`${ORG.name} logo`}
               className="h-10 w-10 rounded-xl object-cover"
             />
