@@ -50,7 +50,7 @@ export function Navbar() {
               key={item.to}
               to={item.to}
               activeOptions={{ exact: item.to === "/" }}
-              className="rounded-full px-3.5 py-2 text-sm font-medium text-foreground/75 transition-colors hover:text-primary data-[status=active]:bg-primary-soft data-[status=active]:text-primary"
+              className="rounded-full px-3.5 py-2 text-sm font-semibold text-foreground/90 transition-colors hover:text-primary data-[status=active]:bg-primary-soft data-[status=active]:text-primary"
             >
               {item.label}
             </Link>
