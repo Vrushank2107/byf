@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { Menu, X, Heart } from "lucide-react";
 import { ORG } from "@/lib/site-data";
 import { cn } from "@/lib/utils";
+import byfLogo from "@/assets/byf-logo.png.asset.json";
+
 
 const NAV = [
   { to: "/", label: "Home" },

@@ -1,6 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { Instagram, Facebook, Twitter, Youtube, Linkedin, Mail, Phone, MapPin, Heart } from "lucide-react";
 import { ORG } from "@/lib/site-data";
+import byfLogo from "@/assets/byf-logo.png.asset.json";
+
 
 const COL_LINKS = [
   { to: "/about", label: "About BYF" },
