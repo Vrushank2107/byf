@@ -55,7 +55,7 @@ export function Footer() {
           <div className="flex items-center gap-2.5">
             <img
               src={byfLogo.url}
-              src="/assests/byf-logo.png"
+              src="/src/assests/byf-logo.png"
               alt={`${ORG.name} logo`}
               className="h-10 w-10 rounded-xl object-cover"
             />
