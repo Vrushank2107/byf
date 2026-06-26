@@ -54,8 +54,7 @@ export function Footer() {
         <div className="md:col-span-4">
           <div className="flex items-center gap-2.5">
             <img
-              src={byfLogo.url}
-             
+              src="/src/assests/byf-logo.png"
               alt={`${ORG.name} logo`}
               className="h-10 w-10 rounded-xl object-cover"
             />
