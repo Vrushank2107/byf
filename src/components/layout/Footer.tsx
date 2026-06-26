@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Instagram, Facebook, Twitter, Youtube, Linkedin, Mail, Phone, MapPin, Heart } from "lucide-react";
+import { Instagram, Facebook, Twitter, Youtube, Mail, Phone, MapPin, Heart } from "lucide-react";
 import { ORG } from "@/lib/site-data";
 import byfLogo from "@/assets/byf-logo.png.asset.json";
 
@@ -73,9 +73,8 @@ export function Footer() {
             {[
               { href: ORG.social.instagram, Icon: Instagram, label: "Instagram" },
               { href: ORG.social.facebook, Icon: Facebook, label: "Facebook" },
-              { href: ORG.social.twitter, Icon: Twitter, label: "Twitter" },
+              { href: ORG.social.twitter, Icon: Twitter, label: "Twitter / X" },
               { href: ORG.social.youtube, Icon: Youtube, label: "YouTube" },
-              { href: ORG.social.linkedin, Icon: Linkedin, label: "LinkedIn" },
             ].map(({ href, Icon, label }) => (
               <a
                 key={label}

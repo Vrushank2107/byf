@@ -44,16 +44,18 @@ export const ORG = {
   short: "BYF",
   tagline: "Together We Can, Together We Care",
   email: "contact@barodayouthfederation.org",
-  phone: "+91 98765 43210",
-  whatsapp: "919876543210",
+  phone: "+91 97237 84628",
+  whatsapp: "919723784628",
+  whatsappName: "Rukmil Shah",
   address: "Vadodara, Gujarat, India",
   social: {
-    instagram: "https://instagram.com/",
-    facebook: "https://facebook.com/",
-    twitter: "https://twitter.com/",
-    youtube: "https://youtube.com/",
-    linkedin: "https://linkedin.com/",
+    instagram: "https://www.instagram.com/baroda_youth_federation/",
+    facebook: "https://www.facebook.com/p/Baroda-YOUTH-Federation-100072446950431/",
+    twitter: "https://x.com/BarodaYouth",
+    youtube: "https://www.youtube.com/@barodayouthfederation1956",
   },
+  /** Founder Rukmil Shah's personal portfolio URL. Leave empty to hide the button. */
+  founderPortfolioUrl: "" as string,
 };
 
 export const IMPACT_STATS = [
