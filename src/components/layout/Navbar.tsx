@@ -1,10 +1,9 @@
 import { Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Menu, X, Heart } from "lucide-react";
 import { ORG } from "@/lib/site-data";
 import { cn } from "@/lib/utils";
 import byfLogo from "@/assets/byf-logo.png.asset.json";
-
 
 const NAV = [
   { to: "/", label: "Home" },
@@ -19,20 +18,13 @@ const NAV = [
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+
 
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-300",
-        scrolled ? "glass shadow-soft" : "bg-transparent",
+        "fixed inset-x-0 top-0 z-50 border-b border-border bg-background/95 shadow-soft backdrop-blur-md",
       )}
     >
       <div className="container-page flex h-16 items-center justify-between gap-4 md:h-20">
@@ -40,7 +32,7 @@ export function Navbar() {
           <img
             src={byfLogo.url}
             alt={`${ORG.name} logo`}
-            className="h-10 w-10 shrink-0 rounded-xl object-cover shadow-soft"
+            className="h-10 w-10 shrink-0 rounded-full object-cover shadow-soft ring-1 ring-border"
           />
           <span className="flex flex-col leading-tight">
             <span className="font-display text-base font-bold tracking-tight text-foreground sm:text-lg">
@@ -58,7 +50,7 @@ export function Navbar() {
               key={item.to}
               to={item.to}
               activeOptions={{ exact: item.to === "/" }}
-              className="rounded-full px-3.5 py-2 text-sm font-medium text-foreground/75 transition-colors hover:text-primary data-[status=active]:bg-primary-soft data-[status=active]:text-primary"
+              className="rounded-full px-3.5 py-2 text-sm font-semibold text-foreground/90 transition-colors hover:text-primary data-[status=active]:bg-primary-soft data-[status=active]:text-primary"
             >
               {item.label}
             </Link>
