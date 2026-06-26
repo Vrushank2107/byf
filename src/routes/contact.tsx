@@ -46,14 +46,17 @@ function ContactPage() {
               icon={MessageCircle}
               title="WhatsApp"
               body={
-                <a
-                  className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-4 py-2 text-sm font-semibold text-white"
-                  target="_blank"
-                  rel="noreferrer"
-                  href={`https://wa.me/${ORG.whatsapp}?text=${encodeURIComponent("Hi BYF, I'd like to know more.")}`}
-                >
-                  Chat on WhatsApp
-                </a>
+                <div className="space-y-2">
+                  <p className="text-sm text-muted-foreground">{ORG.whatsappName} · {ORG.phone}</p>
+                  <a
+                    className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-4 py-2 text-sm font-semibold text-white"
+                    target="_blank"
+                    rel="noreferrer"
+                    href={`https://wa.me/${ORG.whatsapp}?text=${encodeURIComponent("Hi BYF, I'd like to know more.")}`}
+                  >
+                    Chat on WhatsApp
+                  </a>
+                </div>
               }
               accent="accent"
             />
