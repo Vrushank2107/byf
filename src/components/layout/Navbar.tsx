@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Menu, X, Heart } from "lucide-react";
 import { ORG } from "@/lib/site-data";
 import { cn } from "@/lib/utils";
-import byfLogo from "@/assets/byf-logo.png.asset.json";
+import byfLogo from "@/assets/byf-logo.png";
 
 const NAV = [
   { to: "/", label: "Home" },
@@ -30,7 +30,7 @@ export function Navbar() {
       <div className="container-page flex h-16 items-center justify-between gap-4 md:h-20">
         <Link to="/" className="flex min-w-0 items-center gap-2.5 group">
           <img
-            src={byfLogo.url}
+            src={byfLogo}
             alt={`${ORG.name} logo`}
             className="h-10 w-10 shrink-0 rounded-full object-cover shadow-soft ring-1 ring-border"
           />

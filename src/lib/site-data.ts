@@ -1,13 +1,13 @@
-import blanket from "@/assets/byf/blanket.jpg.asset.json";
-import chappal from "@/assets/byf/chappal.jpg.asset.json";
-import diwali from "@/assets/byf/diwali.jpg.asset.json";
-import diwali2 from "@/assets/byf/diwali2.jpg.asset.json";
-import diwali3 from "@/assets/byf/diwali3.jpg.asset.json";
-import flag from "@/assets/byf/flag.jpg.asset.json";
-import holi from "@/assets/byf/holi.jpg.asset.json";
-import holi2 from "@/assets/byf/holi2.jpg.asset.json";
-import holi3 from "@/assets/byf/holi3.jpg.asset.json";
-import joycation1 from "@/assets/byf/joycation1.jpg.asset.json";
+import blanket from "@/assets/byf/blanket.jpg";
+import chappal from "@/assets/byf/chappal.jpg";
+import diwali from "@/assets/byf/diwali.jpg";
+import diwali2 from "@/assets/byf/diwali2.jpg";
+import diwali3 from "@/assets/byf/diwali3.jpg";
+import flag from "@/assets/byf/flag.jpg";
+import holi from "@/assets/byf/holi.jpg";
+import holi2 from "@/assets/byf/holi2.jpg";
+import holi3 from "@/assets/byf/holi3.jpg";
+import joycation1 from "@/assets/byf/joycation1.jpg";
 
 import heroEducation from "@/assets/hero-education.jpg";
 import heroBlankets from "@/assets/hero-blankets.jpg";
@@ -19,16 +19,16 @@ import pRotibank from "@/assets/project-rotibank.jpg";
 import pJoycation from "@/assets/project-joycation.jpg";
 
 export const IMG = {
-  blanket: blanket.url,
-  chappal: chappal.url,
-  diwali: diwali.url,
-  diwali2: diwali2.url,
-  diwali3: diwali3.url,
-  flag: flag.url,
-  holi: holi.url,
-  holi2: holi2.url,
-  holi3: holi3.url,
-  joycation1: joycation1.url,
+  blanket,
+  chappal,
+  diwali,
+  diwali2,
+  diwali3,
+  flag,
+  holi,
+  holi2,
+  holi3,
+  joycation1,
   heroEducation,
   heroBlankets,
   heroFlood,
