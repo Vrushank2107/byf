@@ -4,17 +4,20 @@ import { motion } from "framer-motion";
 import { Calendar, MapPin } from "lucide-react";
 import { PageHero } from "@/components/ui/PageHero";
 import { EVENTS, IMG } from "@/lib/site-data";
+import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
 
 export const Route = createFileRoute("/events")({
-  head: () => ({
-    meta: [
-      { title: "Events — Upcoming & past BYF events" },
-      { name: "description", content: "Join the next BYF event in Vadodara. Notebook drives, blanket distribution, JoyCation, festivals and more." },
-      { property: "og:title", content: "Events — BYF" },
-      { property: "og:url", content: "/events" },
-    ],
-    links: [{ rel: "canonical", href: "/events" }],
-  }),
+  head: () =>
+    createPageSeo({
+      title: "Events — Upcoming & past BYF events",
+      description: "Join the next BYF event in Vadodara. Notebook drives, blanket distribution, JoyCation, festivals and more.",
+      path: "/events",
+      keywords: ["BYF events", "NGO events Vadodara", "community drives Gujarat"],
+      jsonLd: breadcrumbJsonLd([
+        { name: "Home", path: "/" },
+        { name: "Events", path: "/events" },
+      ]),
+    }),
   component: EventsPage,
 });
 

@@ -7,17 +7,21 @@ import { ImpactStats } from "@/components/sections/ImpactStats";
 import { IMG, TIMELINE, ORG } from "@/lib/site-data";
 import { api } from "@/lib/api";
 import { useState, useEffect } from "react";
+import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
 
 export const Route = createFileRoute("/about")({
-  head: () => ({
-    meta: [
-      { title: "About BYF — A decade of grassroots work in Vadodara" },
-      { name: "description", content: "How Baroda Youth Federation started in 2014 and grew into a 450-volunteer movement across education, health, relief and culture." },
-      { property: "og:title", content: "About — Baroda Youth Federation" },
-      { property: "og:url", content: "/about" },
-    ],
-    links: [{ rel: "canonical", href: "/about" }],
-  }),
+  head: () =>
+    createPageSeo({
+      title: "About BYF — A decade of grassroots work in Vadodara",
+      description:
+        "How Baroda Youth Federation started in 2014 and grew into a 450-volunteer movement across education, health, relief and culture.",
+      path: "/about",
+      keywords: ["about BYF", "Baroda Youth Federation history", "Vadodara NGO", "youth nonprofit Gujarat"],
+      jsonLd: breadcrumbJsonLd([
+        { name: "Home", path: "/" },
+        { name: "About", path: "/about" },
+      ]),
+    }),
   component: AboutPage,
 });
 

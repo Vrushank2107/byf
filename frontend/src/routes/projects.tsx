@@ -6,6 +6,7 @@ import { PageHero } from "@/components/ui/PageHero";
 import { Skeleton } from "@/components/ui/skeleton";
 import { type ProjectCategory, IMG } from "@/lib/site-data";
 import { api } from "@/lib/api";
+import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
 
 const CATEGORIES: (ProjectCategory | "All")[] = [
   "All",
@@ -17,15 +18,18 @@ const CATEGORIES: (ProjectCategory | "All")[] = [
 ];
 
 export const Route = createFileRoute("/projects")({
-  head: () => ({
-    meta: [
-      { title: "Projects — Baroda Youth Federation" },
-      { name: "description", content: "Education, women's health, disaster relief, community welfare and cultural projects run by BYF in Vadodara." },
-      { property: "og:title", content: "Projects — BYF" },
-      { property: "og:url", content: "/projects" },
-    ],
-    links: [{ rel: "canonical", href: "/projects" }],
-  }),
+  head: () =>
+    createPageSeo({
+      title: "Projects — Baroda Youth Federation",
+      description:
+        "Education, women's health, disaster relief, community welfare and cultural projects run by BYF in Vadodara.",
+      path: "/projects",
+      keywords: ["BYF projects", "education NGO Vadodara", "disaster relief Gujarat", "women empowerment NGO"],
+      jsonLd: breadcrumbJsonLd([
+        { name: "Home", path: "/" },
+        { name: "Projects", path: "/projects" },
+      ]),
+    }),
   component: ProjectsPage,
 });
 

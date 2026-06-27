@@ -5,17 +5,20 @@ import { Mail, Phone, MapPin, MessageCircle, CheckCircle2, Send } from "lucide-r
 import { PageHero } from "@/components/ui/PageHero";
 import { ORG, IMG } from "@/lib/site-data";
 import { api } from "@/lib/api";
+import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
 
 export const Route = createFileRoute("/contact")({
-  head: () => ({
-    meta: [
-      { title: "Contact BYF — Get in touch" },
-      { name: "description", content: "Reach Baroda Youth Federation by email, phone, WhatsApp or visit our office in Vadodara." },
-      { property: "og:title", content: "Contact — BYF" },
-      { property: "og:url", content: "/contact" },
-    ],
-    links: [{ rel: "canonical", href: "/contact" }],
-  }),
+  head: () =>
+    createPageSeo({
+      title: "Contact BYF — Get in touch",
+      description: "Reach Baroda Youth Federation by email, phone, WhatsApp or visit our office in Vadodara.",
+      path: "/contact",
+      keywords: ["contact BYF", "Baroda Youth Federation phone", "Vadodara NGO contact"],
+      jsonLd: breadcrumbJsonLd([
+        { name: "Home", path: "/" },
+        { name: "Contact", path: "/contact" },
+      ]),
+    }),
   component: ContactPage,
 });
 

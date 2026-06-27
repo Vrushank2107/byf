@@ -12,6 +12,8 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  // Vercel deployment (default in @lovable.dev/vite-tanstack-config is cloudflare-module).
+  nitro: { preset: "vercel" },
   vite: {
     server: {
       // Monorepo: @fontsource lives in ../node_modules; allow Vite dev server to serve those files.

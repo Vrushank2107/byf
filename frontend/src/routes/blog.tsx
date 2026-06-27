@@ -4,19 +4,23 @@ import { motion } from "framer-motion";
 import { Clock, ArrowUpRight } from "lucide-react";
 import { PageHero } from "@/components/ui/PageHero";
 import { BLOG, IMG } from "@/lib/site-data";
+import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
 
 const CATS = ["All", "Success Stories", "Activities", "Community Impact", "Volunteer Experiences"] as const;
 
 export const Route = createFileRoute("/blog")({
-  head: () => ({
-    meta: [
-      { title: "Blog — Stories from BYF's grassroots work" },
-      { name: "description", content: "Success stories, activity reports, community impact and volunteer experiences from Baroda Youth Federation." },
-      { property: "og:title", content: "Blog — BYF" },
-      { property: "og:url", content: "/blog" },
-    ],
-    links: [{ rel: "canonical", href: "/blog" }],
-  }),
+  head: () =>
+    createPageSeo({
+      title: "Blog — Stories from BYF's grassroots work",
+      description:
+        "Success stories, activity reports, community impact and volunteer experiences from Baroda Youth Federation.",
+      path: "/blog",
+      keywords: ["BYF blog", "NGO stories Vadodara", "community impact Gujarat"],
+      jsonLd: breadcrumbJsonLd([
+        { name: "Home", path: "/" },
+        { name: "Blog", path: "/blog" },
+      ]),
+    }),
   component: BlogPage,
 });
 

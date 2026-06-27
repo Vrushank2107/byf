@@ -6,17 +6,20 @@ import { PageHero } from "@/components/ui/PageHero";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GALLERY_TAGS, IMG } from "@/lib/site-data";
 import { api } from "@/lib/api";
+import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
 
 export const Route = createFileRoute("/gallery")({
-  head: () => ({
-    meta: [
-      { title: "Gallery — BYF moments from the ground" },
-      { name: "description", content: "Photos from BYF events: education, JoyCation, Holi, Diwali, blanket and flood relief drives." },
-      { property: "og:title", content: "Gallery — BYF" },
-      { property: "og:url", content: "/gallery" },
-    ],
-    links: [{ rel: "canonical", href: "/gallery" }],
-  }),
+  head: () =>
+    createPageSeo({
+      title: "Gallery — BYF moments from the ground",
+      description: "Photos from BYF events: education, JoyCation, Holi, Diwali, blanket and flood relief drives.",
+      path: "/gallery",
+      keywords: ["BYF gallery", "NGO photos Vadodara", "community events Gujarat"],
+      jsonLd: breadcrumbJsonLd([
+        { name: "Home", path: "/" },
+        { name: "Gallery", path: "/gallery" },
+      ]),
+    }),
   component: GalleryPage,
 });
 

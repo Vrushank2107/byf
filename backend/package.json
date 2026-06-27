@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "prisma generate && tsc",
+    "build": "prisma generate && tsup",
     "start": "node dist/index.js",
     "postinstall": "prisma generate",
     "lint": "eslint src --ext .ts"
@@ -22,6 +22,7 @@
     "hono": "^4.0.0",
     "ioredis": "^5.6.1",
     "jsonwebtoken": "^9.0.3",
+    "prisma": "^5.22.0",
     "razorpay": "^2.9.6",
     "zod": "^3.22.4"
   },
@@ -30,7 +31,7 @@
     "@typescript-eslint/eslint-plugin": "^6.15.0",
     "@typescript-eslint/parser": "^6.15.0",
     "eslint": "^8.55.0",
-    "prisma": "^5.22.0",
+    "tsup": "^8.5.1",
     "tsx": "^4.7.0",
     "typescript": "^5.3.3"
   }

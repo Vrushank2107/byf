@@ -6,17 +6,21 @@ import { PageHero } from "@/components/ui/PageHero";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { DONATION_FUNDS, IMG } from "@/lib/site-data";
 import { api } from "@/lib/api";
+import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
 
 export const Route = createFileRoute("/donate")({
-  head: () => ({
-    meta: [
-      { title: "Donate to BYF — Every rupee changes a life in Vadodara" },
-      { name: "description", content: "Donate to Baroda Youth Federation's education, women's empowerment, relief and general funds. 80G tax-deductible." },
-      { property: "og:title", content: "Donate — BYF" },
-      { property: "og:url", content: "/donate" },
-    ],
-    links: [{ rel: "canonical", href: "/donate" }],
-  }),
+  head: () =>
+    createPageSeo({
+      title: "Donate to BYF — Every rupee changes a life in Vadodara",
+      description:
+        "Donate to Baroda Youth Federation's education, women's empowerment, relief and general funds. 80G tax-deductible.",
+      path: "/donate",
+      keywords: ["donate BYF", "charity Vadodara", "80G donation Gujarat", "nonprofit donation India"],
+      jsonLd: breadcrumbJsonLd([
+        { name: "Home", path: "/" },
+        { name: "Donate", path: "/donate" },
+      ]),
+    }),
   component: DonatePage,
 });
 

@@ -6,17 +6,20 @@ import { PageHero } from "@/components/ui/PageHero";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { IMG } from "@/lib/site-data";
 import { api } from "@/lib/api";
+import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
 
 export const Route = createFileRoute("/volunteer")({
-  head: () => ({
-    meta: [
-      { title: "Volunteer with BYF — One Sunday a month changes a life" },
-      { name: "description", content: "Join 450+ BYF volunteers. Teach, organise events, drive, design — we have a role for every skill." },
-      { property: "og:title", content: "Volunteer — BYF" },
-      { property: "og:url", content: "/volunteer" },
-    ],
-    links: [{ rel: "canonical", href: "/volunteer" }],
-  }),
+  head: () =>
+    createPageSeo({
+      title: "Volunteer with BYF — One Sunday a month changes a life",
+      description: "Join 450+ BYF volunteers. Teach, organise events, drive, design — we have a role for every skill.",
+      path: "/volunteer",
+      keywords: ["volunteer BYF", "volunteer Vadodara", "NGO volunteer Gujarat"],
+      jsonLd: breadcrumbJsonLd([
+        { name: "Home", path: "/" },
+        { name: "Volunteer", path: "/volunteer" },
+      ]),
+    }),
   component: VolunteerPage,
 });
 

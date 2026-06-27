@@ -39,5 +39,6 @@ jobs:
       - name: Build frontend
         run: cd frontend && npm run build
         env:
+          NODE_ENV: production
           VITE_API_URL: https://api.example.com
           VITE_SITE_URL: https://example.com

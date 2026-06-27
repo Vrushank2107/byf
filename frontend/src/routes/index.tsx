@@ -6,18 +6,25 @@ import { FeaturedProjects } from "@/components/sections/FeaturedProjects";
 import { Activities } from "@/components/sections/Activities";
 import { VolunteerCTA } from "@/components/sections/VolunteerCTA";
 import { Testimonials } from "@/components/sections/Testimonials";
+import { ORG } from "@/lib/site-data";
+import { createPageSeo } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Baroda Youth Federation — Together We Can, Together We Care" },
-      { name: "description", content: "Vadodara's youth-led nonprofit. 5,000+ students reached, 50,000+ notebooks, 61,000+ flood beneficiaries. Donate or volunteer today." },
-      { property: "og:title", content: "Baroda Youth Federation" },
-      { property: "og:description", content: "Vadodara's youth-led nonprofit. Donate or volunteer today." },
-      { property: "og:url", content: "/" },
-    ],
-    links: [{ rel: "canonical", href: "/" }],
-  }),
+  head: () =>
+    createPageSeo({
+      title: `${ORG.name} — ${ORG.tagline}`,
+      description:
+        "Vadodara's youth-led nonprofit. 5,000+ students reached, 50,000+ notebooks, 61,000+ flood beneficiaries. Donate or volunteer today.",
+      path: "/",
+      keywords: [
+        "Baroda Youth Federation",
+        "BYF Vadodara",
+        "nonprofit Gujarat",
+        "donate Vadodara",
+        "volunteer Gujarat",
+        "youth NGO India",
+      ],
+    }),
   component: Home,
 });
 

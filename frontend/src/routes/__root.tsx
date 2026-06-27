@@ -11,6 +11,14 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteLayout } from "@/components/layout/SiteLayout";
+import { ORG } from "@/lib/site-data";
+import {
+  DEFAULT_DESCRIPTION,
+  absoluteUrl,
+  ogImageUrl,
+  organizationJsonLd,
+  websiteJsonLd,
+} from "@/lib/seo";
 
 function NotFoundComponent() {
   return (
@@ -60,28 +68,37 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Baroda Youth Federation — Together We Can, Together We Care" },
-      { name: "description", content: "BYF is a Vadodara-based youth nonprofit working in education, women's health, disaster relief and rural welfare since 2014." },
-      { name: "author", content: "Baroda Youth Federation" },
+      { title: `${ORG.name} — ${ORG.tagline}` },
+      { name: "description", content: DEFAULT_DESCRIPTION },
+      { name: "author", content: ORG.name },
       { name: "theme-color", content: "#1E3A8A" },
-      { property: "og:title", content: "Baroda Youth Federation — Together We Can, Together We Care" },
-      { property: "og:description", content: "BYF is a Vadodara-based youth nonprofit working in education, women's health, disaster relief and rural welfare since 2014." },
+      { name: "robots", content: "index, follow" },
+      { property: "og:title", content: `${ORG.name} — ${ORG.tagline}` },
+      { property: "og:description", content: DEFAULT_DESCRIPTION },
       { property: "og:type", content: "website" },
-      { property: "og:site_name", content: "Baroda Youth Federation" },
+      { property: "og:site_name", content: ORG.name },
+      { property: "og:url", content: absoluteUrl("/") },
+      { property: "og:image", content: ogImageUrl() },
+      { property: "og:image:alt", content: `${ORG.name} — ${ORG.tagline}` },
+      { property: "og:locale", content: "en_IN" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@BYF" },
-      { name: "twitter:title", content: "Baroda Youth Federation — Together We Can, Together We Care" },
-      { name: "twitter:description", content: "BYF is a Vadodara-based youth nonprofit working in education, women's health, disaster relief and rural welfare since 2014." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/de4e7556-fd01-4bee-a844-77de4f6e9b31/id-preview-099a39f5--943bcba4-54e4-41f2-9e3f-e7b40ece6b61.lovable.app-1782403992123.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/de4e7556-fd01-4bee-a844-77de4f6e9b31/id-preview-099a39f5--943bcba4-54e4-41f2-9e3f-e7b40ece6b61.lovable.app-1782403992123.png" },
+      { name: "twitter:site", content: "@BarodaYouth" },
+      { name: "twitter:title", content: `${ORG.name} — ${ORG.tagline}` },
+      { name: "twitter:description", content: DEFAULT_DESCRIPTION },
+      { name: "twitter:image", content: ogImageUrl() },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      { rel: "icon", type: "image/png", href: "/favicon.png" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
+      { rel: "canonical", href: absoluteUrl("/") },
     ],
     scripts: [
       { src: "https://checkout.razorpay.com/v1/checkout.js", async: true },
+      { type: "application/ld+json", children: JSON.stringify(organizationJsonLd()) },
+      { type: "application/ld+json", children: JSON.stringify(websiteJsonLd()) },
     ],
   }),
   shellComponent: RootShell,
