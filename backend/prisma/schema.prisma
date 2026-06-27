@@ -1,0 +1,217 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ProjectCategory {
+  Education
+  WomenEmpowerment
+  CommunityWelfare
+  DisasterRelief
+  CulturalActivities
+}
+
+model Project {
+  id        String          @id @default(uuid()) @db.Uuid
+  slug      String          @unique
+  title     String
+  category  ProjectCategory
+  short     String
+  fullStory String?         @map("full_story") @db.Text
+  image     String
+  stats     Json            @default("[]")
+  progress  Int             @default(0) @db.SmallInt
+  createdAt DateTime        @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt DateTime        @default(now()) @map("updated_at") @db.Timestamptz
+
+  @@index([category])
+  @@map("projects")
+}
+
+model Gallery {
+  id        String   @id @default(uuid()) @db.Uuid
+  src       String
+  tag       String
+  alt       String
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  @@index([tag])
+  @@map("gallery")
+}
+
+model Event {
+  id        String   @id @default(uuid()) @db.Uuid
+  title     String
+  date      DateTime @db.Date
+  location  String
+  description String
+  image     String
+  upcoming  Boolean  @default(true)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz
+
+  @@index([date])
+  @@index([upcoming])
+  @@map("events")
+}
+
+model Blog {
+  id        String   @id @default(uuid()) @db.Uuid
+  slug      String   @unique
+  title     String
+  excerpt   String
+  category  String
+  date      DateTime @db.Date
+  image     String
+  read      String
+  content   String?
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz
+
+  @@map("blog")
+}
+
+model Volunteer {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        String
+  email       String
+  phone       String
+  address     String
+  skills      String
+  availability String
+  resumeName  String?  @map("resume_name")
+  resumeUrl   String?  @map("resume_url")
+  reviewed    Boolean  @default(false)
+  submittedAt DateTime @default(now()) @map("submitted_at") @db.Timestamptz
+
+  @@index([reviewed])
+  @@map("volunteers")
+}
+
+model Message {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        String
+  email       String
+  phone       String
+  subject     String
+  message     String
+  read        Boolean  @default(false)
+  submittedAt DateTime @default(now()) @map("submitted_at") @db.Timestamptz
+
+  @@index([read])
+  @@map("messages")
+}
+
+model SiteSettings {
+  id                  String   @id @default(uuid()) @db.Uuid
+  email               String
+  phone               String
+  whatsapp            String
+  whatsappName        String   @map("whatsapp_name")
+  address             String
+  instagram           String
+  facebook            String
+  twitter             String
+  youtube             String
+  founderPortfolioUrl String   @default("") @map("founder_portfolio_url")
+  updatedAt           DateTime @default(now()) @map("updated_at") @db.Timestamptz
+
+  @@map("site_settings")
+}
+
+model Activity {
+  id        String   @id @default(uuid()) @db.Uuid
+  title     String
+  tag       String
+  date      String
+  image     String
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz
+
+  @@map("activities")
+}
+
+model Testimonial {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String
+  role      String
+  quote     String
+  image     String
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz
+
+  @@map("testimonials")
+}
+
+model ImpactStat {
+  id        String   @id @default(uuid()) @db.Uuid
+  label     String
+  value     String
+  suffix    String?
+  color     String   @default("primary")
+  order     Int      @default(0)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz
+
+  @@map("impact_stats")
+}
+
+model Leader {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String
+  role      String
+  bio       String
+  order     Int      @default(0)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz
+
+  @@map("leaders")
+}
+
+model Partner {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String
+  order     Int      @default(0)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz
+
+  @@map("partners")
+}
+
+enum DonationStatus {
+  Pending
+  Completed
+  Failed
+  Refunded
+}
+
+model Donation {
+  id              String         @id @default(uuid()) @db.Uuid
+  name            String
+  email           String
+  phone           String
+  address         String
+  pan             String?
+  amount          Int
+  fund            String
+  status          DonationStatus @default(Pending)
+  razorpayOrderId String?        @map("razorpay_order_id")
+  razorpayPaymentId String?       @map("razorpay_payment_id")
+  razorpaySignature String?      @map("razorpay_signature")
+  receiptNumber   String?        @unique @map("receipt_number")
+  receiptGenerated Boolean       @default(false) @map("receipt_generated")
+  isAnonymous     Boolean        @default(false) @map("is_anonymous")
+  createdAt       DateTime       @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt       DateTime       @default(now()) @map("updated_at") @db.Timestamptz
+
+  @@index([status])
+  @@index([fund])
+  @@map("donations")
+}

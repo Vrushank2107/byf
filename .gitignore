@@ -8,6 +8,11 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
+.env
+.env.local
+.env.*.local
+backend/.env
+frontend/.env
 dist
 dist-ssr
 .output
@@ -30,3 +35,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+
+
+/src/generated/prisma
