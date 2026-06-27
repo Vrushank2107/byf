@@ -13,7 +13,12 @@ export default defineConfig({
     server: { entry: "server" },
   },
   // Vercel deployment (default in @lovable.dev/vite-tanstack-config is cloudflare-module).
-  nitro: { preset: "vercel" },
+  nitro: {
+    preset: "vercel",
+    // Radix UI imports tslib; Nitro externalizes it by default. Full-trace copies the
+    // package into the serverless bundle so Vercel doesn't need a separate install step.
+    traceDeps: ["tslib*"],
+  },
   vite: {
     server: {
       // Monorepo: @fontsource lives in ../node_modules; allow Vite dev server to serve those files.
