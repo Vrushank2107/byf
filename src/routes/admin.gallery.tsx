@@ -1,23 +1,23 @@
-import { createFileRoute, Navigate } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { checkAdminAuth } from "@/lib/admin-auth";
 import { AdminLayout } from "@/components/layout/AdminLayout";
-import { GALLERY, GALLERY_TAGS } from "@/lib/site-data";
+import { GALLERY_TAGS } from "@/lib/site-data";
+import { useGalleryStore, type GalleryItem } from "@/lib/admin-store";
 import { useState } from "react";
 import { Plus, Trash2, X } from "lucide-react";
+import { ImageInput } from "@/components/admin/ImageInput";
 
 export const Route = createFileRoute("/admin/gallery")({
   component: AdminGallery,
   beforeLoad: () => {
-    if (!checkAdminAuth()) {
-      throw new Navigate({ to: "/admin" });
-    }
+    if (!checkAdminAuth()) throw redirect({ to: "/admin" });
   },
 });
 
 function AdminGallery() {
-  const [gallery, setGallery] = useState(GALLERY);
+  const [gallery, setGallery] = useGalleryStore();
   const [showAddForm, setShowAddForm] = useState(false);
-  const [selectedTag, setSelectedTag] = useState("All");
+  const [selectedTag, setSelectedTag] = useState<string>("All");
 
   const filteredGallery =
     selectedTag === "All" ? gallery : gallery.filter((item) => item.tag === selectedTag);
@@ -28,8 +28,8 @@ function AdminGallery() {
     }
   };
 
-  const handleAdd = (item: { src: string; tag: string; alt: string }) => {
-    setGallery([...gallery, item]);
+  const handleAdd = (item: GalleryItem) => {
+    setGallery([item, ...gallery]);
     setShowAddForm(false);
   };
 
@@ -57,6 +57,7 @@ function AdminGallery() {
               <button
                 onClick={() => setShowAddForm(false)}
                 className="p-2 rounded-lg hover:bg-muted transition-colors"
+                aria-label="Close"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -82,28 +83,32 @@ function AdminGallery() {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {filteredGallery.map((item, index) => (
-            <div key={index} className="relative group">
-              <img
-                src={item.src}
-                alt={item.alt}
-                className="w-full aspect-square object-cover rounded-xl border border-border"
-              />
-              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl flex items-center justify-center">
-                <button
-                  onClick={() => handleDelete(gallery.indexOf(item))}
-                  className="p-2 rounded-lg bg-destructive text-destructive-foreground hover:bg-destructive/90 transition-colors"
-                >
-                  <Trash2 className="h-4 w-4" />
-                </button>
+          {filteredGallery.map((item) => {
+            const originalIndex = gallery.indexOf(item);
+            return (
+              <div key={originalIndex} className="relative group">
+                <img
+                  src={item.src}
+                  alt={item.alt}
+                  className="w-full aspect-square object-cover rounded-xl border border-border"
+                />
+                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl flex items-center justify-center">
+                  <button
+                    onClick={() => handleDelete(originalIndex)}
+                    className="p-2 rounded-lg bg-destructive text-destructive-foreground hover:bg-destructive/90 transition-colors"
+                    aria-label="Delete"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </button>
+                </div>
+                <div className="absolute bottom-2 left-2 right-2">
+                  <span className="inline-block px-2 py-1 bg-black/70 text-white text-xs rounded-md">
+                    {item.tag}
+                  </span>
+                </div>
               </div>
-              <div className="absolute bottom-2 left-2 right-2">
-                <span className="inline-block px-2 py-1 bg-black/70 text-white text-xs rounded-md">
-                  {item.tag}
-                </span>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </AdminLayout>
@@ -114,10 +119,10 @@ function AddPhotoForm({
   onAdd,
   onCancel,
 }: {
-  onAdd: (item: { src: string; tag: string; alt: string }) => void;
+  onAdd: (item: GalleryItem) => void;
   onCancel: () => void;
 }) {
-  const [formData, setFormData] = useState({ src: "", tag: "Education", alt: "" });
+  const [formData, setFormData] = useState<GalleryItem>({ src: "", tag: "Education", alt: "" });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -127,17 +132,10 @@ function AddPhotoForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-        <label className="block text-sm font-medium mb-2">Image URL</label>
-        <input
-          type="text"
-          value={formData.src}
-          onChange={(e) => setFormData({ ...formData, src: e.target.value })}
-          className="w-full px-3 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
-          placeholder="/assets/..."
-          required
-        />
-      </div>
+      <ImageInput
+        value={formData.src}
+        onChange={(val) => setFormData({ ...formData, src: val })}
+      />
 
       <div>
         <label className="block text-sm font-medium mb-2">Tag</label>

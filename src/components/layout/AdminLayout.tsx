@@ -1,5 +1,15 @@
 import { Outlet, Link } from "@tanstack/react-router";
-import { LayoutDashboard, FolderKanban, Image as ImageIcon, Calendar, MessageSquare, Users, LogOut, ExternalLink } from "lucide-react";
+import type { ReactNode } from "react";
+import {
+  LayoutDashboard,
+  FolderKanban,
+  Image as ImageIcon,
+  Calendar,
+  MessageSquare,
+  Users,
+  Settings,
+  LogOut,
+} from "lucide-react";
 import { logoutAdmin } from "@/lib/admin-auth";
 
 const ADMIN_NAV = [
@@ -9,9 +19,10 @@ const ADMIN_NAV = [
   { to: "/admin/events", label: "Events & Blogs", icon: Calendar },
   { to: "/admin/messages", label: "Messages", icon: MessageSquare },
   { to: "/admin/volunteers", label: "Volunteers", icon: Users },
+  { to: "/admin/settings", label: "Settings", icon: Settings },
 ] as const;
 
-export function AdminLayout() {
+export function AdminLayout({ children }: { children?: ReactNode }) {
   const handleLogout = () => {
     logoutAdmin();
     window.location.href = "/admin";
@@ -25,13 +36,21 @@ export function AdminLayout() {
             <div className="flex items-center gap-2">
               <span className="font-display text-xl font-bold gradient-text">BYF Admin</span>
             </div>
-            <button
-              onClick={handleLogout}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-muted transition-colors text-sm"
-            >
-              <LogOut className="h-4 w-4" />
-              Logout
-            </button>
+            <div className="flex items-center gap-2">
+              <a
+                href="/"
+                className="text-sm text-muted-foreground hover:text-foreground hidden sm:inline"
+              >
+                View site →
+              </a>
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-muted transition-colors text-sm"
+              >
+                <LogOut className="h-4 w-4" />
+                Logout
+              </button>
+            </div>
           </div>
         </div>
       </nav>
@@ -44,7 +63,7 @@ export function AdminLayout() {
                 <Link
                   key={item.to}
                   to={item.to}
-                  className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium hover:bg-background transition-colors [&.active]:bg-primary [&.active]:text-primary-foreground"
+                  className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium hover:bg-background transition-colors"
                   activeProps={{ className: "bg-primary text-primary-foreground" }}
                 >
                   <item.icon className="h-4 w-4" />
@@ -54,9 +73,7 @@ export function AdminLayout() {
             </nav>
           </aside>
 
-          <main className="flex-1 min-w-0">
-            <Outlet />
-          </main>
+          <main className="flex-1 min-w-0">{children ?? <Outlet />}</main>
         </div>
       </div>
     </div>

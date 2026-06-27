@@ -1,21 +1,21 @@
-import { createFileRoute, Navigate } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { checkAdminAuth } from "@/lib/admin-auth";
 import { AdminLayout } from "@/components/layout/AdminLayout";
-import { PROJECTS, type Project } from "@/lib/site-data";
+import { type Project } from "@/lib/site-data";
+import { useProjectsStore } from "@/lib/admin-store";
 import { useState } from "react";
 import { Plus, Edit, Trash2 } from "lucide-react";
+import { ImageInput } from "@/components/admin/ImageInput";
 
 export const Route = createFileRoute("/admin/projects")({
   component: AdminProjects,
   beforeLoad: () => {
-    if (!checkAdminAuth()) {
-      throw new Navigate({ to: "/admin" });
-    }
+    if (!checkAdminAuth()) throw redirect({ to: "/admin" });
   },
 });
 
 function AdminProjects() {
-  const [projects, setProjects] = useState<Project[]>(PROJECTS);
+  const [projects, setProjects] = useProjectsStore();
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
 
@@ -32,7 +32,7 @@ function AdminProjects() {
 
   const handleSave = (project: Project) => {
     if (editingProject) {
-      setProjects(projects.map((p) => (p.slug === project.slug ? project : p)));
+      setProjects(projects.map((p) => (p.slug === editingProject.slug ? project : p)));
     } else {
       setProjects([...projects, project]);
     }
@@ -75,39 +75,38 @@ function AdminProjects() {
           {projects.map((project) => (
             <div
               key={project.slug}
-              className="bg-card border border-border rounded-xl p-6 flex items-start justify-between"
+              className="bg-card border border-border rounded-xl p-6 flex items-start justify-between gap-4"
             >
-              <div className="flex gap-4">
+              <div className="flex gap-4 min-w-0">
                 <img
                   src={project.image}
                   alt={project.title}
-                  className="w-20 h-20 rounded-lg object-cover"
+                  className="w-20 h-20 rounded-lg object-cover shrink-0"
                 />
-                <div>
+                <div className="min-w-0">
                   <h3 className="font-semibold text-lg">{project.title}</h3>
                   <p className="text-sm text-muted-foreground mb-2">{project.category}</p>
                   <p className="text-sm">{project.short}</p>
                   <div className="mt-2 flex items-center gap-2">
                     <div className="h-2 w-32 bg-muted rounded-full overflow-hidden">
-                      <div
-                        className="h-full bg-primary rounded-full"
-                        style={{ width: `${project.progress}%` }}
-                      />
+                      <div className="h-full bg-primary rounded-full" style={{ width: `${project.progress}%` }} />
                     </div>
                     <span className="text-xs text-muted-foreground">{project.progress}%</span>
                   </div>
                 </div>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 shrink-0">
                 <button
                   onClick={() => handleEdit(project)}
                   className="p-2 rounded-lg hover:bg-muted transition-colors"
+                  aria-label="Edit"
                 >
                   <Edit className="h-4 w-4" />
                 </button>
                 <button
                   onClick={() => handleDelete(project.slug)}
                   className="p-2 rounded-lg hover:bg-destructive/10 text-destructive transition-colors"
+                  aria-label="Delete"
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>
@@ -129,8 +128,8 @@ function ProjectForm({
   onSave: (project: Project) => void;
   onCancel: () => void;
 }) {
-  const [formData, setFormData] = useState<Partial<Project>>(
-    project || {
+  const [formData, setFormData] = useState<Project>(
+    project ?? {
       slug: "",
       title: "",
       category: "Education",
@@ -138,13 +137,13 @@ function ProjectForm({
       image: "",
       stats: [],
       progress: 0,
-    }
+    },
   );
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.slug || !formData.title || !formData.short) return;
-    onSave(formData as Project);
+    onSave(formData);
   };
 
   return (
@@ -153,7 +152,7 @@ function ProjectForm({
         {project ? "Edit Project" : "Add New Project"}
       </h2>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium mb-2">Slug</label>
             <input
@@ -168,7 +167,9 @@ function ProjectForm({
             <label className="block text-sm font-medium mb-2">Category</label>
             <select
               value={formData.category}
-              onChange={(e) => setFormData({ ...formData, category: e.target.value as any })}
+              onChange={(e) =>
+                setFormData({ ...formData, category: e.target.value as Project["category"] })
+              }
               className="w-full px-3 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
             >
               <option value="Education">Education</option>
@@ -202,16 +203,10 @@ function ProjectForm({
           />
         </div>
 
-        <div>
-          <label className="block text-sm font-medium mb-2">Image URL</label>
-          <input
-            type="text"
-            value={formData.image}
-            onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-            className="w-full px-3 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
-            placeholder="/assets/..."
-          />
-        </div>
+        <ImageInput
+          value={formData.image}
+          onChange={(val) => setFormData({ ...formData, image: val })}
+        />
 
         <div>
           <label className="block text-sm font-medium mb-2">Progress: {formData.progress}%</label>
