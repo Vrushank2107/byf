@@ -5,6 +5,7 @@ import { Award, Network, Sparkles, TrendingUp, Upload, CheckCircle2 } from "luci
 import { PageHero } from "@/components/ui/PageHero";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { IMG } from "@/lib/site-data";
+import { appendVolunteer } from "@/lib/admin-store";
 
 export const Route = createFileRoute("/volunteer")({
   head: () => ({
@@ -31,8 +32,20 @@ function VolunteerPage() {
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const form = e.target as HTMLFormElement;
+    const fd = new FormData(form);
+    const resume = fd.get("resume");
+    appendVolunteer({
+      name: String(fd.get("name") ?? ""),
+      email: String(fd.get("email") ?? ""),
+      phone: String(fd.get("phone") ?? ""),
+      address: String(fd.get("address") ?? ""),
+      skills: String(fd.get("skills") ?? ""),
+      availability: String(fd.get("availability") ?? ""),
+      resumeName: resume instanceof File && resume.name ? resume.name : undefined,
+    });
     setSubmitted(true);
-    (e.target as HTMLFormElement).reset();
+    form.reset();
     setTimeout(() => setSubmitted(false), 5000);
   }
 

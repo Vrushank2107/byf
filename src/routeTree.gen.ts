@@ -21,6 +21,7 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminVolunteersRouteImport } from './routes/admin.volunteers'
+import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
 import { Route as AdminProjectsRouteImport } from './routes/admin.projects'
 import { Route as AdminMessagesRouteImport } from './routes/admin.messages'
 import { Route as AdminGalleryRouteImport } from './routes/admin.gallery'
@@ -87,6 +88,11 @@ const AdminVolunteersRoute = AdminVolunteersRouteImport.update({
   path: '/volunteers',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminProjectsRoute = AdminProjectsRouteImport.update({
   id: '/projects',
   path: '/projects',
@@ -130,6 +136,7 @@ export interface FileRoutesByFullPath {
   '/admin/gallery': typeof AdminGalleryRoute
   '/admin/messages': typeof AdminMessagesRoute
   '/admin/projects': typeof AdminProjectsRoute
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin/volunteers': typeof AdminVolunteersRoute
 }
 export interface FileRoutesByTo {
@@ -149,6 +156,7 @@ export interface FileRoutesByTo {
   '/admin/gallery': typeof AdminGalleryRoute
   '/admin/messages': typeof AdminMessagesRoute
   '/admin/projects': typeof AdminProjectsRoute
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin/volunteers': typeof AdminVolunteersRoute
 }
 export interface FileRoutesById {
@@ -169,6 +177,7 @@ export interface FileRoutesById {
   '/admin/gallery': typeof AdminGalleryRoute
   '/admin/messages': typeof AdminMessagesRoute
   '/admin/projects': typeof AdminProjectsRoute
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin/volunteers': typeof AdminVolunteersRoute
 }
 export interface FileRouteTypes {
@@ -190,6 +199,7 @@ export interface FileRouteTypes {
     | '/admin/gallery'
     | '/admin/messages'
     | '/admin/projects'
+    | '/admin/settings'
     | '/admin/volunteers'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -209,6 +219,7 @@ export interface FileRouteTypes {
     | '/admin/gallery'
     | '/admin/messages'
     | '/admin/projects'
+    | '/admin/settings'
     | '/admin/volunteers'
   id:
     | '__root__'
@@ -228,6 +239,7 @@ export interface FileRouteTypes {
     | '/admin/gallery'
     | '/admin/messages'
     | '/admin/projects'
+    | '/admin/settings'
     | '/admin/volunteers'
   fileRoutesById: FileRoutesById
 }
@@ -331,6 +343,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminVolunteersRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/projects': {
       id: '/admin/projects'
       path: '/projects'
@@ -375,6 +394,7 @@ interface AdminRouteChildren {
   AdminGalleryRoute: typeof AdminGalleryRoute
   AdminMessagesRoute: typeof AdminMessagesRoute
   AdminProjectsRoute: typeof AdminProjectsRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
   AdminVolunteersRoute: typeof AdminVolunteersRoute
 }
 
@@ -384,6 +404,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminGalleryRoute: AdminGalleryRoute,
   AdminMessagesRoute: AdminMessagesRoute,
   AdminProjectsRoute: AdminProjectsRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
   AdminVolunteersRoute: AdminVolunteersRoute,
 }
 

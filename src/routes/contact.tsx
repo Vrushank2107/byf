@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, MessageCircle, CheckCircle2, Send } from "lucide-react";
 import { PageHero } from "@/components/ui/PageHero";
 import { ORG, IMG } from "@/lib/site-data";
+import { appendMessage } from "@/lib/admin-store";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -22,8 +23,17 @@ function ContactPage() {
   const [done, setDone] = useState(false);
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const form = e.target as HTMLFormElement;
+    const fd = new FormData(form);
+    appendMessage({
+      name: String(fd.get("name") ?? ""),
+      email: String(fd.get("email") ?? ""),
+      phone: String(fd.get("phone") ?? ""),
+      subject: String(fd.get("subject") ?? ""),
+      message: String(fd.get("message") ?? ""),
+    });
     setDone(true);
-    (e.target as HTMLFormElement).reset();
+    form.reset();
     setTimeout(() => setDone(false), 5000);
   }
 
