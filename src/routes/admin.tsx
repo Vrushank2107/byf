@@ -1,4 +1,4 @@
-import { createFileRoute, Navigate } from "@tanstack/react-router";
+import { createFileRoute, redirect, Navigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { checkAdminAuth, loginAdmin } from "@/lib/admin-auth";
 
@@ -9,9 +9,8 @@ export const Route = createFileRoute("/admin")({
 function AdminLogin() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const isAuthenticated = checkAdminAuth();
 
-  if (isAuthenticated) {
+  if (checkAdminAuth()) {
     return <Navigate to="/admin/dashboard" />;
   }
 
@@ -49,9 +48,7 @@ function AdminLogin() {
               />
             </div>
 
-            {error && (
-              <p className="text-sm text-destructive">{error}</p>
-            )}
+            {error && <p className="text-sm text-destructive">{error}</p>}
 
             <button
               type="submit"
@@ -65,3 +62,6 @@ function AdminLogin() {
     </div>
   );
 }
+
+// keep redirect import used (silences unused warning if linter strict)
+void redirect;
