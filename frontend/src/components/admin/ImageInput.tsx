@@ -1,28 +1,41 @@
 import { useRef, useState } from "react";
-import { Upload, Link2 } from "lucide-react";
-import { fileToDataUrl } from "@/lib/admin-store";
+import { Loader2, Upload, Link2 } from "lucide-react";
+import { toast } from "sonner";
+import { uploadImage } from "@/lib/admin-store";
 
 interface Props {
   value: string;
   onChange: (val: string) => void;
   label?: string;
+  folder?: string;
 }
 
-/** Image input that accepts either a URL or a file upload (stored as data URL). */
-export function ImageInput({ value, onChange, label = "Image" }: Props) {
+/** Image input that accepts a URL or uploads to Cloudinary via the backend API. */
+export function ImageInput({ value, onChange, label = "Image", folder = "projects" }: Props) {
   const [mode, setMode] = useState<"url" | "upload">("url");
+  const [uploading, setUploading] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
   async function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
-    if (file.size > 2_000_000) {
-      alert("Please choose an image under 2 MB (admin uses browser storage).");
+    if (file.size > 5_000_000) {
+      toast.error("Please choose an image under 5 MB.");
       e.target.value = "";
       return;
     }
-    const dataUrl = await fileToDataUrl(file);
-    onChange(dataUrl);
+
+    setUploading(true);
+    try {
+      const url = await uploadImage(file, folder);
+      onChange(url);
+      toast.success("Image uploaded");
+    } catch {
+      toast.error("Failed to upload image. Please try again.");
+    } finally {
+      setUploading(false);
+      e.target.value = "";
+    }
   }
 
   return (
@@ -53,16 +66,25 @@ export function ImageInput({ value, onChange, label = "Image" }: Props) {
           value={value}
           onChange={(e) => onChange(e.target.value)}
           className="w-full px-3 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
-          placeholder="/assets/... or https://..."
+          placeholder="https://... or /assets/..."
         />
       ) : (
-        <input
-          ref={fileRef}
-          type="file"
-          accept="image/*"
-          onChange={handleFile}
-          className="w-full text-sm"
-        />
+        <div className="space-y-2">
+          <input
+            ref={fileRef}
+            type="file"
+            accept="image/*"
+            onChange={handleFile}
+            disabled={uploading}
+            className="w-full text-sm disabled:opacity-50"
+          />
+          {uploading && (
+            <p className="flex items-center gap-2 text-xs text-muted-foreground">
+              <Loader2 className="h-3 w-3 animate-spin" />
+              Uploading to Cloudinary…
+            </p>
+          )}
+        </div>
       )}
 
       {value && (

@@ -5,7 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { type Project } from "@/lib/site-data";
 import { useProjectsStore } from "@/lib/admin-store";
 import { api } from "@/lib/api";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Plus, Edit, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { ImageInput } from "@/components/admin/ImageInput";
@@ -17,10 +17,37 @@ export const Route = createFileRoute("/admin/projects")({
   beforeLoad: requireAdminAuth,
 });
 
+function emptyProject(): Project {
+  return {
+    slug: "",
+    title: "",
+    category: "Education",
+    short: "",
+    fullStory: "",
+    image: "",
+    stats: [],
+    progress: 0,
+  };
+}
+
+function toProjectPayload(project: Project) {
+  return {
+    slug: project.slug.trim(),
+    title: project.title.trim(),
+    category: project.category,
+    short: project.short.trim(),
+    fullStory: project.fullStory?.trim() || undefined,
+    image: project.image.trim(),
+    stats: project.stats ?? [],
+    progress: Number(project.progress),
+  };
+}
+
 function AdminProjects() {
   const { data: projects, loading, refresh } = useProjectsStore();
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
+  const [saving, setSaving] = useState(false);
   const { confirm, dialog } = useConfirmDialog();
 
   const handleDelete = async (id: string) => {
@@ -44,18 +71,55 @@ function AdminProjects() {
   };
 
   const handleSave = async (project: Project) => {
+    const payload = toProjectPayload(project);
+
+    if (!payload.image) {
+      await confirm({
+        title: "Image required",
+        description: "Please add an image URL or upload a photo before saving.",
+        confirmLabel: "OK",
+        cancelLabel: "Dismiss",
+        variant: "default",
+      });
+      return;
+    }
+
+    if (payload.image.startsWith("data:")) {
+      await confirm({
+        title: "Image still uploading",
+        description: "Wait for the upload to finish, or paste an image URL instead.",
+        confirmLabel: "OK",
+        cancelLabel: "Dismiss",
+        variant: "default",
+      });
+      return;
+    }
+
+    setSaving(true);
     try {
-      if (editingProject && editingProject.id) {
-        await api.updateProject(editingProject.id, project);
+      const id = editingProject?.id ?? project.id;
+      if (id) {
+        await api.updateProject(id, payload);
+        toast.success("Project updated");
       } else {
-        await api.createProject(project);
+        await api.createProject(payload);
+        toast.success("Project created");
       }
       setShowAddForm(false);
       setEditingProject(null);
       refresh();
     } catch (error) {
-      console.error('Failed to save project:', error);
-      alert('Failed to save project');
+      console.error("Failed to save project:", error);
+      const message = error instanceof Error ? error.message : "Failed to save project";
+      await confirm({
+        title: "Could not save project",
+        description: message,
+        confirmLabel: "OK",
+        cancelLabel: "Dismiss",
+        variant: "default",
+      });
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -83,6 +147,7 @@ function AdminProjects() {
         {showAddForm && (
           <ProjectForm
             project={editingProject}
+            saving={saving}
             onSave={handleSave}
             onCancel={() => {
               setShowAddForm(false);
@@ -166,25 +231,20 @@ function AdminProjects() {
 
 function ProjectForm({
   project,
+  saving,
   onSave,
   onCancel,
 }: {
   project: Project | null;
+  saving: boolean;
   onSave: (project: Project) => void;
   onCancel: () => void;
 }) {
-  const [formData, setFormData] = useState<Project>(
-    project ?? {
-      slug: "",
-      title: "",
-      category: "Education",
-      short: "",
-      fullStory: "",
-      image: "",
-      stats: [],
-      progress: 0,
-    },
-  );
+  const [formData, setFormData] = useState<Project>(project ? { ...project, stats: project.stats ?? [] } : emptyProject());
+
+  useEffect(() => {
+    setFormData(project ? { ...project, stats: project.stats ?? [] } : emptyProject());
+  }, [project]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -264,6 +324,7 @@ function ProjectForm({
         <ImageInput
           value={formData.image}
           onChange={(val) => setFormData({ ...formData, image: val })}
+          folder="projects"
         />
 
         <div>
@@ -281,14 +342,16 @@ function ProjectForm({
         <div className="flex gap-2">
           <button
             type="submit"
-            className="px-4 py-2 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
+            disabled={saving}
+            className="px-4 py-2 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Save
+            {saving ? "Saving…" : "Save"}
           </button>
           <button
             type="button"
             onClick={onCancel}
-            className="px-4 py-2 rounded-lg border border-border hover:bg-muted transition-colors"
+            disabled={saving}
+            className="px-4 py-2 rounded-lg border border-border hover:bg-muted transition-colors disabled:opacity-50"
           >
             Cancel
           </button>

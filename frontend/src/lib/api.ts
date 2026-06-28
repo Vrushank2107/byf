@@ -45,7 +45,13 @@ async function request<T>(
 
   if (!response.ok) {
     const error = await response.json().catch(() => ({ message: 'Request failed' }))
-    throw new Error(error.message || error.error || 'Request failed')
+    const validation =
+      Array.isArray(error.details) && error.details.length > 0
+        ? error.details.map((d: { message?: string; path?: (string | number)[] }) =>
+            d.path?.length ? `${d.path.join('.')}: ${d.message}` : d.message,
+          ).filter(Boolean).join('; ')
+        : undefined
+    throw new Error(validation || error.error || error.message || 'Request failed')
   }
 
   return response.json()
