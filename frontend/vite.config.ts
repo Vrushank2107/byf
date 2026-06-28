@@ -21,9 +21,18 @@ export default defineConfig({
   },
   vite: {
     ssr: {
-      // Bundle tslib into SSR output instead of leaving a bare `import "tslib"` that
-      // Vercel's serverless runtime can't resolve when traceDeps artifacts are omitted.
-      noExternal: ["tslib"],
+      // Keep Radix (and tslib) in the SSR graph so Nitro doesn't emit bare
+      // `import "tslib"` in externalized _libs chunks that Vercel can't resolve.
+      noExternal: [
+        "tslib",
+        /^@radix-ui\//,
+        "react-remove-scroll",
+        "react-remove-scroll-bar",
+        "react-style-singleton",
+        "aria-hidden",
+        "use-callback-ref",
+        "use-sidecar",
+      ],
     },
     server: {
       // Monorepo: @fontsource lives in ../node_modules; allow Vite dev server to serve those files.
