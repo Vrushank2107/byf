@@ -1,16 +1,22 @@
-function getApiUrl(): string {
-  const envUrl = import.meta.env.VITE_API_URL
-  if (envUrl) return envUrl.replace(/\/$/, '')
+const PRODUCTION_API_URL = 'https://byf-zqh6.onrender.com'
+const LOCAL_API_URL = 'http://localhost:3001'
 
-  // Avoid baking localhost into production bundles when VITE_API_URL is unset at build time.
-  if (typeof window !== 'undefined') {
-    const host = window.location.hostname
-    if (host === 'localhost' || host === '127.0.0.1') {
-      return 'http://localhost:3001'
-    }
+function getApiUrl(): string {
+  const envUrl = import.meta.env.VITE_API_URL?.replace(/\/$/, '')
+  const onLocalClient =
+    typeof window !== 'undefined' &&
+    (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+
+  if (onLocalClient || import.meta.env.DEV) {
+    return envUrl || LOCAL_API_URL
   }
 
-  return 'https://byf-zqh6.onrender.com'
+  // Ignore localhost baked in at build time when running on production hosts.
+  if (envUrl && !/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?\/?$/.test(envUrl)) {
+    return envUrl
+  }
+
+  return PRODUCTION_API_URL
 }
 
 async function request<T>(

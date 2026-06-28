@@ -18,9 +18,11 @@ dist
 dist-ssr
 .output
 .vercel
+frontend/.vercel
 .vinxi
 .tanstack/**
 .nitro
+node_modules/.nitro
 *.local
 
 # Wrangler / Cloudflare
