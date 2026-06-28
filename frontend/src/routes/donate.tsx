@@ -1,11 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Heart, Shield, FileCheck, Sparkles, Loader2 } from "lucide-react";
 import { PageHero } from "@/components/ui/PageHero";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { DONATION_FUNDS, IMG } from "@/lib/site-data";
 import { api } from "@/lib/api";
+import { imageUrl } from "@/lib/image-url";
 import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
 
 export const Route = createFileRoute("/donate")({
@@ -43,6 +44,7 @@ function DonatePage() {
   const [loading, setLoading] = useState(false);
   const [showReceipt, setShowReceipt] = useState(false);
   const [receiptData, setReceiptData] = useState<any>(null);
+  const [settings, setSettings] = useState<any>(null);
   const [donorInfo, setDonorInfo] = useState({
     name: '',
     email: '',
@@ -52,7 +54,16 @@ function DonatePage() {
     isAnonymous: false,
   });
 
+  useEffect(() => {
+    api.getSettings().then((data) => {
+      setSettings(data);
+    }).catch((error) => {
+      console.error('Failed to fetch site settings:', error);
+    });
+  }, []);
+
   const active = DONATION_FUNDS.find((f) => f.slug === fund)!;
+  const heroImage = settings?.donateHeroImage ? imageUrl(settings.donateHeroImage) : IMG.heroBlankets;
 
   const handleDonate = async () => {
     setLoading(true);
@@ -122,7 +133,7 @@ function DonatePage() {
         eyebrow="Donate"
         title={<>₹500 feeds a family for a week. <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">Your turn.</span></>}
         description="100% of donations go directly to programs. Operations are funded separately. 80G-eligible receipts issued instantly."
-        image={IMG.heroBlankets}
+        image={heroImage}
       />
 
       <section className="section-y">
@@ -240,16 +251,18 @@ function DonatePage() {
 
       {/* Donor Form Modal */}
       {showDonorForm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+        <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/50 p-3 py-4 sm:items-center sm:p-4">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="w-full max-w-lg rounded-3xl border border-border bg-card p-8 shadow-soft"
+            className="flex max-h-[calc(100svh-2rem)] w-full max-w-lg flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-soft sm:rounded-3xl"
           >
-            <h3 className="font-display text-2xl font-bold text-foreground">Donor Information</h3>
-            <p className="mt-2 text-sm text-muted-foreground">Required for 80G tax receipt</p>
+            <div className="shrink-0 border-b border-border px-5 py-5 sm:px-8 sm:py-6">
+              <h3 className="font-display text-xl font-bold text-foreground sm:text-2xl">Donor Information</h3>
+              <p className="mt-1 text-sm text-muted-foreground sm:mt-2">Required for 80G tax receipt</p>
+            </div>
 
-            <div className="mt-6 space-y-4">
+            <div className="min-h-0 flex-1 space-y-4 overflow-y-auto px-5 py-5 sm:px-8 sm:py-6">
               <div>
                 <label className="text-sm font-semibold text-foreground">Full Name *</label>
                 <input
@@ -315,27 +328,29 @@ function DonatePage() {
               </div>
             </div>
 
-            <div className="mt-8 flex gap-3">
-              <button
-                onClick={() => setShowDonorForm(false)}
-                className="flex-1 rounded-full border border-border bg-background px-6 py-3 font-semibold text-foreground transition-colors hover:bg-muted"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleDonate}
-                disabled={loading || !donorInfo.name || !donorInfo.email || !donorInfo.phone || !donorInfo.address}
-                className="flex-1 rounded-full gradient-warm px-6 py-3 font-semibold text-white transition-transform hover:-translate-y-0.5 disabled:opacity-50 disabled:hover:translate-y-0"
-              >
-                {loading ? (
-                  <>
-                    <Loader2 className="inline h-5 w-5 animate-spin" />
-                    Processing...
-                  </>
-                ) : (
-                  `Pay ${fmt(amount)}`
-                )}
-              </button>
+            <div className="shrink-0 border-t border-border bg-card px-5 py-4 sm:px-8 sm:py-5">
+              <div className="flex flex-col-reverse gap-3 sm:flex-row">
+                <button
+                  onClick={() => setShowDonorForm(false)}
+                  className="flex-1 rounded-full border border-border bg-background px-6 py-3 font-semibold text-foreground transition-colors hover:bg-muted"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleDonate}
+                  disabled={loading || !donorInfo.name || !donorInfo.email || !donorInfo.phone || !donorInfo.address}
+                  className="flex-1 rounded-full gradient-warm px-6 py-3 font-semibold text-white transition-transform hover:-translate-y-0.5 disabled:opacity-50 disabled:hover:translate-y-0"
+                >
+                  {loading ? (
+                    <>
+                      <Loader2 className="mr-2 inline h-5 w-5 animate-spin" />
+                      Processing...
+                    </>
+                  ) : (
+                    `Pay ${fmt(amount)}`
+                  )}
+                </button>
+              </div>
             </div>
           </motion.div>
         </div>

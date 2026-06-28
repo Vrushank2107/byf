@@ -161,8 +161,8 @@ function AddPhotoForm({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const tag = isCustomTag ? customTag.trim() : selectedTag;
-    if (!formData.src || !formData.alt || !tag) return;
-    onAdd({ ...formData, tag });
+    if (!formData.src || !tag) return;
+    onAdd({ ...formData, tag, alt: `${tag} gallery photo` });
   };
 
   return (
@@ -205,17 +205,6 @@ function AddPhotoForm({
           />
         </div>
       )}
-
-      <div>
-        <label className="block text-sm font-medium mb-2">Alt Text</label>
-        <input
-          type="text"
-          value={formData.alt}
-          onChange={(e) => setFormData({ ...formData, alt: e.target.value })}
-          className="w-full px-3 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
-          required
-        />
-      </div>
 
       <div className="flex gap-2">
         <button

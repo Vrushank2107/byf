@@ -8,7 +8,7 @@ const app = new Hono()
 const gallerySchema = z.object({
   src: z.string(),
   tag: z.string(),
-  alt: z.string(),
+  alt: z.string().optional().default(''),
 })
 
 // GET all gallery items

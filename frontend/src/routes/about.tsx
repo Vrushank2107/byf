@@ -7,6 +7,7 @@ import { ImpactStats } from "@/components/sections/ImpactStats";
 import { Partners } from "@/components/sections/Partners";
 import { IMG, TIMELINE, ORG } from "@/lib/site-data";
 import { api } from "@/lib/api";
+import { imageUrl } from "@/lib/image-url";
 import { useState, useEffect } from "react";
 import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
 
@@ -35,9 +36,18 @@ const VALUES = [
 
 function AboutPage() {
   const [leaders, setLeaders] = useState<any[]>([]);
+  const [heroImage, setHeroImage] = useState(IMG.heroEducation);
   const [loadingLeaders, setLoadingLeaders] = useState(true);
+  const [siteSettings, setSiteSettings] = useState<any>(null);
 
   useEffect(() => {
+    api.getProjects().then((data) => {
+      const selected = data.find((project) => project.showInHero);
+      if (selected?.image) setHeroImage(selected.image);
+    }).catch((error) => {
+      console.error('Failed to fetch hero project:', error);
+    });
+
     api.getLeaders().then((data) => {
       setLeaders(data);
       setLoadingLeaders(false);
@@ -45,7 +55,15 @@ function AboutPage() {
       console.error('Failed to fetch leaders:', error);
       setLoadingLeaders(false);
     });
+
+    api.getSettings().then((data) => {
+      setSiteSettings(data);
+    }).catch((error) => {
+      console.error('Failed to fetch site settings:', error);
+    });
   }, []);
+
+  const resolvedHeroImage = siteSettings?.aboutHeroImage ? imageUrl(siteSettings.aboutHeroImage) : heroImage;
 
   return (
     <>
@@ -53,7 +71,7 @@ function AboutPage() {
         eyebrow="About Us"
         title={<>A decade of <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">grassroots work.</span></>}
         description="Baroda Youth Federation started in 2014 with eight students and a single Sunday tuition class. Today we're 450 volunteers running programs across five missions."
-        image={IMG.heroEducation}
+        image={resolvedHeroImage}
       />
 
       <section className="section-y">

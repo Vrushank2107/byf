@@ -1,11 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Award, Network, Sparkles, TrendingUp, Upload, CheckCircle2 } from "lucide-react";
 import { PageHero } from "@/components/ui/PageHero";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { IMG } from "@/lib/site-data";
 import { api } from "@/lib/api";
+import { imageUrl } from "@/lib/image-url";
 import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
 
 export const Route = createFileRoute("/volunteer")({
@@ -33,6 +34,17 @@ const BENEFITS = [
 function VolunteerPage() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [settings, setSettings] = useState<any>(null);
+
+  useEffect(() => {
+    api.getSettings().then((data) => {
+      setSettings(data);
+    }).catch((error) => {
+      console.error('Failed to fetch site settings:', error);
+    });
+  }, []);
+
+  const heroImage = settings?.volunteerHeroImage ? imageUrl(settings.volunteerHeroImage) : IMG.joycation1;
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -75,7 +87,7 @@ function VolunteerPage() {
         eyebrow="Volunteer with BYF"
         title={<>Show up. <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">Change a year.</span></>}
         description="No prior experience needed. Just bring time, energy and the willingness to listen first."
-        image={IMG.joycation1}
+        image={heroImage}
       />
 
       <section className="section-y bg-surface">

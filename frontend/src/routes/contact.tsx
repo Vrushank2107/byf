@@ -5,6 +5,7 @@ import { Mail, Phone, MapPin, MessageCircle, CheckCircle2, Send } from "lucide-r
 import { PageHero } from "@/components/ui/PageHero";
 import { ORG, IMG } from "@/lib/site-data";
 import { api } from "@/lib/api";
+import { imageUrl } from "@/lib/image-url";
 import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
 
 export const Route = createFileRoute("/contact")({
@@ -44,6 +45,8 @@ function ContactPage() {
     whatsappName: settings.whatsappName || ORG.whatsappName,
   } : ORG;
 
+  const heroImage = settings?.contactHeroImage ? imageUrl(settings.contactHeroImage) : IMG.heroEducation;
+
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
@@ -75,7 +78,7 @@ function ContactPage() {
         eyebrow="Contact"
         title={<>We'd <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">love to hear from you.</span></>}
         description="Partnerships, press, volunteering or just a hello — drop us a note."
-        image={IMG.heroEducation}
+        image={heroImage}
       />
 
       <section className="section-y">

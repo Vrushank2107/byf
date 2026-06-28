@@ -2,7 +2,9 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, Heart, HandHeart, Sparkles } from "lucide-react";
-import { IMG, ORG } from "@/lib/site-data";
+import { IMG, ORG, type Project } from "@/lib/site-data";
+import { api } from "@/lib/api";
+import { imageUrl } from "@/lib/image-url";
 
 const SLIDES = [
   {
@@ -30,13 +32,48 @@ const SLIDES = [
 
 export function Hero() {
   const [i, setI] = useState(0);
+  const [heroProjects, setHeroProjects] = useState<Project[]>([]);
+  const [siteSettings, setSiteSettings] = useState<any>(null);
 
   useEffect(() => {
-    const t = setInterval(() => setI((v) => (v + 1) % SLIDES.length), 6000);
-    return () => clearInterval(t);
+    api.getProjects()
+      .then((projects) => {
+        setHeroProjects(projects.filter((project) => project.showInHero));
+      })
+      .catch((error) => {
+        console.error("Failed to fetch hero projects:", error);
+      });
+
+    api.getSettings()
+      .then((settings) => {
+        setSiteSettings(settings);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch site settings:", error);
+      });
   }, []);
 
-  const slide = SLIDES[i];
+  const slides = heroProjects.length > 0
+    ? heroProjects.map((project) => ({
+        image: project.image,
+        eyebrow: project.category,
+        title: project.title,
+        titleAccent: "featured by BYF.",
+        desc: project.short,
+      }))
+    : SLIDES;
+
+  useEffect(() => {
+    const t = setInterval(() => setI((v) => (v + 1) % slides.length), 6000);
+    return () => clearInterval(t);
+  }, [slides.length]);
+
+  useEffect(() => {
+    setI((current) => Math.min(current, slides.length - 1));
+  }, [slides.length]);
+
+  const slide = slides[i] ?? slides[0];
+  const heroImage = siteSettings?.homeHeroImage ? imageUrl(siteSettings.homeHeroImage) : slide.image;
 
   return (
     <section className="relative isolate min-h-[100svh] overflow-hidden bg-foreground text-background">
@@ -50,7 +87,7 @@ export function Hero() {
           className="absolute inset-0"
         >
           <img
-            src={slide.image}
+            src={heroImage}
             alt=""
             className="h-full w-full object-cover"
             fetchPriority="high"
@@ -119,7 +156,7 @@ export function Hero() {
           </motion.div>
 
           <div className="mt-12 flex items-center gap-3">
-            {SLIDES.map((_, k) => (
+            {slides.map((_, k) => (
               <button
                 key={k}
                 aria-label={`Slide ${k + 1}`}
@@ -130,7 +167,7 @@ export function Hero() {
               />
             ))}
             <span className="ml-3 text-xs uppercase tracking-[0.2em] text-white/60">
-              {String(i + 1).padStart(2, "0")} / {String(SLIDES.length).padStart(2, "0")}
+              {String(i + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
             </span>
           </div>
         </div>

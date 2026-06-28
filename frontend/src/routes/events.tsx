@@ -1,9 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Calendar, MapPin } from "lucide-react";
 import { PageHero } from "@/components/ui/PageHero";
 import { EVENTS, IMG } from "@/lib/site-data";
+import { api } from "@/lib/api";
+import { imageUrl } from "@/lib/image-url";
 import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
 
 export const Route = createFileRoute("/events")({
@@ -23,7 +25,16 @@ export const Route = createFileRoute("/events")({
 
 function EventsPage() {
   const [tab, setTab] = useState<"upcoming" | "past">("upcoming");
+  const [siteSettings, setSiteSettings] = useState<any>(null);
+  useEffect(() => {
+    api.getSettings().then((data) => {
+      setSiteSettings(data);
+    }).catch((error) => {
+      console.error('Failed to fetch site settings:', error);
+    });
+  }, []);
   const list = EVENTS.filter((e) => (tab === "upcoming" ? e.upcoming : !e.upcoming));
+  const heroImage = siteSettings?.eventsHeroImage ? imageUrl(siteSettings.eventsHeroImage) : IMG.flag;
 
   const monthLabel = (iso: string) => {
     const d = new Date(iso);
@@ -36,7 +47,7 @@ function EventsPage() {
         eyebrow="Events"
         title={<>Show up. <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">Be the change.</span></>}
         description="From notebook drives to festival celebrations — every event is open to volunteers and donors."
-        image={IMG.flag}
+        image={heroImage}
       />
 
       <section className="section-y">

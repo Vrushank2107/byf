@@ -7,6 +7,7 @@ import { api } from "@/lib/api";
 import { useState, useEffect } from "react";
 import { Save, RotateCcw, Check } from "lucide-react";
 import { useConfirmDialog } from "@/hooks/use-confirm-dialog";
+import { ImageInput } from "@/components/admin/ImageInput";
 
 export const Route = createFileRoute("/admin/settings")({
   component: AdminSettings,
@@ -23,7 +24,7 @@ function AdminSettings() {
 
   useEffect(() => {
     if (settings) {
-      setDraft(settings);
+      setDraft({ ...DEFAULT_SETTINGS, ...settings });
     }
   }, [settings]);
 
@@ -118,6 +119,23 @@ function AdminSettings() {
                 <Input label="Facebook URL" value={draft.facebook} onChange={(v) => update("facebook", v)} />
                 <Input label="Twitter / X URL" value={draft.twitter} onChange={(v) => update("twitter", v)} />
                 <Input label="YouTube URL" value={draft.youtube} onChange={(v) => update("youtube", v)} />
+              </div>
+            </Section>
+
+            <Section title="Page Background Images">
+              <p className="mb-4 text-sm text-muted-foreground">
+                Choose hero background images for each public page. Leave blank to keep the existing default image.
+              </p>
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <ImageInput label="Home page hero" value={draft.homeHeroImage} onChange={(v) => update("homeHeroImage", v)} folder="site-settings" />
+                <ImageInput label="About page hero" value={draft.aboutHeroImage} onChange={(v) => update("aboutHeroImage", v)} folder="site-settings" />
+                <ImageInput label="Projects page hero" value={draft.projectsHeroImage} onChange={(v) => update("projectsHeroImage", v)} folder="site-settings" />
+                <ImageInput label="Events page hero" value={draft.eventsHeroImage} onChange={(v) => update("eventsHeroImage", v)} folder="site-settings" />
+                <ImageInput label="Gallery page hero" value={draft.galleryHeroImage} onChange={(v) => update("galleryHeroImage", v)} folder="site-settings" />
+                <ImageInput label="Blog page hero" value={draft.blogHeroImage} onChange={(v) => update("blogHeroImage", v)} folder="site-settings" />
+                <ImageInput label="Contact page hero" value={draft.contactHeroImage} onChange={(v) => update("contactHeroImage", v)} folder="site-settings" />
+                <ImageInput label="Volunteer page hero" value={draft.volunteerHeroImage} onChange={(v) => update("volunteerHeroImage", v)} folder="site-settings" />
+                <ImageInput label="Donate page hero" value={draft.donateHeroImage} onChange={(v) => update("donateHeroImage", v)} folder="site-settings" />
               </div>
             </Section>
 

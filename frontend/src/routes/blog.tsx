@@ -1,9 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Clock, ArrowUpRight } from "lucide-react";
 import { PageHero } from "@/components/ui/PageHero";
 import { BLOG, IMG } from "@/lib/site-data";
+import { api } from "@/lib/api";
+import { imageUrl } from "@/lib/image-url";
 import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
 
 const CATS = ["All", "Success Stories", "Activities", "Community Impact", "Volunteer Experiences"] as const;
@@ -26,9 +28,18 @@ export const Route = createFileRoute("/blog")({
 
 function BlogPage() {
   const [cat, setCat] = useState<(typeof CATS)[number]>("All");
+  const [settings, setSettings] = useState<any>(null);
+  useEffect(() => {
+    api.getSettings().then((data) => {
+      setSettings(data);
+    }).catch((error) => {
+      console.error('Failed to fetch site settings:', error);
+    });
+  }, []);
   const list = cat === "All" ? BLOG : BLOG.filter((b) => b.category === cat);
   const featured = list[0];
   const rest = list.slice(1);
+  const heroImage = settings?.blogHeroImage ? imageUrl(settings.blogHeroImage) : IMG.pSanitary;
 
   return (
     <>
@@ -36,7 +47,7 @@ function BlogPage() {
         eyebrow="Blog"
         title={<>Stories from <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">the ground.</span></>}
         description="The work, the wins, the failures and the people behind them — written by our team and volunteers."
-        image={IMG.pSanitary}
+        image={heroImage}
       />
 
       <section className="section-y">

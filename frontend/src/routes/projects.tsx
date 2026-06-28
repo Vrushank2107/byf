@@ -39,6 +39,7 @@ function ProjectsPage() {
   const [projects, setProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedProject, setSelectedProject] = useState<any | null>(null);
+  const [siteSettings, setSiteSettings] = useState<any>(null);
 
   useEffect(() => {
     api.getProjects().then((data) => {
@@ -48,9 +49,16 @@ function ProjectsPage() {
       console.error('Failed to fetch projects:', error);
       setLoading(false);
     });
+
+    api.getSettings().then((data) => {
+      setSiteSettings(data);
+    }).catch((error) => {
+      console.error('Failed to fetch site settings:', error);
+    });
   }, []);
 
   const visible = filter === "All" ? projects : projects.filter((p) => p.category === filter);
+  const heroImage = siteSettings?.projectsHeroImage ? imageUrl(siteSettings.projectsHeroImage) : IMG.pNotebooks;
 
   if (loading) {
     return (
@@ -59,7 +67,7 @@ function ProjectsPage() {
           eyebrow="Our Projects"
           title={<>Eight programs, <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">one mission.</span></>}
           description="Filter by category to explore each project's scale, impact and progress."
-          image={IMG.pNotebooks}
+          image={heroImage}
         />
         <section className="section-y">
           <div className="container-page">

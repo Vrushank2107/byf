@@ -111,6 +111,7 @@ export interface Project {
   image: string;
   stats: { value: string; label: string }[];
   progress: number;
+  showInHero?: boolean;
 }
 
 export const PROJECTS: Project[] = [

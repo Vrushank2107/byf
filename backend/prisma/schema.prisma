@@ -28,10 +28,12 @@ model Project {
   image     String
   stats     Json            @default("[]")
   progress  Int             @default(0) @db.SmallInt
+  showInHero Boolean        @default(false) @map("show_in_hero")
   createdAt DateTime        @default(now()) @map("created_at") @db.Timestamptz
   updatedAt DateTime        @default(now()) @map("updated_at") @db.Timestamptz
 
   @@index([category])
+  @@index([showInHero])
   @@map("projects")
 }
 
@@ -110,18 +112,27 @@ model Message {
 }
 
 model SiteSettings {
-  id                  String   @id @default(uuid()) @db.Uuid
-  email               String
-  phone               String
-  whatsapp            String
-  whatsappName        String   @map("whatsapp_name")
-  address             String
-  instagram           String
-  facebook            String
-  twitter             String
-  youtube             String
-  founderPortfolioUrl String   @default("") @map("founder_portfolio_url")
-  updatedAt           DateTime @default(now()) @map("updated_at") @db.Timestamptz
+  id                    String   @id @default(uuid()) @db.Uuid
+  email                 String
+  phone                 String
+  whatsapp              String
+  whatsappName          String   @map("whatsapp_name")
+  address               String
+  instagram             String
+  facebook              String
+  twitter               String
+  youtube               String
+  founderPortfolioUrl   String   @default("") @map("founder_portfolio_url")
+  homeHeroImage         String   @default("") @map("home_hero_image")
+  aboutHeroImage        String   @default("") @map("about_hero_image")
+  projectsHeroImage     String   @default("") @map("projects_hero_image")
+  eventsHeroImage       String   @default("") @map("events_hero_image")
+  galleryHeroImage      String   @default("") @map("gallery_hero_image")
+  blogHeroImage         String   @default("") @map("blog_hero_image")
+  contactHeroImage      String   @default("") @map("contact_hero_image")
+  volunteerHeroImage    String   @default("") @map("volunteer_hero_image")
+  donateHeroImage       String   @default("") @map("donate_hero_image")
+  updatedAt             DateTime @default(now()) @map("updated_at") @db.Timestamptz
 
   @@map("site_settings")
 }

@@ -113,6 +113,15 @@ export type SiteSettings = {
   twitter: string;
   youtube: string;
   founderPortfolioUrl: string;
+  homeHeroImage: string;
+  aboutHeroImage: string;
+  projectsHeroImage: string;
+  eventsHeroImage: string;
+  galleryHeroImage: string;
+  blogHeroImage: string;
+  contactHeroImage: string;
+  volunteerHeroImage: string;
+  donateHeroImage: string;
   updatedAt: string;
 };
 
@@ -128,6 +137,15 @@ export const DEFAULT_SETTINGS: SiteSettings = {
   twitter: ORG.social.twitter,
   youtube: ORG.social.youtube,
   founderPortfolioUrl: ORG.founderPortfolioUrl,
+  homeHeroImage: '',
+  aboutHeroImage: '',
+  projectsHeroImage: '',
+  eventsHeroImage: '',
+  galleryHeroImage: '',
+  blogHeroImage: '',
+  contactHeroImage: '',
+  volunteerHeroImage: '',
+  donateHeroImage: '',
   updatedAt: new Date().toISOString(),
 };
 

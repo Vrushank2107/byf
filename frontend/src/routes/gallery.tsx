@@ -29,6 +29,7 @@ function GalleryPage() {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
   const [gallery, setGallery] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [siteSettings, setSiteSettings] = useState<any>(null);
 
   useEffect(() => {
     api.getGallery().then((data) => {
@@ -38,9 +39,16 @@ function GalleryPage() {
       console.error('Failed to fetch gallery:', error);
       setLoading(false);
     });
+
+    api.getSettings().then((data) => {
+      setSiteSettings(data);
+    }).catch((error) => {
+      console.error('Failed to fetch site settings:', error);
+    });
   }, []);
 
   const filterTags = useMemo(() => getGalleryFilterTags(gallery), [gallery]);
+  const heroImage = siteSettings?.galleryHeroImage ? imageUrl(siteSettings.galleryHeroImage) : IMG.diwali3;
 
   const visible = useMemo(
     () => (tag === "All" ? [...gallery] : gallery.filter((g) => g.tag === tag)),
@@ -65,7 +73,7 @@ function GalleryPage() {
           eyebrow="Gallery"
           title={<>Moments from <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">the ground.</span></>}
           description="Real photos from our events. Tap any image for fullscreen."
-          image={IMG.diwali3}
+          image={heroImage}
         />
         <section className="section-y">
           <div className="container-page">

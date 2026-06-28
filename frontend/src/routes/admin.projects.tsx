@@ -6,7 +6,7 @@ import { type Project } from "@/lib/site-data";
 import { useProjectsStore } from "@/lib/admin-store";
 import { api } from "@/lib/api";
 import { useState, useEffect } from "react";
-import { Plus, Edit, Trash2 } from "lucide-react";
+import { Plus, Edit, Trash2, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { ImageInput } from "@/components/admin/ImageInput";
 import { useConfirmDialog } from "@/hooks/use-confirm-dialog";
@@ -27,6 +27,7 @@ function emptyProject(): Project {
     image: "",
     stats: [],
     progress: 0,
+    showInHero: false,
   };
 }
 
@@ -40,6 +41,7 @@ function toProjectPayload(project: Project) {
     image: project.image.trim(),
     stats: project.stats ?? [],
     progress: Number(project.progress),
+    showInHero: Boolean(project.showInHero),
   };
 }
 
@@ -195,6 +197,12 @@ function AdminProjects() {
                   <div className="min-w-0">
                     <h3 className="font-semibold text-lg">{project.title}</h3>
                     <p className="text-sm text-muted-foreground mb-2">{project.category}</p>
+                    {project.showInHero && (
+                      <span className="mb-2 inline-flex items-center gap-1 rounded-full bg-secondary/15 px-2.5 py-1 text-xs font-medium text-secondary">
+                        <Sparkles className="h-3 w-3" />
+                        Hero
+                      </span>
+                    )}
                     <p className="text-sm">{project.short}</p>
                     <div className="mt-2 flex items-center gap-2">
                       <div className="h-2 w-32 bg-muted rounded-full overflow-hidden">
@@ -326,6 +334,21 @@ function ProjectForm({
           onChange={(val) => setFormData({ ...formData, image: val })}
           folder="projects"
         />
+
+        <label className="flex items-start gap-3 rounded-lg border border-border bg-background p-4">
+          <input
+            type="checkbox"
+            checked={Boolean(formData.showInHero)}
+            onChange={(e) => setFormData({ ...formData, showInHero: e.target.checked })}
+            className="mt-1 h-4 w-4 rounded border-border text-primary focus:ring-primary/50"
+          />
+          <span>
+            <span className="block text-sm font-medium">Show in home and about hero</span>
+            <span className="mt-1 block text-xs text-muted-foreground">
+              Selected projects appear in the homepage hero slider. The about page uses the first selected project image.
+            </span>
+          </span>
+        </label>
 
         <div>
           <label className="block text-sm font-medium mb-2">Progress: {formData.progress}%</label>
