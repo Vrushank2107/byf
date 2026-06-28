@@ -4,8 +4,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { PageHero } from "@/components/ui/PageHero";
 import { Skeleton } from "@/components/ui/skeleton";
-import { GALLERY_TAGS, IMG } from "@/lib/site-data";
+import { getGalleryFilterTags, IMG } from "@/lib/site-data";
 import { api } from "@/lib/api";
+import { imageUrl } from "@/lib/image-url";
 import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
 
 export const Route = createFileRoute("/gallery")({
@@ -39,6 +40,8 @@ function GalleryPage() {
     });
   }, []);
 
+  const filterTags = useMemo(() => getGalleryFilterTags(gallery), [gallery]);
+
   const visible = useMemo(
     () => (tag === "All" ? [...gallery] : gallery.filter((g) => g.tag === tag)),
     [tag, gallery],
@@ -67,7 +70,7 @@ function GalleryPage() {
         <section className="section-y">
           <div className="container-page">
             <div className="flex flex-wrap justify-center gap-2 mb-10">
-              {GALLERY_TAGS.map((t) => (
+              {filterTags.map((t) => (
                 <Skeleton key={t} className="h-9 w-20 rounded-full" />
               ))}
             </div>
@@ -94,7 +97,7 @@ function GalleryPage() {
       <section className="section-y">
         <div className="container-page">
           <div className="flex flex-wrap justify-center gap-2">
-            {GALLERY_TAGS.map((t) => (
+            {filterTags.map((t) => (
               <button
                 key={t}
                 onClick={() => setTag(t)}
@@ -121,7 +124,7 @@ function GalleryPage() {
                 className="group mb-4 block w-full overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-glow"
               >
                 <div className="relative">
-                  <img src={g.src} alt={g.alt} loading="lazy" className="w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  <img src={imageUrl(g.src)} alt={g.alt} loading="lazy" className="w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                   <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-3 opacity-0 transition-opacity group-hover:opacity-100">
                     <span className="rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-primary">
                       {g.tag}
@@ -169,7 +172,7 @@ function GalleryPage() {
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              src={visible[openIdx].src}
+              src={imageUrl(visible[openIdx].src)}
               alt={visible[openIdx].alt}
               className="max-h-[88vh] max-w-[92vw] rounded-2xl object-contain shadow-glow"
               onClick={(e) => e.stopPropagation()}

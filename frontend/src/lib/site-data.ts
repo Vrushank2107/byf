@@ -263,6 +263,18 @@ export const GALLERY_TAGS = [
   "Flood Relief",
 ] as const;
 
+export const GALLERY_TAG_OPTIONS = GALLERY_TAGS.filter((tag) => tag !== "All");
+
+export const GALLERY_CUSTOM_TAG_OPTION = "Other";
+
+export function getGalleryFilterTags(items: { tag: string }[]): string[] {
+  const predefined = new Set<string>(GALLERY_TAG_OPTIONS);
+  const custom = [...new Set(items.map((item) => item.tag))]
+    .filter((tag) => !predefined.has(tag))
+    .sort((a, b) => a.localeCompare(b));
+  return ["All", ...GALLERY_TAG_OPTIONS, ...custom];
+}
+
 export const EVENTS = [
   {
     title: "Annual Notebook Distribution Drive",

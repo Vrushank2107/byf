@@ -2,7 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import { requireAdminAuth } from "@/lib/admin-auth";
 import { AdminLayout } from "@/components/layout/AdminLayout";
 import { Skeleton } from "@/components/ui/skeleton";
-import { GALLERY_TAGS } from "@/lib/site-data";
+import {
+  GALLERY_CUSTOM_TAG_OPTION,
+  GALLERY_TAG_OPTIONS,
+  getGalleryFilterTags,
+} from "@/lib/site-data";
 import { useGalleryStore, type GalleryItem } from "@/lib/admin-store";
 import { api } from "@/lib/api";
 import { useState } from "react";
@@ -22,6 +26,8 @@ function AdminGallery() {
   const [showAddForm, setShowAddForm] = useState(false);
   const [selectedTag, setSelectedTag] = useState<string>("All");
   const { confirm, dialog } = useConfirmDialog();
+
+  const filterTags = getGalleryFilterTags(gallery);
 
   const filteredGallery =
     selectedTag === "All" ? gallery : gallery.filter((item) => item.tag === selectedTag);
@@ -87,7 +93,7 @@ function AdminGallery() {
         )}
 
         <div className="flex flex-wrap gap-2">
-          {GALLERY_TAGS.map((tag) => (
+          {filterTags.map((tag) => (
             <button
               key={tag}
               onClick={() => setSelectedTag(tag)}
@@ -148,11 +154,15 @@ function AddPhotoForm({
   onCancel: () => void;
 }) {
   const [formData, setFormData] = useState<GalleryItem>({ src: "", tag: "Education", alt: "" });
+  const [selectedTag, setSelectedTag] = useState(GALLERY_TAG_OPTIONS[0]);
+  const [customTag, setCustomTag] = useState("");
+  const isCustomTag = selectedTag === GALLERY_CUSTOM_TAG_OPTION;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.src || !formData.alt) return;
-    onAdd(formData);
+    const tag = isCustomTag ? customTag.trim() : selectedTag;
+    if (!formData.src || !formData.alt || !tag) return;
+    onAdd({ ...formData, tag });
   };
 
   return (
@@ -166,17 +176,35 @@ function AddPhotoForm({
       <div>
         <label className="block text-sm font-medium mb-2">Tag</label>
         <select
-          value={formData.tag}
-          onChange={(e) => setFormData({ ...formData, tag: e.target.value })}
+          value={selectedTag}
+          onChange={(e) => setSelectedTag(e.target.value)}
           className="w-full px-3 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
         >
-          {GALLERY_TAGS.filter((t) => t !== "All").map((tag) => (
+          {GALLERY_TAG_OPTIONS.map((tag) => (
             <option key={tag} value={tag}>
               {tag}
             </option>
           ))}
+          <option value={GALLERY_CUSTOM_TAG_OPTION}>Other — write your own tag</option>
         </select>
+        <p className="mt-1 text-xs text-muted-foreground">
+          Pick a tag above, or choose &ldquo;Other&rdquo; to add a new one. It will appear on the gallery page.
+        </p>
       </div>
+
+      {isCustomTag && (
+        <div>
+          <label className="block text-sm font-medium mb-2">Custom tag</label>
+          <input
+            type="text"
+            value={customTag}
+            onChange={(e) => setCustomTag(e.target.value)}
+            placeholder="e.g. Sports Day, Tree Plantation"
+            className="w-full px-3 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
+            required
+          />
+        </div>
+      )}
 
       <div>
         <label className="block text-sm font-medium mb-2">Alt Text</label>

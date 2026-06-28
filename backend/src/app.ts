@@ -2,7 +2,6 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { secureHeaders } from 'hono/secure-headers'
 import { ZodError } from 'zod'
-import { rateLimit } from './middleware/rateLimit'
 import { prisma } from './lib/prisma'
 import { validateEnv } from './lib/env'
 import { getAllowedOrigins, resolveCorsOrigin } from './lib/cors'
@@ -34,11 +33,6 @@ app.use('*', cors({
   credentials: true,
   allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowHeaders: ['Content-Type', 'Authorization'],
-}))
-
-app.use('*', rateLimit({
-  windowMs: 15 * 60 * 1000,
-  maxRequests: 100,
 }))
 
 app.get('/', (c) => {
