@@ -38,7 +38,7 @@ export function VolunteerCTA() {
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
-            <div className="grid grid-cols-3 gap-3 md:grid-cols-1">
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
               {[
                 { v: "450+", l: "Active volunteers" },
                 { v: "12k+", l: "Volunteer hours / year" },
