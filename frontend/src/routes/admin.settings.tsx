@@ -130,9 +130,7 @@ function AdminSettings() {
                 <ImageInput label="Home page hero" value={draft.homeHeroImage} onChange={(v) => update("homeHeroImage", v)} folder="site-settings" />
                 <ImageInput label="About page hero" value={draft.aboutHeroImage} onChange={(v) => update("aboutHeroImage", v)} folder="site-settings" />
                 <ImageInput label="Projects page hero" value={draft.projectsHeroImage} onChange={(v) => update("projectsHeroImage", v)} folder="site-settings" />
-                <ImageInput label="Events page hero" value={draft.eventsHeroImage} onChange={(v) => update("eventsHeroImage", v)} folder="site-settings" />
                 <ImageInput label="Gallery page hero" value={draft.galleryHeroImage} onChange={(v) => update("galleryHeroImage", v)} folder="site-settings" />
-                <ImageInput label="Blog page hero" value={draft.blogHeroImage} onChange={(v) => update("blogHeroImage", v)} folder="site-settings" />
                 <ImageInput label="Contact page hero" value={draft.contactHeroImage} onChange={(v) => update("contactHeroImage", v)} folder="site-settings" />
                 <ImageInput label="Volunteer page hero" value={draft.volunteerHeroImage} onChange={(v) => update("volunteerHeroImage", v)} folder="site-settings" />
                 <ImageInput label="Donate page hero" value={draft.donateHeroImage} onChange={(v) => update("donateHeroImage", v)} folder="site-settings" />
