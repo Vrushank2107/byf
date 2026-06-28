@@ -6,6 +6,7 @@ import dotenv from 'dotenv'
 import { rateLimit } from './middleware/rateLimit'
 import { prisma } from './lib/prisma'
 import { validateEnv } from './lib/env'
+import { getAllowedOrigins, resolveCorsOrigin } from './lib/cors'
 import projects from './routes/projects'
 import gallery from './routes/gallery'
 import events from './routes/events'
@@ -25,15 +26,13 @@ import donations from './routes/donations'
 dotenv.config()
 validateEnv()
 
-const allowedOrigins = process.env.ALLOWED_ORIGINS
-  ? process.env.ALLOWED_ORIGINS.split(',').map((o) => o.trim())
-  : ['http://localhost:5173', 'http://localhost:8080']
+const allowedOrigins = getAllowedOrigins()
 
 const app = new Hono()
 
 app.use('*', secureHeaders())
 app.use('*', cors({
-  origin: allowedOrigins,
+  origin: (origin) => resolveCorsOrigin(origin, allowedOrigins),
   credentials: true,
   allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowHeaders: ['Content-Type', 'Authorization'],
