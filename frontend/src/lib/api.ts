@@ -1,4 +1,5 @@
 import { getAdminToken } from './admin-token'
+import { normalizeImageCollection, normalizeImageFields } from './image-url'
 
 const PRODUCTION_API_URL = 'https://byf-zqh6.onrender.com'
 const LOCAL_API_URL = 'http://localhost:3001'
@@ -59,57 +60,61 @@ async function request<T>(
 
 export const api = {
   // Projects
-  getProjects: () => request<any[]>('/api/projects'),
-  getProject: (slug: string) => request<any>(`/api/projects/${slug}`),
+  getProjects: () => request<any[]>('/api/projects').then((data) => normalizeImageCollection(data, ['image'])),
+  getProject: (slug: string) =>
+    request<any>(`/api/projects/${slug}`).then((data) => normalizeImageFields(data, ['image'])),
   createProject: (data: any) => request<any>('/api/projects', {
     method: 'POST',
     body: JSON.stringify(data),
-  }),
+  }).then((data) => normalizeImageFields(data, ['image'])),
   updateProject: (id: string, data: any) => request<any>(`/api/projects/${id}`, {
     method: 'PUT',
     body: JSON.stringify(data),
-  }),
+  }).then((data) => normalizeImageFields(data, ['image'])),
   deleteProject: (id: string) => request<{ success: boolean }>(`/api/projects/${id}`, {
     method: 'DELETE',
   }),
 
   // Gallery
-  getGallery: () => request<any[]>('/api/gallery'),
-  getGalleryByTag: (tag: string) => request<any[]>(`/api/gallery/tag/${tag}`),
+  getGallery: () => request<any[]>('/api/gallery').then((data) => normalizeImageCollection(data, ['src'])),
+  getGalleryByTag: (tag: string) =>
+    request<any[]>(`/api/gallery/tag/${tag}`).then((data) => normalizeImageCollection(data, ['src'])),
   createGalleryItem: (data: any) => request<any>('/api/gallery', {
     method: 'POST',
     body: JSON.stringify(data),
-  }),
+  }).then((data) => normalizeImageFields(data, ['src'])),
   deleteGalleryItem: (id: string) => request<{ success: boolean }>(`/api/gallery/${id}`, {
     method: 'DELETE',
   }),
 
   // Events
-  getEvents: () => request<any[]>('/api/events'),
-  getUpcomingEvents: () => request<any[]>('/api/events/upcoming'),
+  getEvents: () => request<any[]>('/api/events').then((data) => normalizeImageCollection(data, ['image'])),
+  getUpcomingEvents: () =>
+    request<any[]>('/api/events/upcoming').then((data) => normalizeImageCollection(data, ['image'])),
   createEvent: (data: any) => request<any>('/api/events', {
     method: 'POST',
     body: JSON.stringify(data),
-  }),
+  }).then((data) => normalizeImageFields(data, ['image'])),
   updateEvent: (id: string, data: any) => request<any>(`/api/events/${id}`, {
     method: 'PUT',
     body: JSON.stringify(data),
-  }),
+  }).then((data) => normalizeImageFields(data, ['image'])),
   deleteEvent: (id: string) => request<{ success: boolean }>(`/api/events/${id}`, {
     method: 'DELETE',
   }),
 
   // Blog
-  getBlogPosts: () => request<any[]>('/api/blog'),
-  getBlogPost: (slug: string) => request<any>(`/api/blog/${slug}`),
+  getBlogPosts: () => request<any[]>('/api/blog').then((data) => normalizeImageCollection(data, ['image'])),
+  getBlogPost: (slug: string) =>
+    request<any>(`/api/blog/${slug}`).then((data) => normalizeImageFields(data, ['image'])),
   createBlogPost: (data: any) => request<any>('/api/blog', {
     method: 'POST',
     body: JSON.stringify(data),
-  }),
+  }).then((data) => normalizeImageFields(data, ['image'])),
   updateBlogPost: (id: string, data: any) => request<any>(`/api/blog/${id}`, {
     method: 'PUT',
     body: JSON.stringify(data),
-  }),
+  }).then((data) => normalizeImageFields(data, ['image'])),
   deleteBlogPost: (id: string) => request<{ success: boolean }>(`/api/blog/${id}`, {
     method: 'DELETE',
   }),
@@ -182,6 +187,11 @@ export const api = {
       if (response.status === 401) {
         throw new Error('Please log in again to upload images.')
       }
+      if (response.status >= 500 && (!error.error || error.error === 'Failed to upload image')) {
+        throw new Error(
+          'Image upload failed on the backend. Check CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET in Render, then redeploy the backend.',
+        )
+      }
       throw new Error(error.error || error.message || 'Upload failed')
     }
 
@@ -189,29 +199,30 @@ export const api = {
   },
 
   // Activities
-  getActivities: () => request<any[]>('/api/activities'),
+  getActivities: () => request<any[]>('/api/activities').then((data) => normalizeImageCollection(data, ['image'])),
   createActivity: (data: any) => request<any>('/api/activities', {
     method: 'POST',
     body: JSON.stringify(data),
-  }),
+  }).then((data) => normalizeImageFields(data, ['image'])),
   updateActivity: (id: string, data: any) => request<any>(`/api/activities/${id}`, {
     method: 'PUT',
     body: JSON.stringify(data),
-  }),
+  }).then((data) => normalizeImageFields(data, ['image'])),
   deleteActivity: (id: string) => request<{ success: boolean }>(`/api/activities/${id}`, {
     method: 'DELETE',
   }),
 
   // Testimonials
-  getTestimonials: () => request<any[]>('/api/testimonials'),
+  getTestimonials: () =>
+    request<any[]>('/api/testimonials').then((data) => normalizeImageCollection(data, ['image'])),
   createTestimonial: (data: any) => request<any>('/api/testimonials', {
     method: 'POST',
     body: JSON.stringify(data),
-  }),
+  }).then((data) => normalizeImageFields(data, ['image'])),
   updateTestimonial: (id: string, data: any) => request<any>(`/api/testimonials/${id}`, {
     method: 'PUT',
     body: JSON.stringify(data),
-  }),
+  }).then((data) => normalizeImageFields(data, ['image'])),
   deleteTestimonial: (id: string) => request<{ success: boolean }>(`/api/testimonials/${id}`, {
     method: 'DELETE',
   }),

@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { Loader2, Upload, Link2 } from "lucide-react";
 import { toast } from "sonner";
 import { uploadImage } from "@/lib/admin-store";
+import { imageUrl } from "@/lib/image-url";
 
 interface Props {
   value: string;
@@ -90,7 +91,7 @@ export function ImageInput({ value, onChange, label = "Image", folder = "project
 
       {value && (
         <img
-          src={value}
+          src={imageUrl(value)}
           alt="preview"
           className="mt-3 h-24 w-24 rounded-lg object-cover border border-border"
         />
