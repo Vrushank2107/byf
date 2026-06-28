@@ -3,6 +3,7 @@ import { requireAdminAuth } from "@/lib/admin-auth";
 import { AdminLayout } from "@/components/layout/AdminLayout";
 import { Skeleton } from "@/components/ui/skeleton";
 import { type Project } from "@/lib/site-data";
+import { PROJECT_CATEGORY_OPTIONS, PROJECT_CUSTOM_CATEGORY_OPTION } from "@/lib/site-data";
 import { useProjectsStore } from "@/lib/admin-store";
 import { api } from "@/lib/api";
 import { useState, useEffect } from "react";
@@ -249,15 +250,22 @@ function ProjectForm({
   onCancel: () => void;
 }) {
   const [formData, setFormData] = useState<Project>(project ? { ...project, stats: project.stats ?? [] } : emptyProject());
+  const [selectedCategory, setSelectedCategory] = useState<string>(PROJECT_CATEGORY_OPTIONS[0]);
+  const [customCategory, setCustomCategory] = useState("");
+  const isCustomCategory = selectedCategory === PROJECT_CUSTOM_CATEGORY_OPTION;
 
   useEffect(() => {
     setFormData(project ? { ...project, stats: project.stats ?? [] } : emptyProject());
+    const isPresetCategory = project?.category && PROJECT_CATEGORY_OPTIONS.includes(project.category as (typeof PROJECT_CATEGORY_OPTIONS)[number]);
+    setSelectedCategory(isPresetCategory ? (project?.category as string) : PROJECT_CUSTOM_CATEGORY_OPTION);
+    setCustomCategory(project?.category && !isPresetCategory ? project.category : "");
   }, [project]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.slug || !formData.title || !formData.short) return;
-    onSave(formData);
+    const category = isCustomCategory ? customCategory.trim() : selectedCategory;
+    if (!formData.slug || !formData.title || !formData.short || !category) return;
+    onSave({ ...formData, category: category as Project["category"] });
   };
 
   return (
@@ -280,20 +288,36 @@ function ProjectForm({
           <div>
             <label className="block text-sm font-medium mb-2">Category</label>
             <select
-              value={formData.category}
-              onChange={(e) =>
-                setFormData({ ...formData, category: e.target.value as Project["category"] })
-              }
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
               className="w-full px-3 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
             >
-              <option value="Education">Education</option>
-              <option value="WomenEmpowerment">Women Empowerment</option>
-              <option value="CommunityWelfare">Community Welfare</option>
-              <option value="DisasterRelief">Disaster Relief</option>
-              <option value="CulturalActivities">Cultural Activities</option>
+              {PROJECT_CATEGORY_OPTIONS.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+              <option value={PROJECT_CUSTOM_CATEGORY_OPTION}>Other — write your own category</option>
             </select>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Pick a category above, or choose “Other” to add a new one.
+            </p>
           </div>
         </div>
+
+        {isCustomCategory && (
+          <div>
+            <label className="block text-sm font-medium mb-2">Custom category</label>
+            <input
+              type="text"
+              value={customCategory}
+              onChange={(e) => setCustomCategory(e.target.value)}
+              placeholder="e.g. Health & Nutrition, Rural Development"
+              className="w-full px-3 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
+              required
+            />
+          </div>
+        )}
 
         <div>
           <label className="block text-sm font-medium mb-2">Title</label>

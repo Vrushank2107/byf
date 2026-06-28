@@ -99,7 +99,18 @@ export type ProjectCategory =
   | "Women Empowerment"
   | "Community Welfare"
   | "Disaster Relief"
-  | "Cultural Activities";
+  | "Cultural Activities"
+  | (string & {});
+
+export const PROJECT_CATEGORY_OPTIONS = [
+  "Education",
+  "Women Empowerment",
+  "Community Welfare",
+  "Disaster Relief",
+  "Cultural Activities",
+] as const;
+
+export const PROJECT_CUSTOM_CATEGORY_OPTION = "Other";
 
 export interface Project {
   id?: string;

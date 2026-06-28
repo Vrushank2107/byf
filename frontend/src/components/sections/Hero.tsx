@@ -76,7 +76,7 @@ export function Hero() {
   const heroImage = siteSettings?.homeHeroImage ? imageUrl(siteSettings.homeHeroImage) : slide.image;
 
   return (
-    <section className="relative isolate min-h-[100svh] overflow-hidden bg-foreground text-background">
+    <section className="relative isolate min-h-[85vh] md:min-h-[100svh] overflow-hidden bg-foreground text-background">
       <AnimatePresence mode="sync">
         <motion.div
           key={i}
@@ -98,7 +98,7 @@ export function Hero() {
       <div className="absolute inset-0 bg-gradient-to-b from-foreground/85 via-foreground/55 to-foreground/90" />
       <div className="absolute inset-0 bg-gradient-to-r from-primary/40 via-transparent to-secondary/25 mix-blend-overlay" />
 
-      <div className="container-page relative flex min-h-[100svh] flex-col justify-end pb-16 pt-32 md:justify-center md:pb-24">
+      <div className="container-page relative flex min-h-[85vh] md:min-h-[100svh] flex-col justify-end pb-12 pt-20 md:justify-center md:pb-24 md:pt-32">
         <div className="max-w-3xl">
           <AnimatePresence mode="wait">
             <motion.div

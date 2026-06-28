@@ -4,18 +4,15 @@ import { motion } from "framer-motion";
 import { ArrowUpRight, X } from "lucide-react";
 import { PageHero } from "@/components/ui/PageHero";
 import { Skeleton } from "@/components/ui/skeleton";
-import { type ProjectCategory, IMG } from "@/lib/site-data";
+import { type ProjectCategory, IMG, PROJECT_CATEGORY_OPTIONS, PROJECT_CUSTOM_CATEGORY_OPTION } from "@/lib/site-data";
 import { api } from "@/lib/api";
 import { imageUrl } from "@/lib/image-url";
 import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
 
 const CATEGORIES: (ProjectCategory | "All")[] = [
   "All",
-  "Education",
-  "Women Empowerment",
-  "Community Welfare",
-  "Disaster Relief",
-  "Cultural Activities",
+  ...PROJECT_CATEGORY_OPTIONS,
+  PROJECT_CUSTOM_CATEGORY_OPTION,
 ];
 
 export const Route = createFileRoute("/projects")({
@@ -33,6 +30,25 @@ export const Route = createFileRoute("/projects")({
     }),
   component: ProjectsPage,
 });
+
+function normalizeProjectCategory(category: string | undefined): ProjectCategory | null {
+  if (!category) return null;
+
+  const normalized = category.trim();
+  const mapping: Record<string, ProjectCategory> = {
+    Education: "Education",
+    "Women Empowerment": "Women Empowerment",
+    "WomenEmpowerment": "Women Empowerment",
+    CommunityWelfare: "Community Welfare",
+    "Community Welfare": "Community Welfare",
+    DisasterRelief: "Disaster Relief",
+    "Disaster Relief": "Disaster Relief",
+    CulturalActivities: "Cultural Activities",
+    "Cultural Activities": "Cultural Activities",
+  };
+
+  return mapping[normalized] ?? null;
+}
 
 function ProjectsPage() {
   const [filter, setFilter] = useState<(ProjectCategory | "All")>("All");
@@ -57,7 +73,9 @@ function ProjectsPage() {
     });
   }, []);
 
-  const visible = filter === "All" ? projects : projects.filter((p) => p.category === filter);
+  const visible = filter === "All"
+    ? projects
+    : projects.filter((p) => normalizeProjectCategory(p.category) === filter || p.category === filter);
   const heroImage = siteSettings?.projectsHeroImage ? imageUrl(siteSettings.projectsHeroImage) : IMG.pNotebooks;
 
   if (loading) {

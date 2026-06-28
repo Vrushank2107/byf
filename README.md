@@ -1,57 +1,112 @@
 # BYF Impact Hub
 
-Baroda Youth Federation - A youth-led nonprofit in Vadodara working across education, women's health, disaster relief and rural welfare since 2014.
+BYF Impact Hub is the digital platform for Baroda Youth Federation, a youth-led nonprofit in Vadodara working in education, women’s empowerment, disaster relief, and rural welfare.
 
-## Project Structure
+The project is a full-stack monorepo with a public-facing website and a protected admin dashboard for managing content, media, donations, and site settings.
 
-This is a monorepo with separate frontend and backend applications:
+## Overview
 
-```
+This repository contains two separate applications:
+
+- Frontend: a React + TanStack Start site for the public experience and admin panel
+- Backend: a Hono + Prisma API that powers content management, authentication, uploads, and donation workflows
+
+## Repository Structure
+
+```text
 byf-impact-hub/
-├── frontend/          # React + TanStack Start application (deploy to Cloudflare/Lovable)
-│   ├── src/          # Frontend source code
-│   ├── public/       # Static assets
-│   └── package.json  # Frontend dependencies
-├── backend/          # Hono + Prisma API server (deploy separately)
-│   ├── src/          # Backend source code
-│   │   ├── routes/   # API endpoints
-│   │   └── lib/      # Utilities (Prisma client, Cloudinary)
-│   ├── prisma/       # Database schema and migrations
-│   ├── Dockerfile    # Container deployment
-│   └── package.json  # Backend dependencies
-└── package.json      # Root workspace configuration
+├── frontend/                # Public site + admin UI
+│   ├── src/                 # React/TanStack Start source
+│   ├── public/              # Static assets
+│   └── package.json         # Frontend dependencies and scripts
+├── backend/                 # API server and database layer
+│   ├── src/                 # Hono routes, middleware, and utilities
+│   ├── prisma/              # Prisma schema, migrations, and seed data
+│   ├── Dockerfile           # Container build for deployment
+│   └── package.json         # Backend dependencies and scripts
+└── package.json             # Root workspace scripts
 ```
 
-## Getting Started
+## Tech Stack
 
-### Prerequisites
+### Frontend
+- React 19
+- TanStack Start
+- TanStack Query
+- Tailwind CSS
+- shadcn/ui style components
+- Framer Motion
+- TypeScript
 
-- Node.js 20+
-- Neon database account (PostgreSQL)
-- Cloudinary account (for image storage)
-- Razorpay account (for donations, optional in dev)
+### Backend
+- Hono
+- Prisma ORM
+- PostgreSQL (Neon-compatible)
+- Cloudinary for image uploads
+- Razorpay for donation payments
+- Zod for validation
+- JWT-based admin authentication
 
-### Installation
+## Key Features
+
+- Public pages for projects, gallery, events, blog, volunteer, contact, and donations
+- Dynamic site settings for page hero images and site-wide content
+- Admin dashboard for managing projects, gallery, activities, testimonials, impact stats, leaders, partners, messages, volunteers, donations, and settings
+- Secure image upload workflow via Cloudinary
+- Donation flow with Razorpay integration
+- Admin authentication and protected routes
+
+## Prerequisites
+
+Before running the project locally, make sure you have:
+
+- Node.js 20 or newer
+- npm
+- A PostgreSQL database (for example, Neon)
+- A Cloudinary account for image uploads
+- A Razorpay account if you want to test donations end to end
+
+## Local Setup
+
+### 1. Install dependencies
 
 ```bash
 npm run install:all
 ```
 
-### Environment Setup
+### 2. Configure environment variables
 
-1. **Frontend** — copy and edit:
+Create environment files for both apps.
+
+Frontend environment variables:
+
 ```bash
-cp frontend/.env.example frontend/.env
+# frontend/.env
+VITE_API_URL=http://localhost:3001
+VITE_SITE_URL=http://localhost:5173
 ```
 
-2. **Backend** — copy and edit:
+Backend environment variables:
+
 ```bash
-cp backend/.env.example backend/.env
+# backend/.env
+DATABASE_URL=postgresql://... 
+JWT_SECRET=replace-with-a-long-random-string
+ADMIN_PASSWORD=replace-with-a-strong-password
+ALLOWED_ORIGINS=http://localhost:5173
+
+# Optional but recommended for full functionality
+CLOUDINARY_CLOUD_NAME=your-cloud-name
+CLOUDINARY_API_KEY=your-api-key
+CLOUDINARY_API_SECRET=your-api-secret
+RAZORPAY_KEY_ID=your-razorpay-key-id
+RAZORPAY_KEY_SECRET=your-razorpay-key-secret
+RAZORPAY_WEBHOOK_SECRET=your-webhook-secret
+REDIS_URL=redis://localhost:6379
+COOKIE_SAME_SITE=Lax
 ```
 
-Required backend variables in production: `DATABASE_URL`, `JWT_SECRET`, `ADMIN_PASSWORD`, `ALLOWED_ORIGINS`.
-
-### Database Setup
+### 3. Set up the database
 
 ```bash
 cd backend
@@ -59,113 +114,87 @@ npx prisma migrate dev
 npx prisma db seed
 ```
 
-### Development
+### 4. Run the apps
 
-Run both frontend and backend:
+From the repository root:
+
 ```bash
 npm run dev
 ```
 
-Or run individually:
+This starts:
+- Frontend at http://localhost:5173
+- Backend at http://localhost:3001
+
+You can also run them separately:
+
 ```bash
-npm run dev:frontend  # Frontend on http://localhost:5173
-npm run dev:backend   # Backend on http://localhost:3001
+npm run dev:frontend
+npm run dev:backend
 ```
 
-### Build
+## Build and Verification
+
+Build both apps:
 
 ```bash
 npm run build
 ```
 
-## Production Deployment
+Build the frontend only:
 
-The frontend and backend deploy as **two separate services**:
-
-| Service | Stack | Suggested hosting |
-|---------|-------|-------------------|
-| Frontend | TanStack Start + Nitro (Cloudflare) | Lovable / Cloudflare Pages |
-| Backend | Hono + Prisma | Railway, Render, Fly.io, or Docker |
-
-### Backend deployment
-
-1. Set all variables from `backend/.env.example` in your hosting provider.
-2. Run migrations before or on startup:
-   ```bash
-   npm run migrate:deploy
-   ```
-3. Start the server:
-   ```bash
-   npm run start:backend
-   ```
-
-Or use Docker:
 ```bash
-cd backend
-docker build -t byf-backend .
-docker run -p 3001:3001 --env-file .env byf-backend
+npm run build:frontend
 ```
 
-Health check endpoint: `GET /health` (includes database connectivity).
+Build the backend only:
 
-### Frontend deployment
+```bash
+npm run build:backend
+```
 
-Set these build-time environment variables:
+## Production Deployment
 
-| Variable | Example |
-|----------|---------|
-| `VITE_API_URL` | `https://api.yourdomain.com` |
-| `VITE_SITE_URL` | `https://yourdomain.com` |
-
-### Production checklist
-
-- [ ] Set strong `JWT_SECRET` and `ADMIN_PASSWORD`
-- [ ] Set `ALLOWED_ORIGINS` to your production frontend URL(s)
-- [ ] Set `VITE_API_URL` and `VITE_SITE_URL` for frontend build
-- [ ] Use live Razorpay keys and configure `RAZORPAY_WEBHOOK_SECRET`
-- [ ] Run `npm run migrate:deploy` against production database
-- [ ] Verify `GET /health` returns `{ status: "ok", db: "connected" }`
-
-## Tech Stack
+The frontend and backend are intended to run as separate services.
 
 ### Frontend
-- React 19
-- TanStack Start (routing)
-- TanStack Query (data fetching)
-- Tailwind CSS
-- shadcn/ui components
-- Framer Motion (animations)
+Recommended hosting: Cloudflare, Vercel, or another static hosting provider.
+
+Set these build-time values:
+
+- VITE_API_URL
+- VITE_SITE_URL
 
 ### Backend
-- Hono (web framework)
-- Neon (PostgreSQL database)
-- Prisma (ORM)
-- Cloudinary (image storage)
-- Razorpay (payments)
-- TypeScript
-- Zod (validation)
+Recommended hosting: Render, Railway, Fly.io, or Docker.
 
-## Features
+Before starting the backend in production:
 
-- **Projects Management** - CRUD for projects with categories
-- **Gallery** - Image management with tags (Cloudinary)
-- **Events** - Event scheduling and management
-- **Blog** - Blog post management
-- **Volunteer Forms** - Volunteer submission handling
-- **Contact Messages** - Contact form submissions
-- **Donations** - Razorpay payment integration with 80G receipts
-- **Admin Panel** - JWT-protected admin dashboard
-- **Site Settings** - Dynamic configuration
-- **Image Upload** - Direct Cloudinary integration
+```bash
+cd backend
+npx prisma migrate deploy
+```
+
+Then start it with:
+
+```bash
+npm run start:backend
+```
+
+A health check endpoint is available at /health.
 
 ## Admin Access
 
-Admin login requires the `ADMIN_PASSWORD` set in `backend/.env`. See [AUTHENTICATION_SETUP.md](./AUTHENTICATION_SETUP.md) for details.
+The admin panel is protected with JWT-based authentication. The backend reads the admin password from the ADMIN_PASSWORD environment variable.
 
-## Security
+After starting the backend, sign in using the admin credentials configured in your environment.
 
-See [SECURITY.md](./SECURITY.md) for credential rotation, cookie auth setup, and Redis rate limiting.
+## Notes
+
+- The backend validates required production environment variables before startup.
+- CORS is controlled through ALLOWED_ORIGINS and FRONTEND_URL settings.
+- Cloudinary uploads and Razorpay payments require their respective credentials to be configured.
 
 ## License
 
-© 2025 Baroda Youth Federation. All rights reserved.
+© 2026 Baroda Youth Federation. All rights reserved.
