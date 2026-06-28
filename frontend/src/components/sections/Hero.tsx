@@ -98,7 +98,7 @@ export function Hero() {
       <div className="absolute inset-0 bg-gradient-to-b from-foreground/85 via-foreground/55 to-foreground/90" />
       <div className="absolute inset-0 bg-gradient-to-r from-primary/40 via-transparent to-secondary/25 mix-blend-overlay" />
 
-      <div className="container-page relative flex min-h-[85vh] md:min-h-[100svh] flex-col justify-end pb-12 pt-20 md:justify-center md:pb-24 md:pt-32">
+      <div className="container-page relative flex min-h-[70vh] md:min-h-[100svh] flex-col justify-center pb-8 pt-12 md:justify-end md:pb-24 md:pt-32">
         <div className="max-w-3xl">
           <AnimatePresence mode="wait">
             <motion.div
