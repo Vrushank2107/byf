@@ -2,7 +2,6 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { secureHeaders } from 'hono/secure-headers'
 import { ZodError } from 'zod'
-import dotenv from 'dotenv'
 import { rateLimit } from './middleware/rateLimit'
 import { prisma } from './lib/prisma'
 import { validateEnv } from './lib/env'
@@ -23,7 +22,6 @@ import leaders from './routes/leaders'
 import partners from './routes/partners'
 import donations from './routes/donations'
 
-dotenv.config()
 validateEnv()
 
 const allowedOrigins = getAllowedOrigins()

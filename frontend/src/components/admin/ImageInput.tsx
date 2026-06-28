@@ -30,8 +30,9 @@ export function ImageInput({ value, onChange, label = "Image", folder = "project
       const url = await uploadImage(file, folder);
       onChange(url);
       toast.success("Image uploaded");
-    } catch {
-      toast.error("Failed to upload image. Please try again.");
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Failed to upload image";
+      toast.error(message, { duration: 8000 });
     } finally {
       setUploading(false);
       e.target.value = "";

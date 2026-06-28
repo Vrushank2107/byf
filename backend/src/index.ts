@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import { fileURLToPath } from 'node:url'
 import { serve } from '@hono/node-server'
 import app from './app'

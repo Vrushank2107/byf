@@ -16,4 +16,8 @@ export function validateEnv(): void {
   if (!process.env.ALLOWED_ORIGINS) {
     console.warn('WARNING: ALLOWED_ORIGINS is not set — CORS will only allow localhost origins')
   }
+
+  if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
+    console.warn('WARNING: Cloudinary is not configured — admin image uploads will fail until CLOUDINARY_* env vars are set')
+  }
 }

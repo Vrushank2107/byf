@@ -175,7 +175,14 @@ export const api = {
     })
 
     if (!response.ok) {
-      throw new Error('Upload failed')
+      const error = await response.clone().json().catch(async () => {
+        const message = await response.text().catch(() => '')
+        return { message }
+      })
+      if (response.status === 401) {
+        throw new Error('Please log in again to upload images.')
+      }
+      throw new Error(error.error || error.message || 'Upload failed')
     }
 
     return response.json()
