@@ -1,3 +1,5 @@
+import { getAdminToken } from './admin-token'
+
 const PRODUCTION_API_URL = 'https://byf-zqh6.onrender.com'
 const LOCAL_API_URL = 'http://localhost:3001'
 
@@ -28,6 +30,11 @@ async function request<T>(
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
     ...(options.headers as Record<string, string> || {}),
+  }
+
+  const token = getAdminToken()
+  if (token) {
+    headers.Authorization = `Bearer ${token}`
   }
 
   const response = await fetch(url, {
@@ -135,7 +142,7 @@ export const api = {
   }),
 
   // Auth
-  login: (password: string) => request<{ success: boolean }>('/api/auth/login', {
+  login: (password: string) => request<{ success: boolean; token?: string }>('/api/auth/login', {
     method: 'POST',
     body: JSON.stringify({ password }),
   }),
@@ -150,9 +157,14 @@ export const api = {
     formData.append('file', file)
     if (folder) formData.append('folder', folder)
 
+    const uploadHeaders: Record<string, string> = {}
+    const token = getAdminToken()
+    if (token) uploadHeaders.Authorization = `Bearer ${token}`
+
     const response = await fetch(`${getApiUrl()}/api/upload`, {
       method: 'POST',
       credentials: 'include',
+      headers: uploadHeaders,
       body: formData,
     })
 

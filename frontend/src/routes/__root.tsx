@@ -96,7 +96,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "canonical", href: absoluteUrl("/") },
     ],
     scripts: [
-      { src: "https://checkout.razorpay.com/v1/checkout.js", async: true },
       { type: "application/ld+json", children: JSON.stringify(organizationJsonLd()) },
       { type: "application/ld+json", children: JSON.stringify(websiteJsonLd()) },
     ],

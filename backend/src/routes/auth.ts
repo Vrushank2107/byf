@@ -28,7 +28,7 @@ app.post('/login', rateLimit({ windowMs: 15 * 60 * 1000, maxRequests: 5, keyPref
   const token = generateToken({ isAdmin: true })
   setCookie(c, AUTH_COOKIE, token, getCookieOptions())
 
-  return c.json({ success: true })
+  return c.json({ success: true, token })
 })
 
 app.get('/session', async (c) => {

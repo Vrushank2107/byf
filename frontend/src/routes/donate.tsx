@@ -9,8 +9,8 @@ import { api } from "@/lib/api";
 import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
 
 export const Route = createFileRoute("/donate")({
-  head: () =>
-    createPageSeo({
+  head: () => {
+    const seo = createPageSeo({
       title: "Donate to BYF — Every rupee changes a life in Vadodara",
       description:
         "Donate to Baroda Youth Federation's education, women's empowerment, relief and general funds. 80G tax-deductible.",
@@ -20,7 +20,16 @@ export const Route = createFileRoute("/donate")({
         { name: "Home", path: "/" },
         { name: "Donate", path: "/donate" },
       ]),
-    }),
+    });
+
+    return {
+      ...seo,
+      scripts: [
+        ...(seo.scripts ?? []),
+        { src: "https://checkout.razorpay.com/v1/checkout.js", async: true },
+      ],
+    };
+  },
   component: DonatePage,
 });
 
