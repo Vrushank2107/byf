@@ -132,7 +132,7 @@ function DonatePage() {
       <PageHero
         eyebrow="Donate"
         title={<>₹500 feeds a family for a week. <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">Your turn.</span></>}
-        description="100% of donations go directly to programs. Operations are funded separately. 80G-eligible receipts issued instantly."
+        description="100% of donations go directly to programs. Operations are funded separately."
         image={heroImage}
       />
 
@@ -221,7 +221,7 @@ function DonatePage() {
 
               <div className="mt-6 grid grid-cols-3 gap-3 text-xs text-muted-foreground">
                 <div className="flex items-center gap-2"><Shield className="h-4 w-4 text-accent" /> Secure</div>
-                <div className="flex items-center gap-2"><FileCheck className="h-4 w-4 text-accent" /> 80G receipt</div>
+                <div className="flex items-center gap-2"><FileCheck className="h-4 w-4 text-accent" /> Receipt on request</div>
                 <div className="flex items-center gap-2"><Sparkles className="h-4 w-4 text-accent" /> 100% to program</div>
               </div>
             </div>
@@ -259,7 +259,7 @@ function DonatePage() {
           >
             <div className="shrink-0 border-b border-border px-5 py-5 sm:px-8 sm:py-6">
               <h3 className="font-display text-xl font-bold text-foreground sm:text-2xl">Donor Information</h3>
-              <p className="mt-1 text-sm text-muted-foreground sm:mt-2">Required for 80G tax receipt</p>
+              <p className="mt-1 text-sm text-muted-foreground sm:mt-2">We’ll use these details to process your donation</p>
             </div>
 
             <div className="min-h-0 flex-1 space-y-4 overflow-y-auto px-5 py-5 sm:px-8 sm:py-6">
@@ -304,7 +304,7 @@ function DonatePage() {
                 />
               </div>
               <div>
-                <label className="text-sm font-semibold text-foreground">PAN Number (for 80G)</label>
+                <label className="text-sm font-semibold text-foreground">PAN Number</label>
                 <input
                   type="text"
                   value={donorInfo.pan}
@@ -400,8 +400,8 @@ function DonatePage() {
             </div>
 
             <div className="mt-6 rounded-xl bg-primary/10 p-4 text-center">
-              <p className="text-xs font-semibold text-primary">80G Tax Exempt Receipt</p>
-              <p className="mt-1 text-xs text-muted-foreground">This receipt is valid for tax deduction under Section 80G of the Income Tax Act.</p>
+              <p className="text-xs font-semibold text-primary">Donation Receipt</p>
+              <p className="mt-1 text-xs text-muted-foreground">A confirmation receipt will be shared with you after the transaction.</p>
             </div>
 
             <button

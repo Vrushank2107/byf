@@ -170,7 +170,7 @@ export function Footer() {
       <div className="border-t border-white/10">
         <div className="container-page flex flex-col items-center justify-between gap-3 py-6 text-xs text-background/60 sm:flex-row">
           <p>© {new Date().getFullYear()} {org.name}. All rights reserved.</p>
-          <p>Made with <span className="text-secondary">♥</span> in Vadodara · 80G &amp; 12A registered</p>
+          <p>Made with <span className="text-secondary">♥</span> in Vadodara</p>
         </div>
       </div>
     </footer>
