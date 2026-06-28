@@ -5,6 +5,15 @@ import { authMiddleware } from '../middleware/auth'
 
 const app = new Hono()
 
+const donationFundSchema = z.object({
+  slug: z.string(),
+  title: z.string(),
+  desc: z.string(),
+  raised: z.number(),
+  goal: z.number(),
+  accent: z.enum(["primary", "secondary", "accent"]),
+})
+
 const settingsSchema = z.object({
   email: z.string(),
   phone: z.string(),
@@ -25,6 +34,7 @@ const settingsSchema = z.object({
   contactHeroImage: z.string().optional(),
   volunteerHeroImage: z.string().optional(),
   donateHeroImage: z.string().optional(),
+  donationFunds: z.array(donationFundSchema).optional().default([]),
 })
 
 // GET site settings
@@ -39,7 +49,7 @@ app.get('/', async (c) => {
 // PUT update site settings (admin only)
 app.put('/', authMiddleware, async (c) => {
   const body = await c.req.json()
-  const validated = settingsSchema.parse(body)
+  const validated = settingsSchema.strict().parse(body)
 
   const settings = await prisma.siteSettings.findFirst()
   

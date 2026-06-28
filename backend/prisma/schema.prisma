@@ -132,6 +132,7 @@ model SiteSettings {
   contactHeroImage      String   @default("") @map("contact_hero_image")
   volunteerHeroImage    String   @default("") @map("volunteer_hero_image")
   donateHeroImage       String   @default("") @map("donate_hero_image")
+  donationFunds         Json     @default("[]")
   updatedAt             DateTime @default(now()) @map("updated_at") @db.Timestamptz
 
   @@map("site_settings")

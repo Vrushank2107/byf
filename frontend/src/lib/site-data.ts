@@ -400,7 +400,16 @@ export const PARTNERS = [
   "HDFC Parivartan", "Infosys Foundation", "Axis Bank Foundation", "ICICI Foundation",
 ];
 
-export const DONATION_FUNDS = [
+export type DonationFund = {
+  slug: string;
+  title: string;
+  desc: string;
+  raised: number;
+  goal: number;
+  accent: "primary" | "secondary" | "accent";
+};
+
+export const DONATION_FUNDS: DonationFund[] = [
   {
     slug: "education-fund",
     title: "Education Fund",

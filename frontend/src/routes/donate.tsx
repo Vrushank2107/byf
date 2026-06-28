@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Heart, Shield, FileCheck, Sparkles, Loader2 } from "lucide-react";
 import { PageHero } from "@/components/ui/PageHero";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { DONATION_FUNDS, IMG } from "@/lib/site-data";
+import { DONATION_FUNDS, IMG, type DonationFund } from "@/lib/site-data";
 import { api } from "@/lib/api";
 import { imageUrl } from "@/lib/image-url";
 import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
@@ -44,7 +44,7 @@ function DonatePage() {
   const [loading, setLoading] = useState(false);
   const [showReceipt, setShowReceipt] = useState(false);
   const [receiptData, setReceiptData] = useState<any>(null);
-  const [settings, setSettings] = useState<any>(null);
+  const [settings, setSettings] = useState<{ donationFunds?: DonationFund[]; donateHeroImage?: string } | null>(null);
   const [donorInfo, setDonorInfo] = useState({
     name: '',
     email: '',
@@ -62,7 +62,14 @@ function DonatePage() {
     });
   }, []);
 
-  const active = DONATION_FUNDS.find((f) => f.slug === fund)!;
+  const funds = settings?.donationFunds?.length ? settings.donationFunds : DONATION_FUNDS;
+  const active = funds.find((f) => f.slug === fund) ?? funds[0];
+
+  useEffect(() => {
+    if (settings?.donationFunds?.length && !settings.donationFunds.some((f) => f.slug === fund)) {
+      setFund(settings.donationFunds[0].slug);
+    }
+  }, [settings, fund]);
   const heroImage = settings?.donateHeroImage ? imageUrl(settings.donateHeroImage) : IMG.heroBlankets;
 
   const handleDonate = async () => {
@@ -140,7 +147,7 @@ function DonatePage() {
         <div className="container-page">
           <SectionHeader eyebrow="Where your money goes" title={<>Choose a <span className="gradient-text">fund.</span></>} />
           <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {DONATION_FUNDS.map((f, idx) => {
+            {funds.map((f, idx) => {
               const pct = Math.min(100, Math.round((f.raised / f.goal) * 100));
               const accentCls = f.accent === "secondary"
                 ? "from-secondary to-secondary/70"

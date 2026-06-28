@@ -2,7 +2,7 @@
 // Uses the REST API for all CRUD operations.
 
 import { useEffect, useState } from "react";
-import { PROJECTS, GALLERY, EVENTS, BLOG, ORG, type Project } from "./site-data";
+import { PROJECTS, GALLERY, EVENTS, BLOG, ORG, DONATION_FUNDS, type DonationFund, type Project } from "./site-data";
 import { api } from "./api";
 
 export type GalleryItem = { id?: string; src: string; tag: string; alt: string };
@@ -122,6 +122,7 @@ export type SiteSettings = {
   contactHeroImage: string;
   volunteerHeroImage: string;
   donateHeroImage: string;
+  donationFunds: DonationFund[];
   updatedAt: string;
 };
 
@@ -146,6 +147,7 @@ export const DEFAULT_SETTINGS: SiteSettings = {
   contactHeroImage: '',
   volunteerHeroImage: '',
   donateHeroImage: '',
+  donationFunds: DONATION_FUNDS,
   updatedAt: new Date().toISOString(),
 };
 

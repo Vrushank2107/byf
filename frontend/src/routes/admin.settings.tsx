@@ -3,6 +3,7 @@ import { requireAdminAuth } from "@/lib/admin-auth";
 import { AdminLayout } from "@/components/layout/AdminLayout";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSettingsStore, DEFAULT_SETTINGS, type SiteSettings } from "@/lib/admin-store";
+import { type DonationFund } from "@/lib/site-data";
 import { api } from "@/lib/api";
 import { useState, useEffect } from "react";
 import { Save, RotateCcw, Check } from "lucide-react";
@@ -22,19 +23,28 @@ function AdminSettings() {
   const [saving, setSaving] = useState(false);
   const { confirm, dialog } = useConfirmDialog();
 
+  type EditableSettingKey = Exclude<keyof SiteSettings, "id" | "donationFunds" | "updatedAt">;
+
   useEffect(() => {
     if (settings) {
       setDraft({ ...DEFAULT_SETTINGS, ...settings });
     }
   }, [settings]);
 
-  const update = (k: keyof SiteSettings, v: string) => setDraft({ ...draft, [k]: v });
+  const update = (k: EditableSettingKey, v: string) => setDraft({ ...draft, [k]: v } as SiteSettings);
+  const updateFund = (index: number, key: keyof DonationFund, value: string | number) => {
+    const updatedFunds = draft.donationFunds.map((fund, idx) =>
+      idx === index ? { ...fund, [key]: value } : fund
+    );
+    setDraft({ ...draft, donationFunds: updatedFunds });
+  };
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
     try {
-      await api.updateSettings(draft);
+      const { id, updatedAt, ...payload } = draft;
+      await api.updateSettings(payload);
       setSaved(true);
       refresh();
       setTimeout(() => setSaved(false), 2500);
@@ -122,6 +132,55 @@ function AdminSettings() {
               </div>
             </Section>
 
+            <Section title="Donation Funds">
+              <p className="mb-4 text-sm text-muted-foreground">
+                Edit the donation cards shown on the public donate page.
+              </p>
+              <div className="space-y-6">
+                {draft.donationFunds.map((fund, index) => (
+                  <div key={fund.slug} className="rounded-3xl border border-border bg-background p-5">
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                      <h3 className="font-display text-base font-semibold text-foreground">{fund.title}</h3>
+                      <span className="rounded-full bg-muted px-3 py-1 text-xs uppercase tracking-[0.18em] text-muted-foreground">
+                        {fund.slug}
+                      </span>
+                    </div>
+                    <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
+                      <Input
+                        label="Fund title"
+                        value={fund.title}
+                        onChange={(v) => updateFund(index, "title", v)}
+                      />
+                      <Input
+                        label="Accent"
+                        value={fund.accent}
+                        onChange={(v) => updateFund(index, "accent", v)}
+                        placeholder="primary, secondary, accent"
+                      />
+                      <Input
+                        label="Raised amount"
+                        type="number"
+                        value={String(fund.raised)}
+                        onChange={(v) => updateFund(index, "raised", Number(v))}
+                      />
+                      <Input
+                        label="Goal amount"
+                        type="number"
+                        value={String(fund.goal)}
+                        onChange={(v) => updateFund(index, "goal", Number(v))}
+                      />
+                      <div className="md:col-span-2">
+                        <Input
+                          label="Description"
+                          value={fund.desc}
+                          onChange={(v) => updateFund(index, "desc", v)}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Section>
             <Section title="Page Background Images">
               <p className="mb-4 text-sm text-muted-foreground">
                 Choose hero background images for each public page. Leave blank to keep the existing default image.
