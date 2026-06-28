@@ -80,48 +80,14 @@ function ContactPage() {
 
       <section className="section-y">
         <div className="container-page grid gap-10 lg:grid-cols-[1.1fr_1.4fr]">
-          <div className="space-y-5">
-            <ContactCard icon={MapPin} title="Visit us" body={org.address} accent="primary" />
-            <ContactCard icon={Mail} title="Email" body={<a className="hover:text-primary" href={`mailto:${org.email}`}>{org.email}</a>} accent="secondary" />
-            <ContactCard icon={Phone} title="Call" body={<a className="hover:text-primary" href={`tel:${org.phone.replace(/\s/g, "")}`}>{org.phone}</a>} accent="accent" />
-            <ContactCard
-              icon={MessageCircle}
-              title="WhatsApp"
-              body={
-                <div className="space-y-2">
-                  <p className="text-sm text-muted-foreground">{org.whatsappName} · {org.phone}</p>
-                  <a
-                    className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-4 py-2 text-sm font-semibold text-white"
-                    target="_blank"
-                    rel="noreferrer"
-                    href={`https://wa.me/${org.whatsapp}?text=${encodeURIComponent("Hi BYF, I'd like to know more.")}`}
-                  >
-                    Chat on WhatsApp
-                  </a>
-                </div>
-              }
-              accent="accent"
-            />
-
-            <div className="overflow-hidden rounded-3xl border border-border bg-card shadow-soft">
-              <iframe
-                title="BYF Office Location"
-                src="https://www.google.com/maps?q=Vadodara,Gujarat,India&output=embed"
-                className="h-72 w-full"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-            </div>
-          </div>
-
           <form
             onSubmit={onSubmit}
-            className="self-start rounded-3xl border border-border bg-card p-6 shadow-soft md:p-10"
+            className="order-1 self-start rounded-3xl border border-border bg-card p-5 shadow-soft sm:p-6 md:p-10 lg:order-2"
           >
-            <h2 className="font-display text-2xl font-bold text-foreground">Send a message</h2>
+            <h2 className="font-display text-xl font-bold text-foreground sm:text-2xl">Send a message</h2>
             <p className="mt-2 text-sm text-muted-foreground">We reply within one working day.</p>
 
-            <div className="mt-7 grid gap-4 sm:grid-cols-2">
+            <div className="mt-7 grid gap-4 md:grid-cols-2">
               <Field label="Name" name="name" required />
               <Field label="Email" name="email" type="email" required />
               <Field label="Phone" name="phone" type="tel" />
@@ -140,7 +106,7 @@ function ContactPage() {
             <button
               type="submit"
               disabled={loading}
-              className="mt-6 inline-flex items-center gap-2 rounded-full gradient-warm px-7 py-3.5 font-display text-sm font-semibold text-white shadow-warm transition-transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full gradient-warm px-7 py-3.5 font-display text-sm font-semibold text-white shadow-warm transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
             >
               {loading ? "Sending..." : "Send Message"} <Send className="h-4 w-4" />
             </button>
@@ -151,11 +117,45 @@ function ContactPage() {
                 animate={{ opacity: 1, y: 0 }}
                 className="mt-5 flex items-center gap-2 rounded-xl bg-accent/15 px-4 py-3 text-sm font-medium text-accent-foreground"
               >
-                <CheckCircle2 className="h-5 w-5 text-accent" />
+                <CheckCircle2 className="h-5 w-5 shrink-0 text-accent" />
                 Thanks! Your message is on its way. We'll be in touch soon.
               </motion.div>
             )}
           </form>
+
+          <div className="order-2 space-y-5 lg:order-1">
+            <ContactCard icon={MapPin} title="Visit us" body={org.address} accent="primary" />
+            <ContactCard icon={Mail} title="Email" body={<a className="break-all hover:text-primary" href={`mailto:${org.email}`}>{org.email}</a>} accent="secondary" />
+            <ContactCard icon={Phone} title="Call" body={<a className="hover:text-primary" href={`tel:${org.phone.replace(/\s/g, "")}`}>{org.phone}</a>} accent="accent" />
+            <ContactCard
+              icon={MessageCircle}
+              title="WhatsApp"
+              body={
+                <div className="space-y-2">
+                  <p className="text-sm text-muted-foreground">{org.whatsappName} · {org.phone}</p>
+                  <a
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-4 py-2.5 text-sm font-semibold text-white sm:w-auto"
+                    target="_blank"
+                    rel="noreferrer"
+                    href={`https://wa.me/${org.whatsapp}?text=${encodeURIComponent("Hi BYF, I'd like to know more.")}`}
+                  >
+                    Chat on WhatsApp
+                  </a>
+                </div>
+              }
+              accent="accent"
+            />
+
+            <div className="overflow-hidden rounded-3xl border border-border bg-card shadow-soft">
+              <iframe
+                title="BYF Office Location"
+                src="https://www.google.com/maps?q=Vadodara,Gujarat,India&output=embed"
+                className="h-56 w-full sm:h-72"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
+          </div>
         </div>
       </section>
     </>
@@ -167,13 +167,13 @@ function ContactCard({
 }: { icon: React.ComponentType<{ className?: string }>; title: string; body: React.ReactNode; accent: "primary" | "secondary" | "accent" }) {
   const cls = accent === "secondary" ? "bg-secondary text-white" : accent === "accent" ? "bg-accent text-accent-foreground" : "bg-primary text-primary-foreground";
   return (
-    <div className="flex items-start gap-4 rounded-3xl border border-border bg-card p-6 shadow-soft">
+    <div className="flex items-start gap-4 rounded-3xl border border-border bg-card p-5 shadow-soft sm:p-6">
       <div className={`grid h-12 w-12 shrink-0 place-items-center rounded-2xl ${cls}`}>
         <Icon className="h-5 w-5" />
       </div>
-      <div className="min-w-0">
+      <div className="min-w-0 flex-1">
         <p className="font-display text-sm font-semibold uppercase tracking-wider text-muted-foreground">{title}</p>
-        <div className="mt-1 text-base text-foreground">{body}</div>
+        <div className="mt-1 break-words text-base text-foreground">{body}</div>
       </div>
     </div>
   );

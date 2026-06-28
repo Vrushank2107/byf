@@ -77,9 +77,9 @@ function AdminLeaders() {
     <AdminLayout>
       {dialog}
       <div className="space-y-6">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h1 className="font-display text-3xl font-bold mb-2">Leadership</h1>
+            <h1 className="font-display text-2xl sm:text-3xl font-bold mb-2">Leadership</h1>
             <p className="text-muted-foreground">Manage leadership team</p>
           </div>
           <button

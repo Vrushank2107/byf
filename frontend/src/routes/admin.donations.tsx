@@ -51,7 +51,7 @@ function AdminDonations() {
     <AdminLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="font-display text-3xl font-bold mb-2">Donations</h1>
+          <h1 className="font-display text-2xl sm:text-3xl font-bold mb-2">Donations</h1>
           <p className="text-muted-foreground">Manage donation records</p>
         </div>
 

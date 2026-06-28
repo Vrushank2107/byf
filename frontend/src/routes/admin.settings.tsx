@@ -63,7 +63,7 @@ function AdminSettings() {
         <div>
           <h1 className="font-display text-3xl font-bold mb-2">Site Settings</h1>
           <p className="text-muted-foreground">
-            Update contact details, social links, and the founder portfolio link.
+            Update contact details and social links.
           </p>
         </div>
 
@@ -87,11 +87,6 @@ function AdminSettings() {
                 <Skeleton className="h-12 w-full" />
                 <Skeleton className="h-12 w-full" />
               </div>
-            </div>
-            <div className="bg-card border border-border rounded-xl p-6">
-              <Skeleton className="h-6 w-32 mb-4" />
-              <Skeleton className="h-12 w-full" />
-              <Skeleton className="h-4 w-64 mt-2" />
             </div>
           </div>
         ) : (
@@ -124,18 +119,6 @@ function AdminSettings() {
                 <Input label="Twitter / X URL" value={draft.twitter} onChange={(v) => update("twitter", v)} />
                 <Input label="YouTube URL" value={draft.youtube} onChange={(v) => update("youtube", v)} />
               </div>
-            </Section>
-
-            <Section title="Founder">
-              <Input
-                label="Rukmil Shah — Personal portfolio URL"
-                value={draft.founderPortfolioUrl}
-                onChange={(v) => update("founderPortfolioUrl", v)}
-                placeholder="https://..."
-              />
-              <p className="text-xs text-muted-foreground mt-2">
-                Leave blank to hide the portfolio button until the link is ready.
-              </p>
             </Section>
 
             <div className="flex flex-wrap gap-3 items-center">

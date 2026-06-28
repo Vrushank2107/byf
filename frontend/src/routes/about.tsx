@@ -201,8 +201,10 @@ function AboutPage() {
         </div>
       </section>
 
+      <section className="bg-background pb-10 pt-4">
+        <ImpactStats overlap={false} />
+      </section>
       <Partners />
-      <div className="pb-10"><ImpactStats /></div>
     </>
   );
 }

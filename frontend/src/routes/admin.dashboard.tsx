@@ -87,18 +87,18 @@ function AdminDashboard() {
     <AdminLayout>
       <div className="space-y-8">
         <div>
-          <h1 className="font-display text-3xl font-bold mb-2">Dashboard</h1>
+          <h1 className="font-display text-2xl sm:text-3xl font-bold mb-2">Dashboard</h1>
           <p className="text-muted-foreground">Welcome to the BYF Admin Panel</p>
         </div>
 
         {loading ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
             {Array.from({ length: 10 }).map((_, i) => (
               <Skeleton key={i} className="h-24 rounded-xl" />
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
             {stats.map((s) => (
               <div key={s.label} className="bg-card border border-border rounded-xl p-5">
                 <div className="flex items-center justify-between mb-3">
@@ -120,7 +120,11 @@ function AdminDashboard() {
             <QuickLink to="/admin/donations" icon={Heart} title="View Donations" desc={`${pendingDonations} pending`} />
             <QuickLink to="/admin/volunteers" icon={Users} title="View Volunteers" desc={`${volunteers.length} submission${volunteers.length === 1 ? "" : "s"}`} />
             <QuickLink to="/admin/messages" icon={MessageSquare} title="View Messages" desc={`${unread} unread`} />
-            <QuickLink to="/admin/settings" icon={SettingsIcon} title="Site Settings" desc="Social links, WhatsApp, portfolio" />
+            <QuickLink to="/admin/testimonials" icon={Quote} title="Testimonials" desc="Manage volunteer quotes" />
+            <QuickLink to="/admin/impact-stats" icon={TrendingUp} title="Impact Stats" desc="Update homepage numbers" />
+            <QuickLink to="/admin/leaders" icon={UserIcon} title="Leadership" desc="Manage team profiles" />
+            <QuickLink to="/admin/partners" icon={Building2} title="Partners" desc="Manage sponsors list" />
+            <QuickLink to="/admin/settings" icon={SettingsIcon} title="Site Settings" desc="Contact info and social links" />
             <a
               href={whatsappUrl}
               target="_blank"

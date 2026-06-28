@@ -32,7 +32,7 @@ export function PageHero({
               {eyebrow}
             </span>
           )}
-          <h1 className="mt-5 font-display text-4xl font-bold leading-tight text-white sm:text-5xl md:text-6xl">
+          <h1 className="mt-5 font-display text-3xl font-bold leading-tight text-white sm:text-5xl md:text-6xl">
             {title}
           </h1>
           {description && <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-white/85 md:text-lg">{description}</p>}
