@@ -20,6 +20,11 @@ export default defineConfig({
     traceDeps: ["tslib*"],
   },
   vite: {
+    ssr: {
+      // Bundle tslib into SSR output instead of leaving a bare `import "tslib"` that
+      // Vercel's serverless runtime can't resolve when traceDeps artifacts are omitted.
+      noExternal: ["tslib"],
+    },
     server: {
       // Monorepo: @fontsource lives in ../node_modules; allow Vite dev server to serve those files.
       fs: {

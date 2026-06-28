@@ -1,10 +1,23 @@
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+function getApiUrl(): string {
+  const envUrl = import.meta.env.VITE_API_URL
+  if (envUrl) return envUrl.replace(/\/$/, '')
+
+  // Avoid baking localhost into production bundles when VITE_API_URL is unset at build time.
+  if (typeof window !== 'undefined') {
+    const host = window.location.hostname
+    if (host === 'localhost' || host === '127.0.0.1') {
+      return 'http://localhost:3001'
+    }
+  }
+
+  return 'https://byf-zqh6.onrender.com'
+}
 
 async function request<T>(
   endpoint: string,
   options: RequestInit = {}
 ): Promise<T> {
-  const url = `${API_URL}${endpoint}`
+  const url = `${getApiUrl()}${endpoint}`
 
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
@@ -131,7 +144,7 @@ export const api = {
     formData.append('file', file)
     if (folder) formData.append('folder', folder)
 
-    const response = await fetch(`${API_URL}/api/upload`, {
+    const response = await fetch(`${getApiUrl()}/api/upload`, {
       method: 'POST',
       credentials: 'include',
       body: formData,
