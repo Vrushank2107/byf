@@ -33,6 +33,9 @@ export async function checkAdminAuth(): Promise<boolean> {
 }
 
 export async function requireAdminAuth(): Promise<void> {
+  // sessionStorage/Bearer auth only exists in the browser — skip during SSR.
+  if (typeof window === "undefined") return;
+
   const authed = await checkAdminAuth();
   if (!authed) {
     throw redirect({ to: "/admin" });

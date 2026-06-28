@@ -1,4 +1,4 @@
-import { createFileRoute, Navigate } from "@tanstack/react-router";
+import { createFileRoute, Navigate, useNavigate } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { checkAdminAuth, loginAdmin } from "@/lib/admin-auth";
 
@@ -8,6 +8,7 @@ export const Route = createFileRoute("/admin/")({
 });
 
 function AdminLogin() {
+  const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -27,7 +28,7 @@ function AdminLogin() {
     setError("");
     const success = await loginAdmin(password);
     if (success) {
-      window.location.href = "/admin/dashboard";
+      navigate({ to: "/admin/dashboard" });
     } else {
       setError("Incorrect password");
       setLoading(false);
