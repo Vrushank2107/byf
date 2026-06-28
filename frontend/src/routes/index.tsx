@@ -6,6 +6,7 @@ import { FeaturedProjects } from "@/components/sections/FeaturedProjects";
 import { Activities } from "@/components/sections/Activities";
 import { VolunteerCTA } from "@/components/sections/VolunteerCTA";
 import { Testimonials } from "@/components/sections/Testimonials";
+import { Partners } from "@/components/sections/Partners";
 import { ORG } from "@/lib/site-data";
 import { createPageSeo } from "@/lib/seo";
 
@@ -39,6 +40,7 @@ function Home() {
       <Activities />
       <VolunteerCTA />
       <Testimonials />
+      <Partners />
     </div>
   );
 }

@@ -76,7 +76,7 @@ function AdminProjects() {
     if (!payload.image) {
       await confirm({
         title: "Image required",
-        description: "Please add an image URL or upload a photo before saving.",
+        description: "Please upload a photo before saving.",
         confirmLabel: "OK",
         cancelLabel: "Dismiss",
         variant: "default",
@@ -87,7 +87,7 @@ function AdminProjects() {
     if (payload.image.startsWith("data:")) {
       await confirm({
         title: "Image still uploading",
-        description: "Wait for the upload to finish, or paste an image URL instead.",
+        description: "Wait for the upload to finish, then try saving again.",
         confirmLabel: "OK",
         cancelLabel: "Dismiss",
         variant: "default",

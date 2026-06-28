@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Loader2, Upload, Link2 } from "lucide-react";
+import { Loader2, Upload } from "lucide-react";
 import { toast } from "sonner";
 import { uploadImage } from "@/lib/admin-store";
 import { imageUrl } from "@/lib/image-url";
@@ -11,9 +11,8 @@ interface Props {
   folder?: string;
 }
 
-/** Image input that accepts a URL or uploads to Cloudinary via the backend API. */
+/** Upload-only image input — sends files to Cloudinary via the backend API. */
 export function ImageInput({ value, onChange, label = "Image", folder = "projects" }: Props) {
-  const [mode, setMode] = useState<"url" | "upload">("url");
   const [uploading, setUploading] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -42,58 +41,34 @@ export function ImageInput({ value, onChange, label = "Image", folder = "project
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-2">
-        <label className="block text-sm font-medium">{label}</label>
-        <div className="flex gap-1 text-xs">
-          <button
-            type="button"
-            onClick={() => setMode("url")}
-            className={`px-2 py-1 rounded ${mode === "url" ? "bg-primary text-primary-foreground" : "bg-muted"}`}
-          >
-            <Link2 className="inline h-3 w-3 mr-1" /> URL
-          </button>
-          <button
-            type="button"
-            onClick={() => setMode("upload")}
-            className={`px-2 py-1 rounded ${mode === "upload" ? "bg-primary text-primary-foreground" : "bg-muted"}`}
-          >
-            <Upload className="inline h-3 w-3 mr-1" /> Upload
-          </button>
-        </div>
-      </div>
-
-      {mode === "url" ? (
+      <label className="mb-2 block text-sm font-medium">{label}</label>
+      <div className="space-y-2">
         <input
-          type="text"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className="w-full px-3 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
-          placeholder="https://... or /assets/..."
+          ref={fileRef}
+          type="file"
+          accept="image/*"
+          onChange={handleFile}
+          disabled={uploading}
+          className="w-full text-sm disabled:opacity-50"
         />
-      ) : (
-        <div className="space-y-2">
-          <input
-            ref={fileRef}
-            type="file"
-            accept="image/*"
-            onChange={handleFile}
-            disabled={uploading}
-            className="w-full text-sm disabled:opacity-50"
-          />
-          {uploading && (
-            <p className="flex items-center gap-2 text-xs text-muted-foreground">
-              <Loader2 className="h-3 w-3 animate-spin" />
-              Uploading to Cloudinary…
-            </p>
-          )}
-        </div>
-      )}
+        {uploading ? (
+          <p className="flex items-center gap-2 text-xs text-muted-foreground">
+            <Loader2 className="h-3 w-3 animate-spin" />
+            Uploading…
+          </p>
+        ) : (
+          <p className="flex items-center gap-1 text-xs text-muted-foreground">
+            <Upload className="h-3 w-3" />
+            JPG, PNG or WebP — max 5 MB
+          </p>
+        )}
+      </div>
 
       {value && (
         <img
           src={imageUrl(value)}
           alt="preview"
-          className="mt-3 h-24 w-24 rounded-lg object-cover border border-border"
+          className="mt-3 h-24 w-24 rounded-lg border border-border object-cover"
         />
       )}
     </div>

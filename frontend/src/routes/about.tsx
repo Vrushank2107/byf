@@ -4,6 +4,7 @@ import { Eye, Target, Heart, ShieldCheck, Users, Sparkles, ExternalLink } from "
 import { PageHero } from "@/components/ui/PageHero";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ImpactStats } from "@/components/sections/ImpactStats";
+import { Partners } from "@/components/sections/Partners";
 import { IMG, TIMELINE, ORG } from "@/lib/site-data";
 import { api } from "@/lib/api";
 import { useState, useEffect } from "react";
@@ -200,6 +201,7 @@ function AboutPage() {
         </div>
       </section>
 
+      <Partners />
       <div className="pb-10"><ImpactStats /></div>
     </>
   );

@@ -160,6 +160,7 @@ function AddPhotoForm({
       <ImageInput
         value={formData.src}
         onChange={(val) => setFormData({ ...formData, src: val })}
+        folder="gallery"
       />
 
       <div>

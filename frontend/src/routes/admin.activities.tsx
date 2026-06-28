@@ -214,6 +214,7 @@ function ActivityForm({
           label="Image"
           value={formData.image}
           onChange={(image) => setFormData({ ...formData, image })}
+          folder="activities"
         />
         <div className="flex gap-3">
           <button

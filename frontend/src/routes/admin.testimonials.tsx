@@ -210,6 +210,7 @@ function TestimonialForm({
           label="Photo"
           value={formData.image}
           onChange={(image) => setFormData({ ...formData, image })}
+          folder="testimonials"
         />
         <div className="flex gap-3">
           <button

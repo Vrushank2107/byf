@@ -40,6 +40,10 @@ export function Partners() {
     );
   }
 
+  if (partners.length === 0) {
+    return null;
+  }
+
   const loop = [...partners, ...partners];
   return (
     <section className="border-y border-border bg-surface py-14">
