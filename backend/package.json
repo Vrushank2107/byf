@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "prisma generate && tsup",
+    "build": "npx prisma generate && tsup",
     "start": "node dist/index.js",
-    "postinstall": "prisma generate",
+    "postinstall": "npx prisma generate",
     "lint": "eslint src --ext .ts"
   },
   "prisma": {
@@ -22,7 +22,6 @@
     "hono": "^4.0.0",
     "ioredis": "^5.6.1",
     "jsonwebtoken": "^9.0.3",
-    "prisma": "^5.22.0",
     "razorpay": "^2.9.6",
     "zod": "^3.22.4"
   },
