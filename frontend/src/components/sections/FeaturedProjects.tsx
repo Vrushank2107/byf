@@ -53,7 +53,7 @@ export function FeaturedProjects() {
           {projects.map((p, idx) => (
             <Link
               key={p.id}
-              to="/projects/$slug"
+              to="/project/$slug"
               params={{ slug: p.slug }}
             >
               <motion.article

@@ -1,6 +1,6 @@
-# BYF Impact Hub
+# Baroda Youth Federation Impact Hub
 
-BYF Impact Hub is the digital platform for Baroda Youth Federation, a youth-led nonprofit in Vadodara working in education, women’s empowerment, disaster relief, and rural welfare.
+Baroda Youth Federation Impact Hub is the digital platform for Baroda Youth Federation, a youth-led nonprofit in Vadodara working in education, women’s empowerment, disaster relief, and rural welfare.
 
 The project is a full-stack monorepo with a public-facing website and a protected admin dashboard for managing content, media, donations, and site settings.
 
@@ -14,7 +14,7 @@ This repository contains two separate applications:
 ## Repository Structure
 
 ```text
-byf-impact-hub/
+baroda-youth-federation-impact-hub/
 ├── frontend/                # Public site + admin UI
 │   ├── src/                 # React/TanStack Start source
 │   ├── public/              # Static assets

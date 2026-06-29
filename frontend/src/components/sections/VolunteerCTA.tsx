@@ -28,7 +28,7 @@ export function VolunteerCTA() {
                 One Sunday a month is all it takes to change a child's year.
               </h2>
               <p className="mt-4 max-w-xl text-base leading-relaxed text-white/85">
-                Whether you can teach, design, organise events, drive, cook or just show up — there is a place for you at BYF.
+                Whether you can teach, design, organise events, drive, cook or just show up — there is a place for you at Baroda Youth Federation.
               </p>
               <Link
                 to="/volunteer"

@@ -13,11 +13,11 @@ const CATS = ["All", "Success Stories", "Activities", "Community Impact", "Volun
 export const Route = createFileRoute("/blog")({
   head: () =>
     createPageSeo({
-      title: "Blog — Stories from BYF's grassroots work",
+      title: "Blog — Stories from Baroda Youth Federation's grassroots work",
       description:
         "Success stories, activity reports, community impact and volunteer experiences from Baroda Youth Federation.",
       path: "/blog",
-      keywords: ["BYF blog", "NGO stories Vadodara", "community impact Gujarat"],
+      keywords: ["Baroda Youth Federation blog", "NGO stories Vadodara", "community impact Gujarat"],
       jsonLd: breadcrumbJsonLd([
         { name: "Home", path: "/" },
         { name: "Blog", path: "/blog" },
@@ -89,9 +89,6 @@ function BlogPage() {
                   <span>{new Date(featured.date).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}</span>
                   <span className="flex items-center gap-1.5"><Clock className="h-3.5 w-3.5" />{featured.read}</span>
                 </div>
-                <button className="mt-7 inline-flex w-fit items-center gap-1.5 text-sm font-semibold text-primary">
-                  Read article <ArrowUpRight className="h-4 w-4" />
-                </button>
               </div>
             </motion.article>
           )}

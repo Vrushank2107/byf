@@ -11,10 +11,10 @@ import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
 export const Route = createFileRoute("/events")({
   head: () =>
     createPageSeo({
-      title: "Events — Upcoming & past BYF events",
-      description: "Join the next BYF event in Vadodara. Notebook drives, blanket distribution, JoyCation, festivals and more.",
+      title: "Events — Upcoming & past Baroda Youth Federation events",
+      description: "Join the next Baroda Youth Federation event in Vadodara. Notebook drives, blanket distribution, JoyCation, festivals and more.",
       path: "/events",
-      keywords: ["BYF events", "NGO events Vadodara", "community drives Gujarat"],
+      keywords: ["Baroda Youth Federation events", "NGO events Vadodara", "community drives Gujarat"],
       jsonLd: breadcrumbJsonLd([
         { name: "Home", path: "/" },
         { name: "Events", path: "/events" },
@@ -94,11 +94,6 @@ function EventsPage() {
                       <span className="flex items-center gap-1.5"><Calendar className="h-3.5 w-3.5 text-primary" />{new Date(ev.date).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}</span>
                       <span className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5 text-secondary" />{ev.location}</span>
                     </div>
-                    {ev.upcoming && (
-                      <button className="mt-5 inline-flex w-full items-center justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90">
-                        Register Interest
-                      </button>
-                    )}
                   </div>
                 </motion.article>
               );

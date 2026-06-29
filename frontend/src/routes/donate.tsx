@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Heart, Shield, FileCheck, Sparkles, Loader2 } from "lucide-react";
 import { PageHero } from "@/components/ui/PageHero";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { DONATION_FUNDS, IMG, type DonationFund } from "@/lib/site-data";
+import { IMG } from "@/lib/site-data";
 import { api } from "@/lib/api";
 import { imageUrl } from "@/lib/image-url";
 import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
@@ -12,11 +12,11 @@ import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
 export const Route = createFileRoute("/donate")({
   head: () => {
     const seo = createPageSeo({
-      title: "Donate to BYF — Every rupee changes a life in Vadodara",
+      title: "Donate to Baroda Youth Federation — Every rupee changes a life in Vadodara",
       description:
-        "Donate to Baroda Youth Federation's education, women's empowerment, relief and general funds. 80G tax-deductible.",
+        "Donate to Baroda Youth Federation and support our mission in Vadodara. 80G tax-deductible.",
       path: "/donate",
-      keywords: ["donate BYF", "charity Vadodara", "80G donation Gujarat", "nonprofit donation India"],
+      keywords: ["donate Baroda Youth Federation", "charity Vadodara", "80G donation Gujarat", "nonprofit donation India"],
       jsonLd: breadcrumbJsonLd([
         { name: "Home", path: "/" },
         { name: "Donate", path: "/donate" },
@@ -38,13 +38,12 @@ const PRESETS = [500, 1000, 2500, 5000, 10000, 25000];
 const fmt = (n: number) => `₹${n.toLocaleString("en-IN")}`;
 
 function DonatePage() {
-  const [fund, setFund] = useState(DONATION_FUNDS[0].slug);
   const [amount, setAmount] = useState<number>(2500);
   const [showDonorForm, setShowDonorForm] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showReceipt, setShowReceipt] = useState(false);
   const [receiptData, setReceiptData] = useState<any>(null);
-  const [settings, setSettings] = useState<{ donationFunds?: DonationFund[]; donateHeroImage?: string } | null>(null);
+  const [settings, setSettings] = useState<{ donateHeroImage?: string } | null>(null);
   const [donorInfo, setDonorInfo] = useState({
     name: '',
     email: '',
@@ -61,15 +60,6 @@ function DonatePage() {
       console.error('Failed to fetch site settings:', error);
     });
   }, []);
-
-  const funds = settings?.donationFunds?.length ? settings.donationFunds : DONATION_FUNDS;
-  const active = funds.find((f) => f.slug === fund) ?? funds[0];
-
-  useEffect(() => {
-    if (settings?.donationFunds?.length && !settings.donationFunds.some((f) => f.slug === fund)) {
-      setFund(settings.donationFunds[0].slug);
-    }
-  }, [settings, fund]);
   const heroImage = settings?.donateHeroImage ? imageUrl(settings.donateHeroImage) : IMG.heroBlankets;
 
   const handleDonate = async () => {
@@ -78,7 +68,7 @@ function DonatePage() {
       const orderData = await api.createDonationOrder({
         ...donorInfo,
         amount,
-        fund,
+        fund: 'general',
       });
 
       const options = {
@@ -86,7 +76,7 @@ function DonatePage() {
         amount: orderData.amount,
         currency: orderData.currency,
         name: 'Baroda Youth Federation',
-        description: `Donation to ${active.title}`,
+        description: 'Donation to Baroda Youth Federation',
         order_id: orderData.orderId,
         handler: async function (response: any) {
           try {
@@ -145,50 +135,9 @@ function DonatePage() {
 
       <section className="section-y">
         <div className="container-page">
-          <SectionHeader eyebrow="Where your money goes" title={<>Choose a <span className="gradient-text">fund.</span></>} />
-          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {funds.map((f, idx) => {
-              const pct = Math.min(100, Math.round((f.raised / f.goal) * 100));
-              const accentCls = f.accent === "secondary"
-                ? "from-secondary to-secondary/70"
-                : f.accent === "accent"
-                ? "from-accent to-accent/70"
-                : "from-primary to-primary/70";
-              return (
-                <motion.button
-                  key={f.slug}
-                  onClick={() => setFund(f.slug)}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.05, duration: 0.4 }}
-                  className={`group relative overflow-hidden rounded-3xl border bg-card p-6 text-left shadow-soft transition-all hover:-translate-y-1 hover:shadow-glow ${
-                    fund === f.slug ? "border-primary ring-2 ring-primary/20" : "border-border"
-                  }`}
-                >
-                  <div className={`absolute -right-8 -top-8 h-28 w-28 rounded-full bg-gradient-to-br opacity-25 blur-2xl ${accentCls}`} />
-                  <div className="relative">
-                    <h3 className="font-display text-lg font-semibold text-foreground">{f.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{f.desc}</p>
-                    <div className="mt-5 flex items-baseline justify-between text-xs text-muted-foreground">
-                      <span><span className="font-display text-base font-bold text-foreground">{fmt(f.raised)}</span> raised</span>
-                      <span>Goal {fmt(f.goal)}</span>
-                    </div>
-                    <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-muted">
-                      <div className={`h-full rounded-full bg-gradient-to-r ${accentCls}`} style={{ width: `${pct}%` }} />
-                    </div>
-                    <div className="mt-1 text-right text-[11px] font-semibold uppercase tracking-wider text-primary">{pct}% funded</div>
-                  </div>
-                </motion.button>
-              );
-            })}
-          </div>
-
+          <SectionHeader eyebrow="Make a donation" title={<>Support our <span className="gradient-text">mission.</span></>} />
           <div className="mt-14 grid gap-8 lg:grid-cols-[1.2fr_1fr]">
             <div className="rounded-3xl border border-border bg-card p-7 shadow-soft md:p-10">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-secondary">Selected fund</p>
-              <h3 className="mt-2 font-display text-2xl font-bold text-foreground">{active.title}</h3>
-
               <div className="mt-8">
                 <label className="text-sm font-semibold text-foreground">Choose an amount</label>
                 <div className="mt-3 grid grid-cols-3 gap-2 sm:grid-cols-6">
@@ -388,10 +337,6 @@ function DonatePage() {
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Amount</span>
                   <span className="font-semibold text-foreground">{fmt(receiptData.amount)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Fund</span>
-                  <span className="font-semibold text-foreground">{active.title}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Date</span>

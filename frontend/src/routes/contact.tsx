@@ -11,10 +11,10 @@ import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
 export const Route = createFileRoute("/contact")({
   head: () =>
     createPageSeo({
-      title: "Contact BYF — Get in touch",
+      title: "Contact Baroda Youth Federation — Get in touch",
       description: "Reach Baroda Youth Federation by email, phone, WhatsApp or visit our office in Vadodara.",
       path: "/contact",
-      keywords: ["contact BYF", "Baroda Youth Federation phone", "Vadodara NGO contact"],
+      keywords: ["contact Baroda Youth Federation", "Baroda Youth Federation phone", "Vadodara NGO contact"],
       jsonLd: breadcrumbJsonLd([
         { name: "Home", path: "/" },
         { name: "Contact", path: "/contact" },
@@ -140,7 +140,7 @@ function ContactPage() {
                     className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-4 py-2.5 text-sm font-semibold text-white sm:w-auto"
                     target="_blank"
                     rel="noreferrer"
-                    href={`https://wa.me/${org.whatsapp}?text=${encodeURIComponent("Hi BYF, I'd like to know more.")}`}
+                    href={`https://wa.me/${org.whatsapp}?text=${encodeURIComponent("Hi Baroda Youth Federation, I'd like to know more.")}`}
                   >
                     Chat on WhatsApp
                   </a>
@@ -151,7 +151,7 @@ function ContactPage() {
 
             <div className="overflow-hidden rounded-3xl border border-border bg-card shadow-soft">
               <iframe
-                title="BYF Office Location"
+                title="Baroda Youth Federation Office Location"
                 src="https://www.google.com/maps?q=Vadodara,Gujarat,India&output=embed"
                 className="h-56 w-full sm:h-72"
                 loading="lazy"

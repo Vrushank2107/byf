@@ -8,7 +8,7 @@ import { api } from "@/lib/api";
 import { imageUrl } from "@/lib/image-url";
 import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
 
-export const Route = createFileRoute("/projects/$slug")({
+export const Route = createFileRoute("/project/$slug")({
   loader: async ({ params }: any) => {
     try {
       const project = await api.getProject(params.slug);
@@ -33,7 +33,7 @@ export const Route = createFileRoute("/projects/$slug")({
       jsonLd: breadcrumbJsonLd([
         { name: "Home", path: "/" },
         { name: "Projects", path: "/projects" },
-        { name: project.title, path: `/projects/${project.slug}` },
+        { name: project.title, path: `/project/${project.slug}` },
       ]),
     });
   },
@@ -43,37 +43,6 @@ export const Route = createFileRoute("/projects/$slug")({
 function ProjectDetailPage() {
   const loaderData = Route.useLoaderData() as { project: any } | undefined;
   const project = loaderData?.project;
-  const [loading, setLoading] = useState(false);
-
-  if (loading) {
-    return (
-      <>
-        <PageHero
-          eyebrow="Project Details"
-          title={<Skeleton className="h-12 w-96" />}
-          description={<Skeleton className="h-6 w-full max-w-2xl" />}
-          image=""
-        />
-        <section className="section-y">
-          <div className="container-page">
-            <div className="grid gap-8 lg:grid-cols-3">
-              <div className="lg:col-span-2 space-y-6">
-                <Skeleton className="h-64 w-full rounded-2xl" />
-                <Skeleton className="h-8 w-3/4" />
-                <Skeleton className="h-4 w-full" />
-                <Skeleton className="h-4 w-full" />
-                <Skeleton className="h-4 w-2/3" />
-              </div>
-              <div className="space-y-6">
-                <Skeleton className="h-48 w-full rounded-2xl" />
-                <Skeleton className="h-32 w-full rounded-2xl" />
-              </div>
-            </div>
-          </div>
-        </section>
-      </>
-    );
-  }
 
   if (!project) {
     return (
@@ -101,7 +70,7 @@ function ProjectDetailPage() {
         <div className="container-page">
           <Link
             to="/projects"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground hover:text-primary transition-colors mb-8"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border bg-card text-sm font-semibold text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all mb-8"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to all projects

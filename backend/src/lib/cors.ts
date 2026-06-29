@@ -1,7 +1,7 @@
 const LOCAL_ORIGINS = ['http://localhost:5173', 'http://localhost:8080'] as const
 
 /** Production frontend — keep in sync with frontend/.env.example VITE_SITE_URL */
-const DEFAULT_PRODUCTION_ORIGIN = 'https://byf-tau.vercel.app'
+const DEFAULT_PRODUCTION_ORIGIN = 'https://baroda-youth-federation.vercel.app'
 
 const VERCEL_ORIGIN = /^https:\/\/[\w.-]+\.vercel\.app$/
 

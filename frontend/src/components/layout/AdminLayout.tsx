@@ -92,7 +92,7 @@ export function AdminLayout({ children }: { children?: ReactNode }) {
                 </SheetTrigger>
                 <SheetContent side="left" className="w-[min(100vw-2rem,20rem)] p-0">
                   <SheetHeader className="border-b border-border px-6 py-5 text-left">
-                    <SheetTitle className="font-display text-lg">BYF Admin</SheetTitle>
+                    <SheetTitle className="font-display text-lg">Baroda Youth Federation Admin</SheetTitle>
                   </SheetHeader>
                   <nav className="space-y-1 overflow-y-auto p-4">
                     <AdminNavLinks onNavigate={() => setMobileNavOpen(false)} />
@@ -100,7 +100,7 @@ export function AdminLayout({ children }: { children?: ReactNode }) {
                 </SheetContent>
               </Sheet>
               <span className="font-display text-lg sm:text-xl font-bold gradient-text truncate">
-                BYF Admin
+                Baroda Youth Federation Admin
               </span>
             </div>
             <div className="flex items-center gap-2 shrink-0">

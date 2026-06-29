@@ -20,9 +20,9 @@ export const Route = createFileRoute("/projects")({
     createPageSeo({
       title: "Projects — Baroda Youth Federation",
       description:
-        "Education, women's health, disaster relief, community welfare and cultural projects run by BYF in Vadodara.",
+        "Education, women's health, disaster relief, community welfare and cultural projects run by Baroda Youth Federation in Vadodara.",
       path: "/projects",
-      keywords: ["BYF projects", "education NGO Vadodara", "disaster relief Gujarat", "women empowerment NGO"],
+      keywords: ["Baroda Youth Federation projects", "education NGO Vadodara", "disaster relief Gujarat", "women empowerment NGO"],
       jsonLd: breadcrumbJsonLd([
         { name: "Home", path: "/" },
         { name: "Projects", path: "/projects" },
@@ -82,7 +82,7 @@ function ProjectsPage() {
       <>
         <PageHero
           eyebrow="Our Projects"
-          title={<>Eight programs, <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">one mission.</span></>}
+          title={<>Multiple programs, <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">one mission.</span></>}
           description="Filter by category to explore each project's scale, impact and progress."
           image={heroImage}
         />
@@ -129,7 +129,7 @@ function ProjectsPage() {
     <>
       <PageHero
         eyebrow="Our Projects"
-        title={<>Eight programs, <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">one mission.</span></>}
+        title={<>Multiple programs, <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">one mission.</span></>}
         description="Filter by category to explore each project's scale, impact and progress."
         image={IMG.pNotebooks}
       />
@@ -156,7 +156,7 @@ function ProjectsPage() {
             {visible.map((p, idx) => (
               <Link
                 key={p.slug}
-                to="/projects/$slug"
+                to="/project/$slug"
                 params={{ slug: p.slug }}
               >
                 <motion.article

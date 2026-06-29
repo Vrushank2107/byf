@@ -6,7 +6,7 @@ export const SITE_URL = (import.meta.env.VITE_SITE_URL ?? "").replace(/\/$/, "")
 export const DEFAULT_OG_IMAGE = "/og-image.jpg";
 
 export const DEFAULT_DESCRIPTION =
-  "BYF is a Vadodara-based youth nonprofit working in education, women's health, disaster relief and rural welfare since 2014.";
+  "Baroda Youth Federation is a Vadodara-based youth nonprofit working in education, women's health, disaster relief and rural welfare since 2014.";
 
 export const SITEMAP_ENTRIES = [
   { path: "/", changefreq: "weekly" as const, priority: "1.0" },

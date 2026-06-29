@@ -5,7 +5,7 @@ export const Route = createFileRoute("/admin")({
   head: () =>
     createPageSeo({
       title: "Admin — Baroda Youth Federation",
-      description: "BYF admin dashboard.",
+      description: "Baroda Youth Federation admin dashboard.",
       path: "/admin",
       noindex: true,
     }),

@@ -99,7 +99,7 @@ app.post('/verify', async (c) => {
         status: 'Completed',
         razorpayPaymentId,
         razorpaySignature,
-        receiptNumber: `BYF-${Date.now()}`,
+        receiptNumber: `BARODA-YOUTH-FEDERATION-${Date.now()}`,
         receiptGenerated: true,
       },
     })
@@ -147,7 +147,7 @@ app.post('/webhook', async (c) => {
             status: 'Completed',
             razorpayPaymentId: payload.id,
             razorpaySignature: signature,
-            receiptNumber: `BYF-${Date.now()}`,
+            receiptNumber: `BARODA-YOUTH-FEDERATION-${Date.now()}`,
             receiptGenerated: true,
           },
         })

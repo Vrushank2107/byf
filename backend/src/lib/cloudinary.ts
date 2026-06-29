@@ -41,7 +41,7 @@ export { cloudinary }
 
 export async function uploadImage(
   file: Buffer,
-  folder: string = 'byf-impact-hub',
+  folder: string = 'baroda-youth-federation-impact-hub',
 ): Promise<string> {
   ensureConfigured()
 

@@ -14,11 +14,11 @@ import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
 export const Route = createFileRoute("/about")({
   head: () =>
     createPageSeo({
-      title: "About BYF — A decade of grassroots work in Vadodara",
+      title: "About Baroda Youth Federation — A decade of grassroots work in Vadodara",
       description:
-        "How Baroda Youth Federation started in 2014 and grew into a 450-volunteer movement across education, health, relief and culture.",
+        "How Baroda Youth Federation started in 2017 and grew into a 450-volunteer movement across education, health, relief and culture.",
       path: "/about",
-      keywords: ["about BYF", "Baroda Youth Federation history", "Vadodara NGO", "youth nonprofit Gujarat"],
+      keywords: ["about Baroda Youth Federation", "Baroda Youth Federation history", "Vadodara NGO", "youth nonprofit Gujarat"],
       jsonLd: breadcrumbJsonLd([
         { name: "Home", path: "/" },
         { name: "About", path: "/about" },
@@ -70,7 +70,7 @@ function AboutPage() {
       <PageHero
         eyebrow="About Us"
         title={<>A decade of <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">grassroots work.</span></>}
-        description="Baroda Youth Federation started in 2014 with eight students and a single Sunday tuition class. Today we're 450 volunteers running programs across five missions."
+        description="Baroda Youth Federation started in 2017 with eight students and a single Sunday tuition class. Today we're 450 volunteers running programs across five missions."
         image={resolvedHeroImage}
       />
 
@@ -83,7 +83,7 @@ function AboutPage() {
             transition={{ duration: 0.6 }}
             className="relative aspect-[4/5] overflow-hidden rounded-3xl shadow-glow"
           >
-            <img src={IMG.flag} alt="BYF volunteers with students" className="h-full w-full object-cover" />
+            <img src={IMG.flag} alt="Baroda Youth Federation volunteers with students" className="h-full w-full object-cover" />
           </motion.div>
           <div>
             <SectionHeader
@@ -138,7 +138,7 @@ function AboutPage() {
 
       <section className="section-y">
         <div className="container-page">
-          <SectionHeader eyebrow="Timeline" title={<>Eleven years, <span className="gradient-text">one block at a time.</span></>} />
+          <SectionHeader eyebrow="Timeline" title={<>Nine years, <span className="gradient-text">one block at a time.</span></>} />
           <div className="relative mx-auto mt-16 max-w-3xl">
             <div className="absolute left-4 top-0 h-full w-0.5 bg-gradient-to-b from-primary via-secondary to-accent md:left-1/2 md:-translate-x-1/2" />
             <div className="space-y-12">
@@ -170,7 +170,7 @@ function AboutPage() {
 
       <section className="section-y bg-surface">
         <div className="container-page">
-          <SectionHeader eyebrow="Leadership" title={<>The people <span className="gradient-text">behind BYF.</span></>} description="A core team of six leads, supported by 8 program coordinators and 450+ active volunteers." />
+          <SectionHeader eyebrow="Leadership" title={<>The people <span className="gradient-text">behind Baroda Youth Federation.</span></>} description="A core team of six leads, supported by 8 program coordinators and 450+ active volunteers." />
           {loadingLeaders ? (
             <div className="mt-12 grid gap-5 sm:grid-cols-2 md:grid-cols-3">
               {[1, 2, 3, 4, 5, 6].map((i) => (

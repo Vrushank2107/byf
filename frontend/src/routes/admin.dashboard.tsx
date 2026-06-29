@@ -16,6 +16,7 @@ import {
   TrendingUp,
   User as UserIcon,
   Building2,
+  FileText,
 } from "lucide-react";
 import {
   useProjectsStore,
@@ -29,6 +30,8 @@ import {
   useImpactStatsStore,
   useLeadersStore,
   usePartnersStore,
+  useEventsStore,
+  useBlogStore,
 } from "@/lib/admin-store";
 
 export const Route = createFileRoute("/admin/dashboard")({
@@ -49,6 +52,8 @@ function AdminDashboard() {
   const { data: impactStats, loading: impactStatsLoading } = useImpactStatsStore();
   const { data: leaders, loading: leadersLoading } = useLeadersStore();
   const { data: partners, loading: partnersLoading } = usePartnersStore();
+  const { data: events, loading: eventsLoading } = useEventsStore();
+  const { data: blog, loading: blogLoading } = useBlogStore();
 
   const loading =
     projectsLoading ||
@@ -61,23 +66,27 @@ function AdminDashboard() {
     testimonialsLoading ||
     impactStatsLoading ||
     leadersLoading ||
-    partnersLoading;
+    partnersLoading ||
+    eventsLoading ||
+    blogLoading;
 
   const unread = messages.filter((m) => !m.read).length;
   const pendingDonations = donations.filter((d) => d.status === "pending").length;
 
   const whatsappUrl = `https://wa.me/${settings.whatsapp}?text=${encodeURIComponent(
-    `Hi ${settings.whatsappName}, this is an update from the BYF admin panel.`,
+    `Hi ${settings.whatsappName}, this is an update from the Baroda Youth Federation admin panel.`,
   )}`;
 
   const stats = [
     { icon: FolderKanban, label: "Projects", value: projects.length, color: "text-primary" },
     { icon: ImageIcon, label: "Gallery Photos", value: gallery.length, color: "text-secondary" },
-    { icon: Calendar, label: "Activities", value: activities.length, color: "text-accent" },
-    { icon: Quote, label: "Testimonials", value: testimonials.length, color: "text-primary" },
-    { icon: TrendingUp, label: "Impact Stats", value: impactStats.length, color: "text-secondary" },
-    { icon: UserIcon, label: "Leaders", value: leaders.length, color: "text-accent" },
-    { icon: Building2, label: "Partners", value: partners.length, color: "text-primary" },
+    { icon: Calendar, label: "Events", value: events.length, color: "text-accent" },
+    { icon: FileText, label: "Blog Posts", value: blog.length, color: "text-primary" },
+    { icon: Calendar, label: "Activities", value: activities.length, color: "text-secondary" },
+    { icon: Quote, label: "Testimonials", value: testimonials.length, color: "text-accent" },
+    { icon: TrendingUp, label: "Impact Stats", value: impactStats.length, color: "text-primary" },
+    { icon: UserIcon, label: "Leaders", value: leaders.length, color: "text-secondary" },
+    { icon: Building2, label: "Partners", value: partners.length, color: "text-accent" },
     { icon: Heart, label: "Donations", value: donations.length, color: "text-destructive" },
     { icon: Users, label: "Volunteer Forms", value: volunteers.length, color: "text-accent" },
     { icon: MessageSquare, label: `Messages (${unread} new)`, value: messages.length, color: "text-destructive" },
@@ -88,7 +97,7 @@ function AdminDashboard() {
       <div className="space-y-8">
         <div>
           <h1 className="font-display text-2xl sm:text-3xl font-bold mb-2">Dashboard</h1>
-          <p className="text-muted-foreground">Welcome to the BYF Admin Panel</p>
+          <p className="text-muted-foreground">Welcome to the Baroda Youth Federation Admin Panel</p>
         </div>
 
         {loading ? (
@@ -116,6 +125,8 @@ function AdminDashboard() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <QuickLink to="/admin/projects" icon={FolderKanban} title="Manage Projects" desc="Create and manage projects" />
             <QuickLink to="/admin/gallery" icon={ImageIcon} title="Gallery" desc="Upload and organize images" />
+            <QuickLink to="/admin/events" icon={Calendar} title="Events" desc={`${events.length} event${events.length === 1 ? "" : "s"}`} />
+            <QuickLink to="/admin/blog" icon={FileText} title="Blog" desc={`${blog.length} post${blog.length === 1 ? "" : "s"}`} />
             <QuickLink to="/admin/activities" icon={Calendar} title="Activities" desc="Manage activity listings" />
             <QuickLink to="/admin/donations" icon={Heart} title="View Donations" desc={`${pendingDonations} pending`} />
             <QuickLink to="/admin/volunteers" icon={Users} title="View Volunteers" desc={`${volunteers.length} submission${volunteers.length === 1 ? "" : "s"}`} />

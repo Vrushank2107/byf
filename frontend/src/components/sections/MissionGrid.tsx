@@ -14,7 +14,7 @@ export function MissionGrid() {
         <SectionHeader
           eyebrow="What we do"
           title={<>Five missions, <span className="gradient-text">one community.</span></>}
-          description="BYF works across the issues that matter most to Vadodara — and we measure ourselves by lives changed, not press coverage."
+          description="Baroda Youth Federation works across the issues that matter most to Vadodara — and we measure ourselves by lives changed, not press coverage."
         />
 
         <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-5">

@@ -19,7 +19,7 @@ export const Route = createFileRoute("/")({
       path: "/",
       keywords: [
         "Baroda Youth Federation",
-        "BYF Vadodara",
+        "Baroda Youth Federation Vadodara",
         "nonprofit Gujarat",
         "donate Vadodara",
         "volunteer Gujarat",

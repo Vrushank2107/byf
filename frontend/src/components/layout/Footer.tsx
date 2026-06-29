@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 
 
 const COL_LINKS = [
-  { to: "/about", label: "About BYF" },
+  { to: "/about", label: "About Baroda Youth Federation" },
   { to: "/projects", label: "Our Projects" },
   { to: "/gallery", label: "Gallery" },
   { to: "/volunteer", label: "Volunteer" },
@@ -84,12 +84,13 @@ export function Footer() {
               alt={`${org.name} logo`}
               className="h-10 w-10 rounded-xl object-cover"
             />
-            <div>
-              <div className="font-display text-lg font-bold">{org.short}</div>
+            <div className="dark:flex hidden flex-col leading-tight">
+              <div className="font-display text-lg font-bold">Baroda Youth</div>
               <div className="text-[11px] uppercase tracking-[0.18em] text-background/60">
-                {org.name}
+                Federation
               </div>
             </div>
+            <div className="dark:hidden font-display text-lg font-bold">Baroda Youth Federation</div>
           </div>
           <p className="mt-5 max-w-sm text-sm leading-relaxed text-background/70">
             A youth-led nonprofit in Vadodara working across education, women's

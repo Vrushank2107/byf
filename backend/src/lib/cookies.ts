@@ -1,4 +1,4 @@
-export const AUTH_COOKIE = 'byf_admin_token'
+export const AUTH_COOKIE = 'baroda_youth_federation_admin_token'
 
 export function getCookieOptions() {
   const isProd = process.env.NODE_ENV === 'production'

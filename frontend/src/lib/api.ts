@@ -1,7 +1,7 @@
 import { getAdminToken } from './admin-token'
 import { normalizeImageCollection, normalizeImageFields } from './image-url'
 
-const PRODUCTION_API_URL = 'https://byf-zqh6.onrender.com'
+const PRODUCTION_API_URL = 'https://baroda-youth-federation-zqh6.onrender.com'
 const LOCAL_API_URL = 'http://localhost:3001'
 
 function getApiUrl(): string {

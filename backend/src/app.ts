@@ -36,7 +36,7 @@ app.use('*', cors({
 }))
 
 app.get('/', (c) => {
-  return c.json({ status: 'ok', message: 'BYF Backend API' })
+  return c.json({ status: 'ok', message: 'Baroda Youth Federation Backend API' })
 })
 
 app.get('/health', async (c) => {

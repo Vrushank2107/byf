@@ -34,13 +34,16 @@ export function Navbar() {
             alt={`${ORG.name} logo`}
             className="h-10 w-10 shrink-0 rounded-full object-cover shadow-soft ring-1 ring-border"
           />
-          <span className="flex flex-col leading-tight">
+          <span className="dark:flex hidden flex-col leading-tight">
             <span className="font-display text-base font-bold tracking-tight text-foreground sm:text-lg">
-              {ORG.short}
+              Baroda Youth
             </span>
-            <span className="hidden text-[10px] uppercase tracking-[0.18em] text-muted-foreground sm:block">
-              Baroda Youth Federation
+            <span className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+              Federation
             </span>
+          </span>
+          <span className="dark:hidden font-display text-base font-bold tracking-tight text-foreground sm:text-lg">
+            Baroda Youth Federation
           </span>
         </Link>
 

@@ -22,7 +22,7 @@ export function Activities() {
     return (
       <section className="section-y bg-surface">
         <div className="container-page">
-          <SectionHeader eyebrow="Latest Activities" title={<>This month at <span className="gradient-text">BYF.</span></>} description="A small snapshot of what 450 active volunteers have been up to." />
+          <SectionHeader eyebrow="Latest Activities" title={<>This month at <span className="gradient-text">Baroda Youth Federation.</span></>} description="A small snapshot of what 450 active volunteers have been up to." />
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {[1, 2, 3, 4, 5, 6].map((i) => (
               <div key={i} className="group flex gap-4 rounded-2xl border border-border bg-card p-3">

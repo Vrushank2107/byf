@@ -12,10 +12,10 @@ import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
 export const Route = createFileRoute("/gallery")({
   head: () =>
     createPageSeo({
-      title: "Gallery — BYF moments from the ground",
-      description: "Photos from BYF events: education, JoyCation, Holi, Diwali, blanket and flood relief drives.",
+      title: "Gallery — Baroda Youth Federation moments from the ground",
+      description: "Photos from Baroda Youth Federation events: education, JoyCation, Holi, Diwali, blanket and flood relief drives.",
       path: "/gallery",
-      keywords: ["BYF gallery", "NGO photos Vadodara", "community events Gujarat"],
+      keywords: ["Baroda Youth Federation gallery", "NGO photos Vadodara", "community events Gujarat"],
       jsonLd: breadcrumbJsonLd([
         { name: "Home", path: "/" },
         { name: "Gallery", path: "/gallery" },

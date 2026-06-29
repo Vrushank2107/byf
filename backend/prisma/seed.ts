@@ -126,7 +126,7 @@ async function main() {
   } else {
     // Seed gallery
     const gallery = [
-      { src: '/assets/joycation1.jpg', tag: 'JoyCation', alt: 'Children at JoyCation event with BYF volunteers' },
+      { src: '/assets/joycation1.jpg', tag: 'JoyCation', alt: 'Children at JoyCation event with Baroda Youth Federation volunteers' },
       { src: '/assets/flag.jpg', tag: 'Education', alt: 'Students with national flag distribution' },
       { src: '/assets/holi.jpg', tag: 'Holi', alt: 'Holi celebration with children' },
       { src: '/assets/diwali3.jpg', tag: 'Diwali', alt: 'Diwali fireworks celebration with kids' },
@@ -211,7 +211,7 @@ async function main() {
       {
         name: 'Priya Sharma',
         role: 'Student, Project Progress',
-        quote: 'BYF volunteers helped me understand math concepts I struggled with for years. Now I want to become a teacher.',
+        quote: 'Baroda Youth Federation volunteers helped me understand math concepts I struggled with for years. Now I want to become a teacher.',
         image: '/assets/avatar1.jpg',
       },
       {
@@ -264,7 +264,7 @@ async function main() {
       {
         name: 'Rukmil Shah',
         role: 'Founder & President',
-        bio: 'Started BYF in 2014 with eight friends and a single Sunday tuition class. Today leads 450+ volunteers across five missions.',
+        bio: 'Started Baroda Youth Federation in 2014 with eight friends and a single Sunday tuition class. Today leads 450+ volunteers across five missions.',
         order: 0,
       },
       {
@@ -326,6 +326,138 @@ async function main() {
       await prisma.partner.create({ data: partner })
     }
     console.log('✅ Partners seeded:', partners.length)
+  }
+
+  // Check if events already exist
+  const existingEvents = await prisma.event.count()
+  if (existingEvents > 0) {
+    console.log('✅ Events already exist, skipping events seed')
+  } else {
+    // Seed events
+    const events = [
+      {
+        title: 'Annual Notebook Distribution Drive',
+        date: new Date('2026-07-12'),
+        location: 'Vadodara — 12 schools',
+        description: '50,000+ notebooks and stationery kits handed to students before the new academic year.',
+        image: '/assets/project-notebooks.jpg',
+        upcoming: true,
+      },
+      {
+        title: 'Independence Day Flag Distribution',
+        date: new Date('2026-08-15'),
+        location: 'Government Primary School, Waghodia',
+        description: 'National flags, sweets and a patriotic assembly for 600+ children.',
+        image: '/assets/flag.jpg',
+        upcoming: true,
+      },
+      {
+        title: 'Winter Blanket Drive 2026',
+        date: new Date('2026-12-18'),
+        location: 'Sayajigunj & Old City',
+        description: 'Distribute 1,500 blankets to street families, daily-wage workers and the elderly.',
+        image: '/assets/blanket.jpg',
+        upcoming: true,
+      },
+      {
+        title: 'Diwali with the Children',
+        date: new Date('2025-11-01'),
+        location: 'Atladara Community Center',
+        description: 'Diyas, sweets, sparklers and a hot meal with 200 children from nearby slums.',
+        image: '/assets/diwali3.jpg',
+        upcoming: false,
+      },
+      {
+        title: 'Holi Colour Drive',
+        date: new Date('2025-03-25'),
+        location: 'Waghodia Village',
+        description: 'Organic colours, music and lunch for 300+ village children.',
+        image: '/assets/holi2.jpg',
+        upcoming: false,
+      },
+      {
+        title: 'JoyCation #12 — Sayaji Baug',
+        date: new Date('2025-05-05'),
+        location: 'Sayaji Baug, Vadodara',
+        description: 'Day-out for 90 children with art, games, a hot lunch and a bus ride back home.',
+        image: '/assets/joycation1.jpg',
+        upcoming: false,
+      },
+    ]
+
+    for (const event of events) {
+      await prisma.event.create({ data: event })
+    }
+    console.log('✅ Events seeded:', events.length)
+  }
+
+  // Check if blog posts already exist
+  const existingBlog = await prisma.blog.count()
+  if (existingBlog > 0) {
+    console.log('✅ Blog posts already exist, skipping blog seed')
+  } else {
+    // Seed blog posts
+    const blogPosts = [
+      {
+        slug: 'five-years-of-roti-bank',
+        title: 'Five years, 3 lakh meals — what Roti Bank taught us',
+        excerpt: 'How a small Sunday-evening idea grew into a nightly operation serving over 1,400 meals a week.',
+        category: 'Success Stories',
+        date: new Date('2025-09-10'),
+        image: '/assets/project-rotibank.jpg',
+        read: '6 min',
+      },
+      {
+        slug: 'diwali-with-the-children',
+        title: 'Diwali with 200 kids who had never lit a sparkler',
+        excerpt: 'What an evening of light, laddoos and fireworks looked like through their eyes.',
+        category: 'Activities',
+        date: new Date('2024-11-04'),
+        image: '/assets/diwali3.jpg',
+        read: '4 min',
+      },
+      {
+        slug: 'vadodara-flood-response',
+        title: 'Inside the 28-day Vadodara flood response',
+        excerpt: 'How 450 volunteers reached 61,000+ people with food, water and medicine.',
+        category: 'Community Impact',
+        date: new Date('2024-09-20'),
+        image: '/assets/hero-flood.jpg',
+        read: '8 min',
+      },
+      {
+        slug: 'i-came-for-a-sunday',
+        title: 'I came for a Sunday and stayed six years',
+        excerpt: 'A long-time Baroda Youth Federation volunteer on what really keeps her coming back every week.',
+        category: 'Volunteer Experiences',
+        date: new Date('2025-02-14'),
+        image: '/assets/joycation1.jpg',
+        read: '5 min',
+      },
+      {
+        slug: 'menstrual-health-curriculum',
+        title: 'Designing a menstrual-health curriculum that girls actually want',
+        excerpt: 'What we learned from 60 schools, 22,000 girls and a lot of honest conversations.',
+        category: 'Community Impact',
+        date: new Date('2025-04-02'),
+        image: '/assets/project-sanitary.jpg',
+        read: '7 min',
+      },
+      {
+        slug: 'blanket-drive-2024',
+        title: '10,000 blankets later — the math of warmth',
+        excerpt: 'How we plan, source and distribute blankets without a single rupee of overhead.',
+        category: 'Success Stories',
+        date: new Date('2024-12-15'),
+        image: '/assets/blanket.jpg',
+        read: '6 min',
+      },
+    ]
+
+    for (const post of blogPosts) {
+      await prisma.blog.create({ data: post })
+    }
+    console.log('✅ Blog posts seeded:', blogPosts.length)
   }
 }
 

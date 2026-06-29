@@ -58,7 +58,7 @@ export function Hero() {
         image: project.image,
         eyebrow: project.category,
         title: project.title,
-        titleAccent: "featured by BYF.",
+        titleAccent: "featured by Baroda Youth Federation.",
         desc: project.short,
       }))
     : SLIDES;

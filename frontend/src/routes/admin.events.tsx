@@ -3,10 +3,12 @@ import { requireAdminAuth } from "@/lib/admin-auth";
 import { AdminLayout } from "@/components/layout/AdminLayout";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useState } from "react";
-import { Plus, Edit, Trash2, Calendar, MapPin } from "lucide-react";
+import { Plus, Edit, Trash2, Calendar, MapPin, X } from "lucide-react";
 import { toast } from "sonner";
 import { ImageInput } from "@/components/admin/ImageInput";
 import { useConfirmDialog } from "@/hooks/use-confirm-dialog";
+import { useEventsStore, type EventItem } from "@/lib/admin-store";
+import { api } from "@/lib/api";
 
 export const Route = createFileRoute("/admin/events")({
   component: AdminEvents,
@@ -14,20 +16,11 @@ export const Route = createFileRoute("/admin/events")({
   beforeLoad: requireAdminAuth,
 });
 
-interface Event {
-  id?: string;
-  title: string;
-  date: string;
-  location: string;
-  description: string;
-  image: string;
-}
-
 function AdminEvents() {
-  const [events, setEvents] = useState<Event[]>([]);
-  const [loading, setLoading] = useState(false);
+  const { data: events, loading, refresh } = useEventsStore();
   const [showAddForm, setShowAddForm] = useState(false);
-  const [editingEvent, setEditingEvent] = useState<Event | null>(null);
+  const [editingEvent, setEditingEvent] = useState<EventItem | null>(null);
+  const [saving, setSaving] = useState(false);
   const { confirm, dialog } = useConfirmDialog();
 
   const handleDelete = async (id: string) => {
@@ -36,26 +29,69 @@ function AdminEvents() {
       description: "Are you sure you want to delete this event? This action cannot be undone.",
     });
     if (!ok) return;
-    setEvents(events.filter((e) => e.id !== id));
-    toast.success("Event deleted");
+    try {
+      await api.deleteEvent(id);
+      refresh();
+      toast.success("Event deleted");
+    } catch (error) {
+      console.error('Failed to delete event:', error);
+      toast.error('Failed to delete event');
+    }
   };
 
-  const handleEdit = (event: Event) => {
+  const handleEdit = (event: EventItem) => {
     setEditingEvent(event);
     setShowAddForm(true);
   };
 
-  const handleSave = async (event: Event) => {
-    if (editingEvent && editingEvent.id) {
-      setEvents(events.map((e) => (e.id === editingEvent.id ? { ...event, id: editingEvent.id } : e)));
-      toast.success("Event updated");
-    } else {
-      const newEvent = { ...event, id: Date.now().toString() };
-      setEvents([...events, newEvent]);
-      toast.success("Event created");
+  const handleSave = async (event: EventItem) => {
+    if (!event.image) {
+      await confirm({
+        title: "Image required",
+        description: "Please upload a photo before saving.",
+        confirmLabel: "OK",
+        cancelLabel: "Dismiss",
+        variant: "default",
+      });
+      return;
     }
-    setShowAddForm(false);
-    setEditingEvent(null);
+
+    if (event.image.startsWith("data:")) {
+      await confirm({
+        title: "Image still uploading",
+        description: "Wait for the upload to finish, then try saving again.",
+        confirmLabel: "OK",
+        cancelLabel: "Dismiss",
+        variant: "default",
+      });
+      return;
+    }
+
+    setSaving(true);
+    try {
+      if (editingEvent && editingEvent.id) {
+        await api.updateEvent(editingEvent.id, event);
+        toast.success("Event updated");
+      } else {
+        await api.createEvent(event);
+        toast.success("Event created");
+      }
+      setShowAddForm(false);
+      setEditingEvent(null);
+      refresh();
+    } catch (error) {
+      console.error('Failed to save event:', error);
+      const message = error instanceof Error ? error.message : "Failed to save event";
+      await confirm({
+        title: "Could not save event",
+        description: message,
+        confirmLabel: "OK",
+        cancelLabel: "Dismiss",
+        variant: "default",
+      });
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -80,14 +116,32 @@ function AdminEvents() {
         </div>
 
         {showAddForm && (
-          <EventForm
-            event={editingEvent}
-            onSave={handleSave}
-            onCancel={() => {
-              setShowAddForm(false);
-              setEditingEvent(null);
-            }}
-          />
+          <div className="bg-card border border-border rounded-xl p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="font-display text-xl font-semibold">
+                {editingEvent ? "Edit Event" : "Add New Event"}
+              </h2>
+              <button
+                onClick={() => {
+                  setShowAddForm(false);
+                  setEditingEvent(null);
+                }}
+                className="p-2 rounded-lg hover:bg-muted transition-colors"
+                aria-label="Close"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+            <EventForm
+              event={editingEvent}
+              saving={saving}
+              onSave={handleSave}
+              onCancel={() => {
+                setShowAddForm(false);
+                setEditingEvent(null);
+              }}
+            />
+          </div>
         )}
 
         <div className="grid gap-4">
@@ -162,20 +216,23 @@ function AdminEvents() {
 
 function EventForm({
   event,
+  saving,
   onSave,
   onCancel,
 }: {
-  event: Event | null;
-  onSave: (data: Event) => void;
+  event: EventItem | null;
+  saving: boolean;
+  onSave: (data: EventItem) => void;
   onCancel: () => void;
 }) {
-  const [formData, setFormData] = useState<Event>(
+  const [formData, setFormData] = useState<EventItem>(
     event || {
       title: "",
       date: "",
       location: "",
       description: "",
       image: "",
+      upcoming: false,
     }
   );
 
@@ -186,11 +243,7 @@ function EventForm({
   };
 
   return (
-    <div className="bg-card border border-border rounded-xl p-6">
-      <h2 className="font-display text-xl font-semibold mb-4">
-        {event ? "Edit Event" : "Add Event"}
-      </h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="text-sm font-semibold">Title</label>
           <input
@@ -243,19 +296,20 @@ function EventForm({
         <div className="flex gap-3">
           <button
             type="submit"
-            className="px-4 py-2 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
+            disabled={saving}
+            className="px-4 py-2 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Save
+            {saving ? "Saving…" : "Save"}
           </button>
           <button
             type="button"
             onClick={onCancel}
-            className="px-4 py-2 rounded-lg border border-border hover:bg-muted transition-colors"
+            disabled={saving}
+            className="px-4 py-2 rounded-lg border border-border hover:bg-muted transition-colors disabled:opacity-50"
           >
             Cancel
           </button>
         </div>
       </form>
-    </div>
   );
 }

@@ -12,10 +12,10 @@ import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
 export const Route = createFileRoute("/volunteer")({
   head: () =>
     createPageSeo({
-      title: "Volunteer with BYF — One Sunday a month changes a life",
-      description: "Join 450+ BYF volunteers. Teach, organise events, drive, design — we have a role for every skill.",
+      title: "Volunteer with Baroda Youth Federation — One Sunday a month changes a life",
+      description: "Join 450+ Baroda Youth Federation volunteers. Teach, organise events, drive, design — we have a role for every skill.",
       path: "/volunteer",
-      keywords: ["volunteer BYF", "volunteer Vadodara", "NGO volunteer Gujarat"],
+      keywords: ["volunteer Baroda Youth Federation", "volunteer Vadodara", "NGO volunteer Gujarat"],
       jsonLd: breadcrumbJsonLd([
         { name: "Home", path: "/" },
         { name: "Volunteer", path: "/volunteer" },
@@ -84,7 +84,7 @@ function VolunteerPage() {
   return (
     <>
       <PageHero
-        eyebrow="Volunteer with BYF"
+        eyebrow="Volunteer with Baroda Youth Federation"
         title={<>Show up. <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">Change a year.</span></>}
         description="No prior experience needed. Just bring time, energy and the willingness to listen first."
         image={heroImage}
@@ -178,7 +178,7 @@ function VolunteerPage() {
                 </motion.div>
               )}
               <p className="text-xs text-muted-foreground">
-                By submitting you agree to be contacted by BYF about volunteer opportunities. We never share your details.
+                By submitting you agree to be contacted by Baroda Youth Federation about volunteer opportunities. We never share your details.
               </p>
             </form>
           </div>

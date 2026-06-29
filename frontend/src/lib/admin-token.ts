@@ -1,4 +1,4 @@
-const TOKEN_KEY = 'byf_admin_token'
+const TOKEN_KEY = 'baroda_youth_federation_admin_token'
 
 export function getAdminToken(): string | null {
   if (typeof window === 'undefined') return null

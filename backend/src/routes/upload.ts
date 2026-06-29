@@ -17,7 +17,7 @@ function sanitizeFolder(value: string): string {
     .replace(/[^a-zA-Z0-9/_-]/g, '-')
     .replace(/\/+/g, '/')
     .replace(/^\/|\/$/g, '')
-    .slice(0, 120) || 'byf-impact-hub'
+    .slice(0, 120) || 'baroda-youth-federation-impact-hub'
 }
 
 // POST upload image to Cloudinary (admin only)
@@ -35,7 +35,7 @@ app.post('/', authMiddleware, async (c) => {
   try {
     const formData = await c.req.formData()
     const file = formData.get('file')
-    const folder = sanitizeFolder((formData.get('folder') as string | null) || 'byf-impact-hub')
+    const folder = sanitizeFolder((formData.get('folder') as string | null) || 'baroda-youth-federation-impact-hub')
 
     if (!(file instanceof File)) {
       return c.json({ error: 'No image file provided' }, 400)
