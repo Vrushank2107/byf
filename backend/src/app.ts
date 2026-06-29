@@ -33,7 +33,6 @@ app.use('*', cors({
   allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowHeaders: ['Content-Type', 'Authorization'],
 }))
-app.use('*', secureHeaders())
 
 app.get('/', (c) => {
   return c.json({ status: 'ok', message: 'Baroda Youth Federation Backend API' })
