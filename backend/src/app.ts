@@ -27,13 +27,13 @@ const allowedOrigins = getAllowedOrigins()
 
 const app = new Hono()
 
-app.use('*', secureHeaders())
 app.use('*', cors({
   origin: '*',
   credentials: true,
   allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowHeaders: ['Content-Type', 'Authorization'],
 }))
+app.use('*', secureHeaders())
 
 app.get('/', (c) => {
   return c.json({ status: 'ok', message: 'Baroda Youth Federation Backend API' })
