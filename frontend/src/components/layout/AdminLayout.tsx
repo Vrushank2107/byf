@@ -17,6 +17,7 @@ import {
   Heart,
   Menu,
   ArrowUpRight,
+  FileText,
 } from "lucide-react";
 import { logoutAdmin } from "@/lib/admin-auth";
 import { Toaster } from "@/components/ui/sonner";
@@ -31,6 +32,8 @@ import {
 export const ADMIN_NAV = [
   { to: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { to: "/admin/projects", label: "Projects", icon: FolderKanban },
+  { to: "/admin/events", label: "Events", icon: Calendar },
+  { to: "/admin/blog", label: "Blog", icon: FileText },
   { to: "/admin/gallery", label: "Gallery", icon: ImageIcon },
   { to: "/admin/activities", label: "Activities", icon: Calendar },
   { to: "/admin/testimonials", label: "Testimonials", icon: Quote },

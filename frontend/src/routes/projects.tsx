@@ -1,7 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowUpRight, X } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { PageHero } from "@/components/ui/PageHero";
 import { Skeleton } from "@/components/ui/skeleton";
 import { type ProjectCategory, IMG, PROJECT_CATEGORY_OPTIONS, PROJECT_CUSTOM_CATEGORY_OPTION } from "@/lib/site-data";
@@ -54,7 +54,6 @@ function ProjectsPage() {
   const [filter, setFilter] = useState<(ProjectCategory | "All")>("All");
   const [projects, setProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedProject, setSelectedProject] = useState<any | null>(null);
   const [siteSettings, setSiteSettings] = useState<any>(null);
 
   useEffect(() => {
@@ -155,83 +154,59 @@ function ProjectsPage() {
 
           <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {visible.map((p, idx) => (
-              <motion.article
+              <Link
                 key={p.slug}
-                id={p.slug}
-                layout
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.04, duration: 0.45 }}
-                className="group flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-soft transition-all hover:-translate-y-1 hover:shadow-glow"
+                to="/projects/$slug"
+                params={{ slug: p.slug }}
               >
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <img src={imageUrl(p.image)} alt={p.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-                  <span className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-primary">
-                    {p.category}
-                  </span>
-                  <h3 className="absolute inset-x-4 bottom-4 font-display text-xl font-bold text-white">{p.title}</h3>
-                </div>
-                <div className="flex flex-1 flex-col p-6">
-                  <p className="text-sm leading-relaxed text-muted-foreground">{p.short}</p>
-                  <div className="mt-5 grid grid-cols-2 gap-4 border-t border-border pt-4">
-                    {p.stats.map((s: any) => (
-                      <div key={s.label}>
-                        <div className="font-display text-lg font-bold text-foreground">{s.value}</div>
-                        <div className="text-xs text-muted-foreground">{s.label}</div>
+                <motion.article
+                  id={p.slug}
+                  layout
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.04, duration: 0.45 }}
+                  className="group flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-soft transition-all hover:-translate-y-1 hover:shadow-glow cursor-pointer"
+                >
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <img src={imageUrl(p.image)} alt={p.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                    <span className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-primary">
+                      {p.category}
+                    </span>
+                    <h3 className="absolute inset-x-4 bottom-4 font-display text-xl font-bold text-white">{p.title}</h3>
+                  </div>
+                  <div className="flex flex-1 flex-col p-6">
+                    <p className="text-sm leading-relaxed text-muted-foreground">{p.short}</p>
+                    <div className="mt-5 grid grid-cols-2 gap-4 border-t border-border pt-4">
+                      {p.stats.map((s: any) => (
+                        <div key={s.label}>
+                          <div className="font-display text-lg font-bold text-foreground">{s.value}</div>
+                          <div className="text-xs text-muted-foreground">{s.label}</div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-5">
+                      <div className="flex items-center justify-between text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+                        <span>Progress</span>
+                        <span className="text-primary">{p.progress}%</span>
                       </div>
-                    ))}
-                  </div>
-                  <div className="mt-5">
-                    <div className="flex items-center justify-between text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-                      <span>Progress</span>
-                      <span className="text-primary">{p.progress}%</span>
+                      <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-muted">
+                        <div className="h-full rounded-full gradient-warm" style={{ width: `${p.progress}%` }} />
+                      </div>
                     </div>
-                    <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-muted">
-                      <div className="h-full rounded-full gradient-warm" style={{ width: `${p.progress}%` }} />
-                    </div>
+                    {p.fullStory && (
+                      <div className="mt-6 inline-flex w-fit items-center gap-1.5 self-start text-sm font-semibold text-primary transition-transform group-hover:translate-x-0.5">
+                        Read full story
+                        <ArrowUpRight className="h-4 w-4" />
+                      </div>
+                    )}
                   </div>
-                  {p.fullStory && (
-                    <button
-                      onClick={() => setSelectedProject(p)}
-                      className="mt-6 inline-flex w-fit items-center gap-1.5 self-start text-sm font-semibold text-primary transition-transform hover:translate-x-0.5"
-                    >
-                      Read full story
-                      <ArrowUpRight className="h-4 w-4" />
-                    </button>
-                  )}
-                </div>
-              </motion.article>
+                </motion.article>
+              </Link>
             ))}
           </div>
         </div>
       </section>
-
-      {selectedProject && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" onClick={() => setSelectedProject(null)}>
-          <div
-            className="bg-card border border-border rounded-2xl shadow-xl max-w-3xl w-full max-h-[90vh] overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center justify-between p-6 border-b border-border">
-              <h2 className="font-display text-2xl font-bold">{selectedProject.title}</h2>
-              <button
-                onClick={() => setSelectedProject(null)}
-                className="p-2 rounded-lg hover:bg-muted transition-colors"
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-            <div className="p-6 overflow-y-auto max-h-[calc(90vh-80px)]">
-              <div className="prose prose-sm max-w-none dark:prose-invert">
-                {selectedProject.fullStory?.split('\n').map((paragraph: string, idx: number) => (
-                  <p key={idx} className="mb-4">{paragraph}</p>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 }
