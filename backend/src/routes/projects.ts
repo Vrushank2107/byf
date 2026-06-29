@@ -15,7 +15,7 @@ const projectSchema = z.object({
   images: z.array(z.string()).optional(),
   stats: z.array(z.object({ value: z.string(), label: z.string() })),
   progress: z.number().min(0).max(100),
-  showInHero: z.boolean().optional(),
+  showInHero: z.boolean().default(false),
 })
 
 // GET all projects
