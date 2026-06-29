@@ -28,7 +28,7 @@ app.post('/', authMiddleware, async (c) => {
         error:
           'Image upload is not configured on the server. Add CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET in Render → Environment, or paste an image URL instead.',
       },
-      503,
+      503 as any,
     )
   }
 
@@ -38,26 +38,26 @@ app.post('/', authMiddleware, async (c) => {
     const folder = sanitizeFolder((formData.get('folder') as string | null) || 'baroda-youth-federation-impact-hub')
 
     if (!(file instanceof File)) {
-      return c.json({ error: 'No image file provided' }, 400)
+      return c.json({ error: 'No image file provided' }, 400 as any)
     }
 
     if (!file.type.startsWith('image/')) {
-      return c.json({ error: 'Only image files are allowed' }, 400)
+      return c.json({ error: 'Only image files are allowed' }, 400 as any)
     }
 
     if (file.size > MAX_BYTES) {
-      return c.json({ error: 'Image must be under 5 MB' }, 400)
+      return c.json({ error: 'Image must be under 5 MB' }, 400 as any)
     }
 
     const bytes = await file.arrayBuffer()
     const buffer = Buffer.from(bytes)
     const url = await uploadImage(buffer, folder)
 
-    return c.json({ url }, 201)
+    return c.json({ url }, 201 as any)
   } catch (error) {
     console.error('Upload error:', error)
     const status = error instanceof ImageUploadError ? error.status : 500
-    return c.json({ error: uploadErrorMessage(error) }, status)
+    return c.json({ error: uploadErrorMessage(error) }, status as any)
   }
 })
 
