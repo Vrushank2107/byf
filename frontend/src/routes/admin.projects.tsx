@@ -6,6 +6,7 @@ import { type Project } from "@/lib/site-data";
 import { PROJECT_CATEGORY_OPTIONS, PROJECT_CUSTOM_CATEGORY_OPTION } from "@/lib/site-data";
 import { useProjectsStore } from "@/lib/admin-store";
 import { api } from "@/lib/api";
+import { imageUrl } from "@/lib/image-url";
 import { useState, useEffect } from "react";
 import { Plus, Edit, Trash2, Sparkles } from "lucide-react";
 import { toast } from "sonner";
@@ -26,6 +27,7 @@ function emptyProject(): Project {
     short: "",
     fullStory: "",
     image: "",
+    images: [],
     stats: [],
     progress: 0,
     showInHero: false,
@@ -40,6 +42,7 @@ function toProjectPayload(project: Project) {
     short: project.short.trim(),
     fullStory: project.fullStory?.trim() || undefined,
     image: project.image.trim(),
+    images: [],
     stats: project.stats ?? [],
     progress: Number(project.progress),
     showInHero: Boolean(project.showInHero),
@@ -249,13 +252,13 @@ function ProjectForm({
   onSave: (project: Project) => void;
   onCancel: () => void;
 }) {
-  const [formData, setFormData] = useState<Project>(project ? { ...project, stats: project.stats ?? [] } : emptyProject());
+  const [formData, setFormData] = useState<Project>(project ? { ...project, stats: project.stats ?? [], images: [] } : emptyProject());
   const [selectedCategory, setSelectedCategory] = useState<string>(PROJECT_CATEGORY_OPTIONS[0]);
   const [customCategory, setCustomCategory] = useState("");
   const isCustomCategory = selectedCategory === PROJECT_CUSTOM_CATEGORY_OPTION;
 
   useEffect(() => {
-    setFormData(project ? { ...project, stats: project.stats ?? [] } : emptyProject());
+    setFormData(project ? { ...project, stats: project.stats ?? [], images: [] } : emptyProject());
     const isPresetCategory = project?.category && PROJECT_CATEGORY_OPTIONS.includes(project.category as (typeof PROJECT_CATEGORY_OPTIONS)[number]);
     setSelectedCategory(isPresetCategory ? (project?.category as string) : PROJECT_CUSTOM_CATEGORY_OPTION);
     setCustomCategory(project?.category && !isPresetCategory ? project.category : "");
@@ -344,13 +347,13 @@ function ProjectForm({
         <div>
           <label className="block text-sm font-medium mb-2">Full Story (Optional)</label>
           <textarea
-            value={formData.fullStory || ""}
+            value={formData.fullStory || ''}
             onChange={(e) => setFormData({ ...formData, fullStory: e.target.value })}
             className="w-full px-3 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
-            rows={10}
-            placeholder="Enter the detailed story of this project..."
+            rows={6}
+            placeholder="Add detailed information about the project, its impact, and story..."
           />
-          <p className="text-xs text-muted-foreground mt-1">This will be shown when users click "Read full story" on the project card.</p>
+          <p className="mt-1 text-xs text-muted-foreground">This will be displayed on the project detail page.</p>
         </div>
 
         <ImageInput

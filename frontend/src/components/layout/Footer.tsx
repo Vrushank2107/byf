@@ -93,8 +93,8 @@ export function Footer() {
             <div className="dark:hidden font-display text-lg font-bold">Baroda Youth Federation</div>
           </div>
           <p className="mt-5 max-w-sm text-sm leading-relaxed text-background/70">
-            A youth-led nonprofit in Vadodara working across education, women's
-            health, disaster relief and rural welfare since 2014.
+            A nonprofit organisation in Vadodara working across education, women's
+            health, disaster relief and rural welfare since 2017.
           </p>
           <div className="mt-6 flex flex-wrap gap-2">
             {[

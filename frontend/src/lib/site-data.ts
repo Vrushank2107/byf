@@ -120,6 +120,7 @@ export interface Project {
   short: string;
   fullStory?: string;
   image: string;
+  images?: string[];
   stats: { value: string; label: string }[];
   progress: number;
   showInHero?: boolean;

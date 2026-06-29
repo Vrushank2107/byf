@@ -25,10 +25,16 @@ export function normalizeImageFields<T extends Record<string, any>>(
   fields: string[],
 ): T {
   return fields.reduce<T>(
-    (next, field) =>
-      typeof next[field] === 'string'
-        ? { ...next, [field]: imageUrl(next[field]) }
-        : next,
+    (next, field) => {
+      const value = next[field]
+      if (typeof value === 'string') {
+        return { ...next, [field]: imageUrl(value) }
+      }
+      if (Array.isArray(value)) {
+        return { ...next, [field]: value.map((v) => typeof v === 'string' ? imageUrl(v) : v) }
+      }
+      return next
+    },
     item,
   )
 }

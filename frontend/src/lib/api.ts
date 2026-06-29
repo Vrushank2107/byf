@@ -60,17 +60,17 @@ async function request<T>(
 
 export const api = {
   // Projects
-  getProjects: () => request<any[]>('/api/projects').then((data) => normalizeImageCollection(data, ['image'])),
+  getProjects: () => request<any[]>('/api/projects').then((data) => normalizeImageCollection(data, ['image', 'images'])),
   getProject: (slug: string) =>
-    request<any>(`/api/projects/${slug}`).then((data) => normalizeImageFields(data, ['image'])),
+    request<any>(`/api/projects/${slug}`).then((data) => normalizeImageFields(data, ['image', 'images'])),
   createProject: (data: any) => request<any>('/api/projects', {
     method: 'POST',
     body: JSON.stringify(data),
-  }).then((data) => normalizeImageFields(data, ['image'])),
+  }).then((data) => normalizeImageFields(data, ['image', 'images'])),
   updateProject: (id: string, data: any) => request<any>(`/api/projects/${id}`, {
     method: 'PUT',
     body: JSON.stringify(data),
-  }).then((data) => normalizeImageFields(data, ['image'])),
+  }).then((data) => normalizeImageFields(data, ['image', 'images'])),
   deleteProject: (id: string) => request<{ success: boolean }>(`/api/projects/${id}`, {
     method: 'DELETE',
   }),

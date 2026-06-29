@@ -44,6 +44,9 @@ function ProjectDetailPage() {
   const loaderData = Route.useLoaderData() as { project: any } | undefined;
   const project = loaderData?.project;
 
+  console.log('Project data:', project);
+  console.log('Images:', project?.images);
+
   if (!project) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -79,26 +82,6 @@ function ProjectDetailPage() {
           <div className="grid gap-8 lg:grid-cols-3">
             {/* Main Content */}
             <div className="lg:col-span-2 space-y-8">
-              {/* Project Image Gallery */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="relative aspect-[16/9] overflow-hidden rounded-2xl"
-              >
-                <img
-                  src={imageUrl(project.image)}
-                  alt={project.title}
-                  className="h-full w-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-                <div className="absolute bottom-6 left-6 right-6">
-                  <span className="inline-block rounded-full bg-white/95 px-4 py-2 text-sm font-semibold uppercase tracking-wider text-primary backdrop-blur-sm">
-                    {project.category}
-                  </span>
-                </div>
-              </motion.div>
-
               {/* Full Story */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -115,6 +98,56 @@ function ProjectDetailPage() {
                   ))
                 ) : (
                   <p className="text-muted-foreground">{project.short}</p>
+                )}
+              </motion.div>
+
+              {/* Project Image Gallery */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="space-y-4"
+              >
+                {project.images && project.images.length > 0 ? (
+                  <>
+                    <h2 className="font-display text-3xl font-bold mb-6">Project Photos</h2>
+                    <div className="grid gap-4 md:grid-cols-2">
+                      {project.images.map((img: string, idx: number) => (
+                        <motion.div
+                          key={idx}
+                          initial={{ opacity: 0, scale: 0.95 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ duration: 0.4, delay: idx * 0.1 }}
+                          className={`overflow-hidden rounded-2xl ${idx === 0 ? 'md:col-span-2 aspect-[16/9]' : 'aspect-[4/3]'}`}
+                        >
+                          <img
+                            src={imageUrl(img)}
+                            alt={`${project.title} - Image ${idx + 1}`}
+                            className="h-full w-full object-cover transition-transform duration-700 hover:scale-110"
+                          />
+                        </motion.div>
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="relative aspect-[16/9] overflow-hidden rounded-2xl"
+                  >
+                    <img
+                      src={imageUrl(project.image)}
+                      alt={project.title}
+                      className="h-full w-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+                    <div className="absolute bottom-6 left-6 right-6">
+                      <span className="inline-block rounded-full bg-white/95 px-4 py-2 text-sm font-semibold uppercase tracking-wider text-primary backdrop-blur-sm">
+                        {project.category}
+                      </span>
+                    </div>
+                  </motion.div>
                 )}
               </motion.div>
 

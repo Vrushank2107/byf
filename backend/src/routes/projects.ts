@@ -12,6 +12,7 @@ const projectSchema = z.object({
   short: z.string(),
   fullStory: z.string().optional(),
   image: z.string(),
+  images: z.array(z.string()).optional(),
   stats: z.array(z.object({ value: z.string(), label: z.string() })),
   progress: z.number().min(0).max(100),
   showInHero: z.boolean().optional(),
