@@ -252,13 +252,13 @@ function ProjectForm({
   onSave: (project: Project) => void;
   onCancel: () => void;
 }) {
-  const [formData, setFormData] = useState<Project>(project ? { ...project, stats: project.stats ?? [], images: [] } : emptyProject());
+  const [formData, setFormData] = useState<Project>(project ? { ...project, stats: project.stats ?? [], images: [], showInHero: Boolean(project.showInHero) } : emptyProject());
   const [selectedCategory, setSelectedCategory] = useState<string>(PROJECT_CATEGORY_OPTIONS[0]);
   const [customCategory, setCustomCategory] = useState("");
   const isCustomCategory = selectedCategory === PROJECT_CUSTOM_CATEGORY_OPTION;
 
   useEffect(() => {
-    setFormData(project ? { ...project, stats: project.stats ?? [], images: [] } : emptyProject());
+    setFormData(project ? { ...project, stats: project.stats ?? [], images: [], showInHero: Boolean(project.showInHero) } : emptyProject());
     const isPresetCategory = project?.category && PROJECT_CATEGORY_OPTIONS.includes(project.category as (typeof PROJECT_CATEGORY_OPTIONS)[number]);
     setSelectedCategory(isPresetCategory ? (project?.category as string) : PROJECT_CUSTOM_CATEGORY_OPTION);
     setCustomCategory(project?.category && !isPresetCategory ? project.category : "");
