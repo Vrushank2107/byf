@@ -1,6 +1,4 @@
 import { Hono } from 'hono'
-import { cors } from 'hono/cors'
-import { secureHeaders } from 'hono/secure-headers'
 import { ZodError } from 'zod'
 import { prisma } from './lib/prisma'
 import { validateEnv } from './lib/env'
@@ -27,12 +25,19 @@ const allowedOrigins = getAllowedOrigins()
 
 const app = new Hono()
 
-app.use('*', cors({
-  origin: '*',
-  credentials: true,
-  allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowHeaders: ['Content-Type', 'Authorization'],
-}))
+// Custom CORS middleware
+app.use('*', async (c, next) => {
+  c.header('Access-Control-Allow-Origin', '*')
+  c.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+  c.header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+  c.header('Access-Control-Allow-Credentials', 'true')
+  
+  if (c.req.method === 'OPTIONS') {
+    return c.text('', 200)
+  }
+  
+  await next()
+})
 
 app.get('/', (c) => {
   return c.json({ status: 'ok', message: 'Baroda Youth Federation Backend API' })
