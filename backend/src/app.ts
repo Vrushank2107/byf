@@ -27,7 +27,7 @@ const app = new Hono()
 
 // Custom CORS middleware
 app.use('*', async (c, next) => {
-  const origin = c.req.header('origin') || '*'
+  const origin = c.req.header('origin') || 'https://byf-tau.vercel.app'
   c.header('Access-Control-Allow-Origin', origin)
   c.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
   c.header('Access-Control-Allow-Headers', 'Content-Type, Authorization')

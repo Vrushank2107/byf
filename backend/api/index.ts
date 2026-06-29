@@ -9,7 +9,7 @@ export const config = {
 const honoHandler = handle(app)
 
 export default async (req: any) => {
-  const origin = req.headers?.origin || '*'
+  const origin = req.headers?.origin || 'https://byf-tau.vercel.app'
   
   // Handle OPTIONS preflight
   if (req.method === 'OPTIONS') {
