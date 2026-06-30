@@ -90,15 +90,15 @@ function ProjectDetailPage() {
                 className="rounded-2xl border border-border bg-card p-8 shadow-soft"
               >
                 <h2 className="font-display text-3xl font-bold mb-6 text-foreground">About This Project</h2>
-                <div className="space-y-6 text-base leading-relaxed text-muted-foreground">
+                <div className="text-base text-muted-foreground leading-normal">
                   {project.fullStory ? (
                     project.fullStory.split('\n').map((paragraph: string, idx: number) => (
-                      <p key={idx} className="break-words">
+                      <p key={idx} className="mb-4 last:mb-0">
                         {paragraph}
                       </p>
                     ))
                   ) : (
-                    <p className="break-words">{project.short}</p>
+                    <p>{project.short}</p>
                   )}
                 </div>
               </motion.div>
