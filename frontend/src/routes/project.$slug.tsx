@@ -90,7 +90,7 @@ function ProjectDetailPage() {
                 className="rounded-2xl border border-border bg-card p-8 shadow-soft"
               >
                 <h2 className="font-display text-3xl font-bold mb-6 text-foreground">About This Project</h2>
-                <div className="text-base text-muted-foreground leading-normal">
+                <div className="w-full text-base text-muted-foreground leading-normal">
                   {project.fullStory ? (
                     project.fullStory.split('\n').map((paragraph: string, idx: number) => (
                       <p key={idx} className="mb-4 last:mb-0">
