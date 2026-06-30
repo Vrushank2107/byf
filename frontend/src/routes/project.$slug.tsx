@@ -87,18 +87,20 @@ function ProjectDetailPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="prose prose-lg max-w-none dark:prose-invert"
+                className="rounded-2xl border border-border bg-card p-8 shadow-soft"
               >
-                <h2 className="font-display text-3xl font-bold mb-6">About This Project</h2>
-                {project.fullStory ? (
-                  project.fullStory.split('\n').map((paragraph: string, idx: number) => (
-                    <p key={idx} className="mb-4 leading-relaxed text-muted-foreground">
-                      {paragraph}
-                    </p>
-                  ))
-                ) : (
-                  <p className="text-muted-foreground">{project.short}</p>
-                )}
+                <h2 className="font-display text-3xl font-bold mb-6 text-foreground">About This Project</h2>
+                <div className="prose prose-lg max-w-none dark:prose-invert">
+                  {project.fullStory ? (
+                    project.fullStory.split('\n').map((paragraph: string, idx: number) => (
+                      <p key={idx} className="mb-6 leading-relaxed text-muted-foreground text-base">
+                        {paragraph}
+                      </p>
+                    ))
+                  ) : (
+                    <p className="mb-6 leading-relaxed text-muted-foreground text-base">{project.short}</p>
+                  )}
+                </div>
               </motion.div>
 
               {/* Project Image Gallery */}
