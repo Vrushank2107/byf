@@ -27,7 +27,7 @@ function ContactPage() {
   const [done, setDone] = useState(false);
   const [loading, setLoading] = useState(false);
   const [settings, setSettings] = useState<any>(null);
-  const [heroImage, setHeroImage] = useState(IMG.heroEducation);
+  const [heroImage, setHeroImage] = useState(IMG.flag);
 
   useEffect(() => {
     api.getSettings().then((data) => {

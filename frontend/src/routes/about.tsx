@@ -36,7 +36,7 @@ const VALUES = [
 
 function AboutPage() {
   const [leaders, setLeaders] = useState<any[]>([]);
-  const [heroImage, setHeroImage] = useState(IMG.heroEducation);
+  const [heroImage, setHeroImage] = useState(IMG.flag);
   const [sectionImage, setSectionImage] = useState(IMG.flag);
   const [loadingLeaders, setLoadingLeaders] = useState(true);
   const [siteSettings, setSiteSettings] = useState<any>(null);

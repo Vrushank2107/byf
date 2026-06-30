@@ -35,7 +35,7 @@ function VolunteerPage() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [heroImage, setHeroImage] = useState(IMG.joycation1);
-  const [formImage, setFormImage] = useState(IMG.holi2);
+  const [formImage, setFormImage] = useState(IMG.holi);
 
   useEffect(() => {
     api.getSettings().then((data) => {

@@ -26,7 +26,7 @@ export const Route = createFileRoute("/events")({
 function EventsPage() {
   const [events, setEvents] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [heroImage, setHeroImage] = useState(IMG.flag);
+  const [heroImage, setHeroImage] = useState(IMG.diwali);
   
   useEffect(() => {
     Promise.all([

@@ -9,15 +9,6 @@ import holi2 from "@/assets/byf/holi2.jpg";
 import holi3 from "@/assets/byf/holi3.jpg";
 import joycation1 from "@/assets/byf/joycation1.jpg";
 
-import heroEducation from "@/assets/hero-education.jpg";
-import heroBlankets from "@/assets/hero-blankets.jpg";
-import heroFlood from "@/assets/hero-flood.jpg";
-import heroWomen from "@/assets/hero-women.jpg";
-import pNotebooks from "@/assets/project-notebooks.jpg";
-import pSanitary from "@/assets/project-sanitary.jpg";
-import pRotibank from "@/assets/project-rotibank.jpg";
-import pJoycation from "@/assets/project-joycation.jpg";
-
 // Default fallback images
 const DEFAULT_IMG = {
   blanket,
@@ -30,14 +21,6 @@ const DEFAULT_IMG = {
   holi2,
   holi3,
   joycation1,
-  heroEducation,
-  heroBlankets,
-  heroFlood,
-  heroWomen,
-  pNotebooks,
-  pSanitary,
-  pRotibank,
-  pJoycation,
 };
 
 // Dynamic images from settings (will be populated by API)
@@ -45,14 +28,6 @@ let dynamicImages: Partial<typeof DEFAULT_IMG> = {};
 
 export function setDynamicImages(settings: any) {
   dynamicImages = {
-    heroEducation: settings.heroEducation,
-    heroBlankets: settings.heroBlankets,
-    heroFlood: settings.heroFlood,
-    heroWomen: settings.heroWomen,
-    pNotebooks: settings.pNotebooks,
-    pSanitary: settings.pSanitary,
-    pRotibank: settings.pRotibank,
-    pJoycation: settings.pJoycation,
     blanket: settings.blanket,
     chappal: settings.chappal,
     diwali: settings.diwali,
@@ -167,7 +142,7 @@ export const PROJECTS: Project[] = [
     category: "Education",
     short: "Year-long tuition and mentorship for first-generation learners in Vadodara's outer wards. Weekend classes covering all subjects with dedicated volunteer tutors.",
     fullStory: "Project Progress provides comprehensive academic support to first-generation learners from economically weaker sections. Our volunteer tutors conduct weekend classes covering Mathematics, Science, English and Social Studies. The program includes regular assessments, parent-teacher meetings, and career guidance sessions. Started in 2018, the program has helped over 1,200 students improve their academic performance and continue their education.",
-    image: IMG.heroEducation,
+    image: IMG.flag,
     stats: [{ value: "1,200+", label: "Students mentored" }, { value: "38", label: "Volunteer tutors" }, { value: "15", label: "Centers" }],
     progress: 72,
   },
@@ -187,7 +162,7 @@ export const PROJECTS: Project[] = [
     category: "Education",
     short: "50,000+ notebooks and stationery kits handed out before every academic year. Ensuring every child has the tools to learn.",
     fullStory: "Project Sankalp is our annual notebook distribution drive that provides essential educational supplies to underprivileged students before the start of each academic year. The distribution includes notebooks, pens, pencils, erasers, geometry boxes, and school bags. We work with government schools and community centers to identify deserving students. The program has grown from distributing 8,000 notebooks in 2018 to over 50,000 in 2025.",
-    image: IMG.pNotebooks,
+    image: IMG.flag,
     stats: [{ value: "50,000+", label: "Notebooks" }, { value: "180", label: "Schools" }, { value: "12,000", label: "Students" }],
     progress: 88,
   },
@@ -197,7 +172,7 @@ export const PROJECTS: Project[] = [
     category: "Women Empowerment",
     short: "Free pads, dignity kits and menstrual-health sessions for adolescent girls. Breaking taboos and ensuring menstrual hygiene.",
     fullStory: "Our Sanitary Pad Distribution program addresses menstrual health management among adolescent girls from low-income families. We distribute free sanitary pads along with dignity kits containing hygiene products. The program includes educational sessions on menstrual health, hygiene practices, and breaking societal taboos. We work with government schools and community health centers to reach girls who would otherwise miss school during their periods.",
-    image: IMG.pSanitary,
+    image: IMG.holi,
     stats: [{ value: "22,000+", label: "Girls reached" }, { value: "60+", label: "Schools covered" }, { value: "150", label: "Health sessions" }],
     progress: 54,
   },
@@ -207,7 +182,7 @@ export const PROJECTS: Project[] = [
     category: "Disaster Relief",
     short: "Food packets, drinking water and medical aid during the 2024 Vadodara floods. Emergency response when it matters most.",
     fullStory: "During the devastating Vadodara floods of 2024, Baroda Youth Federation mobilized 450 volunteers for emergency relief operations. We distributed food packets, drinking water, medicines, and essential relief materials to affected families. Our team worked with local authorities to identify the most vulnerable populations and ensure timely assistance. The 28-day operation reached over 61,000 people across the worst-affected areas.",
-    image: IMG.heroFlood,
+    image: IMG.diwali,
     stats: [{ value: "61,000+", label: "Beneficiaries" }, { value: "28", label: "Relief days" }, { value: "450", label: "Volunteers" }],
     progress: 100,
   },
@@ -217,7 +192,7 @@ export const PROJECTS: Project[] = [
     category: "Community Welfare",
     short: "Hot rotis and sabzi distributed nightly to homeless families across the city. No one should sleep hungry in Vadodara.",
     fullStory: "Roti Bank is our nightly food distribution program that serves hot meals to homeless individuals, migrant workers, and families in need. Every evening, our volunteers prepare fresh rotis and vegetable curry, then distribute them at identified locations across the city. The program started as a small initiative in 2019 and has grown to serve over 1,400 meals per week. We believe that no one should go to bed hungry in our city.",
-    image: IMG.pRotibank,
+    image: IMG.chappal,
     stats: [{ value: "1,400", label: "Meals / week" }, { value: "6", label: "Years running" }, { value: "3,00,000", label: "Total meals" }],
     progress: 80,
   },
@@ -301,12 +276,12 @@ export const GALLERY = [
   { src: IMG.chappal, tag: "Education", alt: "Footwear distribution for children" },
   { src: IMG.diwali2, tag: "Diwali", alt: "Diwali group photo with volunteers" },
   { src: IMG.holi3, tag: "Holi", alt: "Village Holi group photo" },
-  { src: IMG.pSanitary, tag: "Sanitary Program", alt: "Women receiving sanitary pad kits" },
-  { src: IMG.heroFlood, tag: "Flood Relief", alt: "Flood relief volunteers distributing food" },
-  { src: IMG.pNotebooks, tag: "Education", alt: "Schoolgirl receiving notebooks" },
-  { src: IMG.heroBlankets, tag: "Blanket Distribution", alt: "Elderly women receiving blankets" },
-  { src: IMG.pRotibank, tag: "Sanitary Program", alt: "Roti bank volunteers preparing meals" },
-  { src: IMG.heroEducation, tag: "Education", alt: "Volunteers with students at village school" },
+  { src: IMG.holi, tag: "Sanitary Program", alt: "Women receiving sanitary pad kits" },
+  { src: IMG.diwali, tag: "Flood Relief", alt: "Flood relief volunteers distributing food" },
+  { src: IMG.flag, tag: "Education", alt: "Schoolgirl receiving notebooks" },
+  { src: IMG.blanket, tag: "Blanket Distribution", alt: "Elderly women receiving blankets" },
+  { src: IMG.chappal, tag: "Sanitary Program", alt: "Roti bank volunteers preparing meals" },
+  { src: IMG.joycation1, tag: "Education", alt: "Volunteers with students at village school" },
 ] as const;
 
 export const GALLERY_TAGS = [
@@ -339,7 +314,7 @@ export const EVENTS = [
     date: "2026-07-15",
     location: "Vadodara — 15 schools across Waghodia, Fatehgunj & Sayajigunj",
     description: "Distribution of 50,000+ notebooks and complete stationery kits to underprivileged students before the academic year begins. Volunteer teams will visit government schools and community centers.",
-    image: IMG.pNotebooks,
+    image: IMG.flag,
     upcoming: true,
   },
   {
@@ -403,7 +378,7 @@ export const EVENTS = [
     date: "2026-01-15",
     location: "Railway Station, Bus Stand & Market Areas",
     description: "Special winter night distribution serving hot meals and warm clothing to 500 homeless individuals. Extra blankets and sweaters distributed.",
-    image: IMG.pRotibank,
+    image: IMG.chappal,
     upcoming: true,
   },
 ];
@@ -424,7 +399,7 @@ export const BLOG = [
     excerpt: "How a small evening idea in 2019 grew into a nightly operation serving over 1,400 meals a week across Vadodara.",
     category: "Success Stories",
     date: "2025-12-20",
-    image: IMG.pRotibank,
+    image: IMG.chappal,
     read: "7 min",
   },
   {
@@ -442,7 +417,7 @@ export const BLOG = [
     excerpt: "How 450 volunteers mobilized overnight to reach flood-affected families with food, water and medicine across the city.",
     category: "Community Impact",
     date: "2024-09-25",
-    image: IMG.heroFlood,
+    image: IMG.diwali,
     read: "9 min",
   },
   {
@@ -460,7 +435,7 @@ export const BLOG = [
     excerpt: "What we learned from 60 schools, thousands of conversations, and building trust with adolescent girls across Vadodara.",
     category: "Community Impact",
     date: "2025-07-15",
-    image: IMG.pSanitary,
+    image: IMG.holi,
     read: "8 min",
   },
   {
@@ -478,7 +453,7 @@ export const BLOG = [
     excerpt: "From 8,000 books in 2018 to 50,000+ in 2025 — the growth of our flagship education initiative across 180 schools.",
     category: "Success Stories",
     date: "2025-07-20",
-    image: IMG.pNotebooks,
+    image: IMG.flag,
     read: "7 min",
   },
   {

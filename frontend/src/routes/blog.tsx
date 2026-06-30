@@ -31,7 +31,7 @@ function BlogPage() {
   const [cat, setCat] = useState<(typeof CATS)[number]>("All");
   const [blogPosts, setBlogPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [heroImage, setHeroImage] = useState(IMG.pSanitary);
+  const [heroImage, setHeroImage] = useState(IMG.holi);
 
   useEffect(() => {
     api.getSettings().then((data) => {

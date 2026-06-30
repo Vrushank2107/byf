@@ -26,24 +26,6 @@ const settingsSchema = z.object({
   youtube: z.string(),
   founderPortfolioUrl: z.string().optional(),
   donationFunds: z.array(donationFundSchema).optional().default([]),
-  heroEducation: z.string().nullable().optional(),
-  heroBlankets: z.string().nullable().optional(),
-  heroFlood: z.string().nullable().optional(),
-  heroWomen: z.string().nullable().optional(),
-  pNotebooks: z.string().nullable().optional(),
-  pSanitary: z.string().nullable().optional(),
-  pRotibank: z.string().nullable().optional(),
-  pJoycation: z.string().nullable().optional(),
-  blanket: z.string().nullable().optional(),
-  chappal: z.string().nullable().optional(),
-  diwali: z.string().nullable().optional(),
-  diwali2: z.string().nullable().optional(),
-  diwali3: z.string().nullable().optional(),
-  flag: z.string().nullable().optional(),
-  holi: z.string().nullable().optional(),
-  holi2: z.string().nullable().optional(),
-  holi3: z.string().nullable().optional(),
-  joycation1: z.string().nullable().optional(),
   donateHeroImage: z.string().nullable().optional(),
   aboutHeroImage: z.string().nullable().optional(),
   aboutSectionImage: z.string().nullable().optional(),
@@ -65,10 +47,13 @@ app.get('/', async (c) => {
   return c.json(settings)
 })
 
+// Partial schema for updates (all fields optional)
+const partialSettingsSchema = settingsSchema.partial()
+
 // PUT update site settings (admin only)
 app.put('/', authMiddleware, async (c) => {
   const body = await c.req.json()
-  const validated = settingsSchema.strict().parse(body)
+  const validated = partialSettingsSchema.parse(body)
 
   const settings = await prisma.siteSettings.findFirst()
   
@@ -79,8 +64,10 @@ app.put('/', authMiddleware, async (c) => {
     })
     return c.json(updated)
   } else {
+    // For creation, require all fields
+    const fullValidated = settingsSchema.parse(body)
     const created = await prisma.siteSettings.create({
-      data: validated,
+      data: fullValidated,
     })
     return c.json(created, 201)
   }

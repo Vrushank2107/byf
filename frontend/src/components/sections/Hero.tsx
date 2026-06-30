@@ -7,21 +7,21 @@ import { api } from "@/lib/api";
 
 const SLIDES = [
   {
-    image: IMG.heroEducation,
+    image: IMG.flag,
     eyebrow: "Education",
     title: "Every child deserves a notebook,",
     titleAccent: "a teacher, and a chance.",
     desc: "5,000+ first-generation learners are in school today because someone believed in them.",
   },
   {
-    image: IMG.heroFlood,
+    image: IMG.diwali,
     eyebrow: "Disaster Relief",
     title: "When the waters rose,",
     titleAccent: "61,000 people had us by their side.",
     desc: "28 days. 450 volunteers. Food, water and medicine to every family in need.",
   },
   {
-    image: IMG.heroBlankets,
+    image: IMG.blanket,
     eyebrow: "Winter Drive",
     title: "Ten thousand blankets,",
     titleAccent: "ten thousand warmer nights.",

@@ -125,44 +125,6 @@ function AdminSettings() {
               </div>
             </Section>
 
-            <Section title="Site Images">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <ImageInput label="Hero Education Image" value={draft.heroEducation || ''} onChange={(v) => update("heroEducation", v)} />
-                <ImageInput label="Hero Blankets Image" value={draft.heroBlankets || ''} onChange={(v) => update("heroBlankets", v)} />
-                <ImageInput label="Hero Flood Image" value={draft.heroFlood || ''} onChange={(v) => update("heroFlood", v)} />
-                <ImageInput label="Hero Women Image" value={draft.heroWomen || ''} onChange={(v) => update("heroWomen", v)} />
-                <ImageInput label="P Notebooks Image" value={draft.pNotebooks || ''} onChange={(v) => update("pNotebooks", v)} />
-                <ImageInput label="P Sanitary Image" value={draft.pSanitary || ''} onChange={(v) => update("pSanitary", v)} />
-                <ImageInput label="P Rotibank Image" value={draft.pRotibank || ''} onChange={(v) => update("pRotibank", v)} />
-                <ImageInput label="P Joycation Image" value={draft.pJoycation || ''} onChange={(v) => update("pJoycation", v)} />
-                <ImageInput label="Blanket Image" value={draft.blanket || ''} onChange={(v) => update("blanket", v)} />
-                <ImageInput label="Chappal Image" value={draft.chappal || ''} onChange={(v) => update("chappal", v)} />
-                <ImageInput label="Diwali Image" value={draft.diwali || ''} onChange={(v) => update("diwali", v)} />
-                <ImageInput label="Diwali 2 Image" value={draft.diwali2 || ''} onChange={(v) => update("diwali2", v)} />
-                <ImageInput label="Diwali 3 Image" value={draft.diwali3 || ''} onChange={(v) => update("diwali3", v)} />
-                <ImageInput label="Flag Image" value={draft.flag || ''} onChange={(v) => update("flag", v)} />
-                <ImageInput label="Holi Image" value={draft.holi || ''} onChange={(v) => update("holi", v)} />
-                <ImageInput label="Holi 2 Image" value={draft.holi2 || ''} onChange={(v) => update("holi2", v)} />
-                <ImageInput label="Holi 3 Image" value={draft.holi3 || ''} onChange={(v) => update("holi3", v)} />
-                <ImageInput label="Joycation 1 Image" value={draft.joycation1 || ''} onChange={(v) => update("joycation1", v)} />
-              </div>
-            </Section>
-
-            <Section title="Page Hero Images">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <ImageInput label="Donate Hero Image" value={draft.donateHeroImage || ''} onChange={(v) => update("donateHeroImage", v)} />
-                <ImageInput label="About Hero Image" value={draft.aboutHeroImage || ''} onChange={(v) => update("aboutHeroImage", v)} />
-                <ImageInput label="About Section Image" value={draft.aboutSectionImage || ''} onChange={(v) => update("aboutSectionImage", v)} />
-                <ImageInput label="Contact Hero Image" value={draft.contactHeroImage || ''} onChange={(v) => update("contactHeroImage", v)} />
-                <ImageInput label="Events Hero Image" value={draft.eventsHeroImage || ''} onChange={(v) => update("eventsHeroImage", v)} />
-                <ImageInput label="Blog Hero Image" value={draft.blogHeroImage || ''} onChange={(v) => update("blogHeroImage", v)} />
-                <ImageInput label="Volunteer Hero Image" value={draft.volunteerHeroImage || ''} onChange={(v) => update("volunteerHeroImage", v)} />
-                <ImageInput label="Volunteer Form Image" value={draft.volunteerFormImage || ''} onChange={(v) => update("volunteerFormImage", v)} />
-                <ImageInput label="Gallery Hero Image" value={draft.galleryHeroImage || ''} onChange={(v) => update("galleryHeroImage", v)} />
-                <ImageInput label="Projects Hero Image" value={draft.projectsHeroImage || ''} onChange={(v) => update("projectsHeroImage", v)} />
-              </div>
-            </Section>
-
 
             <div className="flex flex-wrap gap-3 items-center">
               <button

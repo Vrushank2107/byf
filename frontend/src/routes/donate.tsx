@@ -44,7 +44,7 @@ function DonatePage() {
   const [showReceipt, setShowReceipt] = useState(false);
   const [receiptData, setReceiptData] = useState<any>(null);
   const [settings, setSettings] = useState<{ donateHeroImage?: string } | null>(null);
-  const [heroImage, setHeroImage] = useState(IMG.heroBlankets);
+  const [heroImage, setHeroImage] = useState(IMG.blanket);
   const [donorInfo, setDonorInfo] = useState({
     name: '',
     email: '',

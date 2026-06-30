@@ -29,7 +29,7 @@ function GalleryPage() {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
   const [gallery, setGallery] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [heroImage, setHeroImage] = useState(IMG.diwali3);
+  const [heroImage, setHeroImage] = useState(IMG.diwali);
 
   useEffect(() => {
     api.getGallery().then((data) => {
@@ -100,7 +100,7 @@ function GalleryPage() {
         eyebrow="Gallery"
         title={<>Moments from <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">the ground.</span></>}
         description="Real photos from our events. Tap any image for fullscreen."
-        image={IMG.diwali3}
+        image={IMG.diwali}
       />
 
       <section className="section-y">
