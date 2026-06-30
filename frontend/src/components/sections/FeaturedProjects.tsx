@@ -12,7 +12,8 @@ export function FeaturedProjects() {
 
   useEffect(() => {
     api.getProjects().then((data) => {
-      setProjects(data.slice(0, 6));
+      const sorted = [...data].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+      setProjects(sorted.slice(0, 6));
       setLoading(false);
     }).catch((error) => {
       console.error('Failed to fetch projects:', error);

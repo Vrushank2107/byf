@@ -11,7 +11,7 @@ model Project {
   id         String          @id @default(uuid()) @db.Uuid
   slug       String          @unique
   title      String
-  category   ProjectCategory
+  category   String
   short      String
   image      String
   stats      Json            @default("[]")

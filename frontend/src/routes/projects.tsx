@@ -58,7 +58,8 @@ function ProjectsPage() {
 
   useEffect(() => {
     api.getProjects().then((data) => {
-      setProjects(data);
+      const sorted = [...data].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+      setProjects(sorted);
       setLoading(false);
     }).catch((error) => {
       console.error('Failed to fetch projects:', error);

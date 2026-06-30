@@ -53,6 +53,7 @@ function toProjectPayload(project: Project) {
 
 function AdminProjects() {
   const { data: projects, loading, refresh } = useProjectsStore();
+  const sortedProjects = [...(projects || [])].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [saving, setSaving] = useState(false);
@@ -189,7 +190,7 @@ function AdminProjects() {
               ))}
             </>
           ) : (
-            projects.map((project) => (
+            sortedProjects.map((project) => (
               <div
                 key={project.slug}
                 className="bg-card border border-border rounded-xl p-6 flex items-start justify-between gap-4"
@@ -433,21 +434,6 @@ function ProjectForm({
             ))}
           </div>
         </div>
-
-        <label className="flex items-start gap-3 rounded-lg border border-border bg-background p-4">
-          <input
-            type="checkbox"
-            checked={Boolean(formData.showInHero)}
-            onChange={(e) => setFormData({ ...formData, showInHero: e.target.checked })}
-            className="mt-1 h-4 w-4 rounded border-border text-primary focus:ring-primary/50"
-          />
-          <span>
-            <span className="block text-sm font-medium">Show in home and about hero</span>
-            <span className="mt-1 block text-xs text-muted-foreground">
-              Selected projects appear in the homepage hero slider. The about page uses the first selected project image.
-            </span>
-          </span>
-        </label>
 
         <div>
           <label className="block text-sm font-medium mb-2">Progress: {formData.progress}%</label>

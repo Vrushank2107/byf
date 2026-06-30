@@ -8,7 +8,7 @@ const app = new Hono()
 const projectSchema = z.object({
   slug: z.string(),
   title: z.string(),
-  category: z.enum(['Education', 'WomenEmpowerment', 'CommunityWelfare', 'DisasterRelief', 'CulturalActivities']),
+  category: z.string(),
   short: z.string(),
   fullStory: z.string().optional(),
   image: z.string(),
@@ -22,7 +22,7 @@ const projectSchema = z.object({
 // GET all projects
 app.get('/', async (c) => {
   const data = await prisma.project.findMany({
-    orderBy: { order: 'asc' },
+    orderBy: { order: 'asc' as const },
   })
   return c.json(data)
 })
@@ -31,7 +31,7 @@ app.get('/', async (c) => {
 app.get('/hero', async (c) => {
   const data = await prisma.project.findMany({
     where: { showInHero: true },
-    orderBy: { order: 'asc' },
+    orderBy: { order: 'asc' as const },
   })
   return c.json(data)
 })
