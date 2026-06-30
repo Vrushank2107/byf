@@ -7,6 +7,8 @@ import { useState, useEffect } from "react";
 import { Plus, Edit, Trash2, Users } from "lucide-react";
 import { toast } from "sonner";
 import { useConfirmDialog } from "@/hooks/use-confirm-dialog";
+import { ImageInput } from "@/components/admin/ImageInput";
+import { imageUrl } from "@/lib/image-url";
 
 export const Route = createFileRoute("/admin/leaders")({
   component: AdminLeaders,
@@ -132,9 +134,13 @@ function AdminLeaders() {
                 className="bg-card border border-border rounded-xl p-6 flex items-start justify-between gap-4"
               >
                 <div className="flex gap-4 min-w-0">
-                  <div className="grid h-16 w-16 shrink-0 place-items-center rounded-2xl gradient-hero font-display text-2xl font-bold text-white">
-                    {leader.name.split(" ").map((n: string) => n[0]).join("")}
-                  </div>
+                  {leader.image ? (
+                    <img src={imageUrl(leader.image)} alt={leader.name} className="h-16 w-16 shrink-0 rounded-2xl object-cover" />
+                  ) : (
+                    <div className="grid h-16 w-16 shrink-0 place-items-center rounded-2xl gradient-hero font-display text-2xl font-bold text-white">
+                      {leader.name.split(" ").map((n: string) => n[0]).join("")}
+                    </div>
+                  )}
                   <div className="min-w-0 flex-1">
                     <h3 className="font-semibold text-foreground">{leader.name}</h3>
                     <p className="text-sm text-muted-foreground">{leader.role}</p>
@@ -178,6 +184,7 @@ function LeaderForm({
       name: "",
       role: "",
       bio: "",
+      image: "",
       order: 0,
     }
   );
@@ -222,6 +229,15 @@ function LeaderForm({
             rows={4}
             required
           />
+        </div>
+        <div>
+          <label className="text-sm font-semibold">Photo</label>
+          <div className="mt-2">
+            <ImageInput
+              value={formData.image}
+              onChange={(value) => setFormData({ ...formData, image: value })}
+            />
+          </div>
         </div>
         <div>
           <label className="text-sm font-semibold">Order</label>

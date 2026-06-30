@@ -201,9 +201,13 @@ function AboutPage() {
                   transition={{ delay: idx * 0.06, duration: 0.5 }}
                   className="rounded-3xl border border-border bg-card p-6 shadow-soft transition-transform hover:-translate-y-1"
                 >
-                  <div className="grid h-20 w-20 place-items-center rounded-2xl gradient-hero font-display text-2xl font-bold text-white">
-                    {p.name.split(" ").map((n: string) => n[0]).join("")}
-                  </div>
+                  {p.image ? (
+                    <img src={imageUrl(p.image)} alt={p.name} className="h-20 w-20 rounded-2xl object-cover" />
+                  ) : (
+                    <div className="grid h-20 w-20 place-items-center rounded-2xl gradient-hero font-display text-2xl font-bold text-white">
+                      {p.name.split(" ").map((n: string) => n[0]).join("")}
+                    </div>
+                  )}
                   <h3 className="mt-5 font-display text-lg font-semibold text-foreground">{p.name}</h3>
                   <p className="text-xs font-semibold uppercase tracking-wider text-secondary">{p.role}</p>
                   <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{p.bio}</p>
