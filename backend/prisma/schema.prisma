@@ -145,6 +145,9 @@ model SiteSettings {
   volunteerFormImage  String?  @map("volunteer_form_image")
   galleryHeroImage    String?  @map("gallery_hero_image")
   projectsHeroImage   String?  @map("projects_hero_image")
+  homeHeroImage1      String?  @map("home_hero_image_1")
+  homeHeroImage2      String?  @map("home_hero_image_2")
+  homeHeroImage3      String?  @map("home_hero_image_3")
 
   @@map("site_settings")
 }
