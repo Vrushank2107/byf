@@ -41,7 +41,6 @@ async function request<T>(
   const response = await fetch(url, {
     ...options,
     headers,
-    credentials: 'include',
   })
 
   if (!response.ok) {
@@ -175,7 +174,6 @@ export const api = {
 
     const response = await fetch(`${getApiUrl()}/api/upload`, {
       method: 'POST',
-      credentials: 'include',
       headers: uploadHeaders,
       body: formData,
     })
