@@ -256,7 +256,9 @@ function EventForm({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.title || !formData.date || !formData.location) return;
-    onSave(formData);
+    // Convert yyyy-MM-dd to ISO format for backend
+    const isoDate = new Date(formData.date).toISOString();
+    onSave({ ...formData, date: isoDate });
   };
 
   return (
