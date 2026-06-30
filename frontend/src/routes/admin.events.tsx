@@ -1,8 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
+ import { createFileRoute } from "@tanstack/react-router";
 import { requireAdminAuth } from "@/lib/admin-auth";
 import { AdminLayout } from "@/components/layout/AdminLayout";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Plus, Edit, Trash2, Calendar, MapPin, X } from "lucide-react";
 import { toast } from "sonner";
 import { ImageInput } from "@/components/admin/ImageInput";
@@ -235,6 +235,23 @@ function EventForm({
       upcoming: false,
     }
   );
+
+  useEffect(() => {
+    if (event) {
+      // Convert ISO date to yyyy-MM-dd format for date input
+      const dateForInput = event.date ? event.date.split('T')[0] : '';
+      setFormData({ ...event, date: dateForInput });
+    } else {
+      setFormData({
+        title: "",
+        date: "",
+        location: "",
+        description: "",
+        image: "",
+        upcoming: false,
+      });
+    }
+  }, [event]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
