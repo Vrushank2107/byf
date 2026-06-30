@@ -30,10 +30,13 @@ app.use('*', async (c, next) => {
   const requestOrigin = c.req.header('origin')
   const resolvedOrigin = resolveCorsOrigin(requestOrigin, allowedOrigins)
   
+  // Always set CORS headers
+  c.header('Access-Control-Allow-Origin', resolvedOrigin || '*')
+  c.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+  c.header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+  
+  // Only set credentials if we have a specific origin
   if (resolvedOrigin) {
-    c.header('Access-Control-Allow-Origin', resolvedOrigin)
-    c.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-    c.header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
     c.header('Access-Control-Allow-Credentials', 'true')
     c.header('Vary', 'Origin')
   }

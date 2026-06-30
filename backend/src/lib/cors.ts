@@ -30,11 +30,8 @@ export function resolveCorsOrigin(
   if (!requestOrigin) return undefined
   if (allowedOrigins.includes(requestOrigin)) return requestOrigin
 
-  // Allow all Vercel origins
+  // Allow all Vercel origins (both production and preview)
   if (VERCEL_ORIGIN.test(requestOrigin)) return requestOrigin
-
-  const allowsVercel = allowedOrigins.some((o) => VERCEL_ORIGIN.test(o))
-  if (allowsVercel && VERCEL_ORIGIN.test(requestOrigin)) return requestOrigin
 
   return undefined
 }
