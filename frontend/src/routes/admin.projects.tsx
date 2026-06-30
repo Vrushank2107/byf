@@ -47,7 +47,7 @@ function toProjectPayload(project: Project) {
     stats: project.stats ?? [],
     progress: Number(project.progress),
     showInHero: Boolean(project.showInHero),
-    order: Number(project.order) ?? 0,
+    order: Number(project.order || 0),
   };
 }
 
@@ -265,7 +265,7 @@ function ProjectForm({
   const isCustomCategory = selectedCategory === PROJECT_CUSTOM_CATEGORY_OPTION;
 
   useEffect(() => {
-    setFormData(project ? { ...project, stats: project.stats ?? [], images: project.images ?? [], showInHero: Boolean(project.showInHero) } : emptyProject());
+    setFormData(project ? { ...project, stats: project.stats ?? [], images: project.images ?? [], showInHero: Boolean(project.showInHero), order: project.order ?? 0 } : emptyProject());
     const isPresetCategory = project?.category && PROJECT_CATEGORY_OPTIONS.includes(project.category as (typeof PROJECT_CATEGORY_OPTIONS)[number]);
     setSelectedCategory(isPresetCategory ? (project?.category as string) : PROJECT_CUSTOM_CATEGORY_OPTION);
     setCustomCategory(project?.category && !isPresetCategory ? project.category : "");
@@ -275,7 +275,7 @@ function ProjectForm({
     e.preventDefault();
     const category = isCustomCategory ? customCategory.trim() : selectedCategory;
     if (!formData.slug || !formData.title || !formData.short || !category) return;
-    onSave({ ...formData, category: category as Project["category"] });
+    onSave({ ...formData, category: category as Project["category"], order: formData.order ?? 0 });
   };
 
   return (
