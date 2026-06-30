@@ -61,6 +61,7 @@ async function request<T>(
 export const api = {
   // Projects
   getProjects: () => request<any[]>('/api/projects').then((data) => normalizeImageCollection(data, ['image', 'images'])),
+  getHeroProjects: () => request<any[]>('/api/projects/hero').then((data) => normalizeImageCollection(data, ['image', 'images'])),
   getProject: (slug: string) =>
     request<any>(`/api/projects/${slug}`).then((data) => normalizeImageFields(data, ['image', 'images'])),
   createProject: (data: any) => request<any>('/api/projects', {

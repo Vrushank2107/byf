@@ -41,8 +41,8 @@ function AboutPage() {
   const [siteSettings, setSiteSettings] = useState<any>(null);
 
   useEffect(() => {
-    api.getProjects().then((data) => {
-      const selected = data.find((project) => project.showInHero);
+    api.getHeroProjects().then((data) => {
+      const selected = data[0];
       if (selected?.image) setHeroImage(selected.image);
     }).catch((error) => {
       console.error('Failed to fetch hero project:', error);

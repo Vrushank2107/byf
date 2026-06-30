@@ -26,6 +26,15 @@ app.get('/', async (c) => {
   return c.json(data)
 })
 
+// GET hero projects (projects with showInHero: true)
+app.get('/hero', async (c) => {
+  const data = await prisma.project.findMany({
+    where: { showInHero: true },
+    orderBy: { createdAt: 'desc' },
+  })
+  return c.json(data)
+})
+
 // GET single project by slug
 app.get('/:slug', async (c) => {
   const slug = c.req.param('slug')

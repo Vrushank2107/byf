@@ -26,7 +26,7 @@ const SLIDES = [
     eyebrow: "Winter Drive",
     title: "Ten thousand blankets,",
     titleAccent: "ten thousand warmer nights.",
-    desc: "Reaching the elderly, daily-wage workers and street families every winter since 2016.",
+    desc: "Reaching the elderly, daily-wage workers and street families every winter since 2017.",
   },
 ];
 
@@ -36,9 +36,9 @@ export function Hero() {
   const [siteSettings, setSiteSettings] = useState<any>(null);
 
   useEffect(() => {
-    api.getProjects()
+    api.getHeroProjects()
       .then((projects) => {
-        setHeroProjects(projects.filter((project) => project.showInHero));
+        setHeroProjects(projects);
       })
       .catch((error) => {
         console.error("Failed to fetch hero projects:", error);
