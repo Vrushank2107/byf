@@ -22,6 +22,11 @@ validateEnv()
 
 const app = new Hono()
 
+// Handle OPTIONS requests for CORS
+app.options('*', (c) => {
+  return c.text('', 200)
+})
+
 app.get('/', (c) => {
   return c.json({ status: 'ok', message: 'Baroda Youth Federation Backend API' })
 })
