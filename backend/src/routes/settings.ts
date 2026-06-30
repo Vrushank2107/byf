@@ -44,6 +44,14 @@ const settingsSchema = z.object({
   holi2: z.string().optional(),
   holi3: z.string().optional(),
   joycation1: z.string().optional(),
+  donateHeroImage: z.string().optional(),
+  aboutHeroImage: z.string().optional(),
+  contactHeroImage: z.string().optional(),
+  eventsHeroImage: z.string().optional(),
+  blogHeroImage: z.string().optional(),
+  volunteerHeroImage: z.string().optional(),
+  galleryHeroImage: z.string().optional(),
+  projectsHeroImage: z.string().optional(),
 })
 
 // GET site settings

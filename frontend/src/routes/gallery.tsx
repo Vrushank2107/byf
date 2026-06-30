@@ -29,7 +29,7 @@ function GalleryPage() {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
   const [gallery, setGallery] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [siteSettings, setSiteSettings] = useState<any>(null);
+  const [heroImage, setHeroImage] = useState(IMG.diwali3);
 
   useEffect(() => {
     api.getGallery().then((data) => {
@@ -41,14 +41,15 @@ function GalleryPage() {
     });
 
     api.getSettings().then((data) => {
-      setSiteSettings(data);
+      if (data.galleryHeroImage) {
+        setHeroImage(imageUrl(data.galleryHeroImage));
+      }
     }).catch((error) => {
       console.error('Failed to fetch site settings:', error);
     });
   }, []);
 
   const filterTags = useMemo(() => getGalleryFilterTags(gallery), [gallery]);
-  const heroImage = siteSettings?.galleryHeroImage ? imageUrl(siteSettings.galleryHeroImage) : IMG.diwali3;
 
   const visible = useMemo(
     () => (tag === "All" ? [...gallery] : gallery.filter((g) => g.tag === tag)),

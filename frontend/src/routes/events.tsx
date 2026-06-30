@@ -26,7 +26,7 @@ export const Route = createFileRoute("/events")({
 function EventsPage() {
   const [events, setEvents] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [siteSettings, setSiteSettings] = useState<any>(null);
+  const [heroImage, setHeroImage] = useState(IMG.flag);
   
   useEffect(() => {
     Promise.all([
@@ -38,14 +38,14 @@ function EventsPage() {
         setLoading(false);
       }),
       api.getSettings().then((data) => {
-        setSiteSettings(data);
+        if (data.eventsHeroImage) {
+          setHeroImage(imageUrl(data.eventsHeroImage));
+        }
       }).catch((error) => {
         console.error('Failed to fetch site settings:', error);
       }),
     ]);
   }, []);
-  
-  const heroImage = siteSettings?.eventsHeroImage ? imageUrl(siteSettings.eventsHeroImage) : IMG.flag;
 
   const monthLabel = (iso: string) => {
     const d = new Date(iso);

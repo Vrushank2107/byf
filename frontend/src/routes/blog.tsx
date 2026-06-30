@@ -29,13 +29,15 @@ export const Route = createFileRoute("/blog")({
 
 function BlogPage() {
   const [cat, setCat] = useState<(typeof CATS)[number]>("All");
-  const [settings, setSettings] = useState<any>(null);
   const [blogPosts, setBlogPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [heroImage, setHeroImage] = useState(IMG.pSanitary);
 
   useEffect(() => {
     api.getSettings().then((data) => {
-      setSettings(data);
+      if (data.blogHeroImage) {
+        setHeroImage(imageUrl(data.blogHeroImage));
+      }
     }).catch((error) => {
       console.error('Failed to fetch site settings:', error);
     });
@@ -52,7 +54,6 @@ function BlogPage() {
   const list = cat === "All" ? blogPosts : blogPosts.filter((b) => b.category === cat);
   const featured = list[0];
   const rest = list.slice(1);
-  const heroImage = settings?.blogHeroImage ? imageUrl(settings.blogHeroImage) : IMG.pSanitary;
 
   if (loading) {
     return (

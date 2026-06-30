@@ -54,7 +54,7 @@ function ProjectsPage() {
   const [filter, setFilter] = useState<(ProjectCategory | "All")>("All");
   const [projects, setProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [siteSettings, setSiteSettings] = useState<any>(null);
+  const [heroImage, setHeroImage] = useState(IMG.pNotebooks);
 
   useEffect(() => {
     api.getProjects().then((data) => {
@@ -67,7 +67,9 @@ function ProjectsPage() {
     });
 
     api.getSettings().then((data) => {
-      setSiteSettings(data);
+      if (data.projectsHeroImage) {
+        setHeroImage(imageUrl(data.projectsHeroImage));
+      }
     }).catch((error) => {
       console.error('Failed to fetch site settings:', error);
     });
@@ -76,7 +78,6 @@ function ProjectsPage() {
   const visible = filter === "All"
     ? projects
     : projects.filter((p) => normalizeProjectCategory(p.category) === filter || p.category === filter);
-  const heroImage = siteSettings?.projectsHeroImage ? imageUrl(siteSettings.projectsHeroImage) : IMG.pNotebooks;
 
   if (loading) {
     return (

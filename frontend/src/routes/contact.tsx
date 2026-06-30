@@ -27,10 +27,14 @@ function ContactPage() {
   const [done, setDone] = useState(false);
   const [loading, setLoading] = useState(false);
   const [settings, setSettings] = useState<any>(null);
+  const [heroImage, setHeroImage] = useState(IMG.heroEducation);
 
   useEffect(() => {
     api.getSettings().then((data) => {
       setSettings(data);
+      if (data.contactHeroImage) {
+        setHeroImage(imageUrl(data.contactHeroImage));
+      }
     }).catch((error) => {
       console.error('Failed to fetch settings:', error);
     });
@@ -44,8 +48,6 @@ function ContactPage() {
     whatsapp: settings.whatsapp || ORG.whatsapp,
     whatsappName: settings.whatsappName || ORG.whatsappName,
   } : ORG;
-
-  const heroImage = settings?.contactHeroImage ? imageUrl(settings.contactHeroImage) : IMG.heroEducation;
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();

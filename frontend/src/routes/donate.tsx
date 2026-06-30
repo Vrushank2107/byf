@@ -44,6 +44,7 @@ function DonatePage() {
   const [showReceipt, setShowReceipt] = useState(false);
   const [receiptData, setReceiptData] = useState<any>(null);
   const [settings, setSettings] = useState<{ donateHeroImage?: string } | null>(null);
+  const [heroImage, setHeroImage] = useState(IMG.heroBlankets);
   const [donorInfo, setDonorInfo] = useState({
     name: '',
     email: '',
@@ -56,11 +57,13 @@ function DonatePage() {
   useEffect(() => {
     api.getSettings().then((data) => {
       setSettings(data);
+      if (data.donateHeroImage) {
+        setHeroImage(imageUrl(data.donateHeroImage));
+      }
     }).catch((error) => {
       console.error('Failed to fetch site settings:', error);
     });
   }, []);
-  const heroImage = settings?.donateHeroImage ? imageUrl(settings.donateHeroImage) : IMG.heroBlankets;
 
   const handleDonate = async () => {
     setLoading(true);

@@ -31,6 +31,14 @@ const IMAGE_FIELDS = [
   { key: "holi2", label: "Gallery - Holi 2", description: "Holi celebration image 2" },
   { key: "holi3", label: "Gallery - Holi 3", description: "Holi celebration image 3" },
   { key: "joycation1", label: "Gallery - JoyCation", description: "JoyCation gallery image" },
+  { key: "donateHeroImage", label: "Page Hero - Donate", description: "Background image for Donate page hero section" },
+  { key: "aboutHeroImage", label: "Page Hero - About", description: "Background image for About page hero section" },
+  { key: "contactHeroImage", label: "Page Hero - Contact", description: "Background image for Contact page hero section" },
+  { key: "eventsHeroImage", label: "Page Hero - Events", description: "Background image for Events page hero section" },
+  { key: "blogHeroImage", label: "Page Hero - Blog", description: "Background image for Blog page hero section" },
+  { key: "volunteerHeroImage", label: "Page Hero - Volunteer", description: "Background image for Volunteer page hero section" },
+  { key: "galleryHeroImage", label: "Page Hero - Gallery", description: "Background image for Gallery page hero section" },
+  { key: "projectsHeroImage", label: "Page Hero - Projects", description: "Background image for Projects page hero section" },
 ] as const;
 
 function AdminImages() {

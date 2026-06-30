@@ -34,17 +34,17 @@ const BENEFITS = [
 function VolunteerPage() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [settings, setSettings] = useState<any>(null);
+  const [heroImage, setHeroImage] = useState(IMG.joycation1);
 
   useEffect(() => {
     api.getSettings().then((data) => {
-      setSettings(data);
+      if (data.volunteerHeroImage) {
+        setHeroImage(imageUrl(data.volunteerHeroImage));
+      }
     }).catch((error) => {
       console.error('Failed to fetch site settings:', error);
     });
   }, []);
-
-  const heroImage = settings?.volunteerHeroImage ? imageUrl(settings.volunteerHeroImage) : IMG.joycation1;
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();

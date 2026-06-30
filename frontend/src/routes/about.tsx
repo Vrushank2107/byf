@@ -41,11 +41,13 @@ function AboutPage() {
   const [siteSettings, setSiteSettings] = useState<any>(null);
 
   useEffect(() => {
-    api.getHeroProjects().then((data) => {
-      const selected = data[0];
-      if (selected?.image) setHeroImage(selected.image);
+    api.getSettings().then((data) => {
+      setSiteSettings(data);
+      if (data.aboutHeroImage) {
+        setHeroImage(imageUrl(data.aboutHeroImage));
+      }
     }).catch((error) => {
-      console.error('Failed to fetch hero project:', error);
+      console.error('Failed to fetch site settings:', error);
     });
 
     api.getLeaders().then((data) => {
