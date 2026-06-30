@@ -61,21 +61,22 @@ function AdminActivities() {
   return (
     <AdminLayout>
       {dialog}
-      <div className="space-y-6">
-        <div className="flex flex-wrap items-center justify-between gap-4">
+      <div className="space-y-4 sm:space-y-6">
+        <div className="flex flex-wrap items-center justify-between gap-3 sm:gap-4">
           <div>
-            <h1 className="font-display text-2xl sm:text-3xl font-bold mb-2">Activities</h1>
-            <p className="text-muted-foreground">Manage latest activities</p>
+            <h1 className="font-display text-xl sm:text-2xl lg:text-3xl font-bold mb-2">Activities</h1>
+            <p className="text-sm sm:text-base text-muted-foreground">Manage latest activities</p>
           </div>
           <button
             onClick={() => {
               setEditingActivity(null);
               setShowAddForm(true);
             }}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
+            className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors"
           >
             <Plus className="h-4 w-4" />
-            Add Activity
+            <span className="hidden sm:inline">Add Activity</span>
+            <span className="sm:hidden">Add</span>
           </button>
         </div>
 
@@ -90,20 +91,20 @@ function AdminActivities() {
           />
         )}
 
-        <div className="grid gap-4">
+        <div className="grid gap-3 sm:gap-4">
           {loading ? (
             <>
               {[1, 2, 3, 4, 5].map((i) => (
-                <div key={i} className="bg-card border border-border rounded-xl p-6 flex items-start justify-between gap-4">
-                  <div className="flex gap-4 min-w-0">
-                    <Skeleton className="w-20 h-20 rounded-lg shrink-0" />
+                <div key={i} className="bg-card border border-border rounded-xl p-4 sm:p-6 flex flex-col sm:flex-row items-start justify-between gap-4">
+                  <div className="flex gap-3 sm:gap-4 min-w-0 w-full sm:w-auto">
+                    <Skeleton className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg shrink-0" />
                     <div className="min-w-0 flex-1">
-                      <Skeleton className="h-6 w-3/4 mb-2" />
+                      <Skeleton className="h-5 w-3/4 mb-2" />
                       <Skeleton className="h-4 w-1/2 mb-2" />
                       <Skeleton className="h-4 w-full" />
                     </div>
                   </div>
-                  <div className="flex gap-2 shrink-0">
+                  <div className="flex gap-2 shrink-0 self-end sm:self-start">
                     <Skeleton className="h-8 w-8 rounded-lg" />
                     <Skeleton className="h-8 w-8 rounded-lg" />
                   </div>
@@ -114,20 +115,20 @@ function AdminActivities() {
             activities.map((activity) => (
               <div
                 key={activity.id}
-                className="bg-card border border-border rounded-xl p-6 flex items-start justify-between gap-4"
+                className="bg-card border border-border rounded-xl p-4 sm:p-6 flex flex-col sm:flex-row items-start justify-between gap-4"
               >
-                <div className="flex gap-4 min-w-0">
-                  <img src={activity.image} alt={activity.title} className="w-20 h-20 rounded-lg object-cover shrink-0" />
+                <div className="flex gap-3 sm:gap-4 min-w-0 w-full sm:w-auto">
+                  <img src={activity.image} alt={activity.title} className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg object-cover shrink-0" />
                   <div className="min-w-0 flex-1">
-                    <h3 className="font-semibold text-foreground">{activity.title}</h3>
-                    <p className="text-sm text-muted-foreground">{activity.tag}</p>
+                    <h3 className="font-semibold text-base sm:text-lg text-foreground">{activity.title}</h3>
+                    <p className="text-xs sm:text-sm text-muted-foreground">{activity.tag}</p>
                     <div className="flex items-center gap-1.5 text-xs text-muted-foreground mt-1">
                       <Calendar className="h-3.5 w-3.5" />
                       {activity.date}
                     </div>
                   </div>
                 </div>
-                <div className="flex gap-2 shrink-0">
+                <div className="flex gap-2 shrink-0 self-end sm:self-start">
                   <button
                     onClick={() => handleEdit(activity)}
                     className="p-2 rounded-lg hover:bg-muted transition-colors"
@@ -135,7 +136,7 @@ function AdminActivities() {
                     <Edit className="h-4 w-4" />
                   </button>
                   <button
-                    onClick={() => handleDelete(activity.id)}
+                    onClick={() => activity.id && handleDelete(activity.id)}
                     className="p-2 rounded-lg hover:bg-destructive hover:text-destructive-foreground transition-colors"
                   >
                     <Trash2 className="h-4 w-4" />
@@ -174,8 +175,8 @@ function ActivityForm({
   };
 
   return (
-    <div className="bg-card border border-border rounded-xl p-6">
-      <h2 className="font-display text-xl font-semibold mb-4">
+    <div className="bg-card border border-border rounded-xl p-4 sm:p-6">
+      <h2 className="font-display text-lg sm:text-xl font-semibold mb-4">
         {activity ? "Edit Activity" : "Add Activity"}
       </h2>
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -219,14 +220,14 @@ function ActivityForm({
         <div className="flex gap-3">
           <button
             type="submit"
-            className="px-4 py-2 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
+            className="px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors"
           >
             Save
           </button>
           <button
             type="button"
             onClick={onCancel}
-            className="px-4 py-2 rounded-lg border border-border hover:bg-muted transition-colors"
+            className="px-4 py-2 rounded-lg border border-border hover:bg-muted transition-colors text-sm"
           >
             Cancel
           </button>

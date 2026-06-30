@@ -144,21 +144,22 @@ function AdminProjects() {
   return (
     <AdminLayout>
       {dialog}
-      <div className="space-y-6">
-        <div className="flex flex-wrap items-center justify-between gap-4">
+      <div className="space-y-4 sm:space-y-6">
+        <div className="flex flex-wrap items-center justify-between gap-3 sm:gap-4">
           <div>
-            <h1 className="font-display text-2xl sm:text-3xl font-bold mb-2">Projects</h1>
-            <p className="text-muted-foreground">Manage your projects</p>
+            <h1 className="font-display text-xl sm:text-2xl lg:text-3xl font-bold mb-2">Projects</h1>
+            <p className="text-sm sm:text-base text-muted-foreground">Manage your projects</p>
           </div>
           <button
             onClick={() => {
               setEditingProject(null);
               setShowAddForm(true);
             }}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
+            className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors"
           >
             <Plus className="h-4 w-4" />
-            Add Project
+            <span className="hidden sm:inline">Add Project</span>
+            <span className="sm:hidden">Add</span>
           </button>
         </div>
 
@@ -176,15 +177,15 @@ function AdminProjects() {
           </div>
         )}
 
-        <div className="grid gap-4">
+        <div className="grid gap-3 sm:gap-4">
           {loading ? (
             <>
               {[1, 2, 3, 4, 5].map((i) => (
-                <div key={i} className="bg-card border border-border rounded-xl p-6 flex items-start justify-between gap-4">
-                  <div className="flex gap-4 min-w-0">
-                    <Skeleton className="w-20 h-20 rounded-lg shrink-0" />
+                <div key={i} className="bg-card border border-border rounded-xl p-4 sm:p-6 flex flex-col sm:flex-row items-start justify-between gap-4">
+                  <div className="flex gap-3 sm:gap-4 min-w-0 w-full sm:w-auto">
+                    <Skeleton className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg shrink-0" />
                     <div className="min-w-0 flex-1">
-                      <Skeleton className="h-6 w-3/4 mb-2" />
+                      <Skeleton className="h-5 w-3/4 mb-2" />
                       <Skeleton className="h-4 w-1/2 mb-2" />
                       <Skeleton className="h-4 w-full mb-2" />
                       <div className="flex items-center gap-2">
@@ -193,7 +194,7 @@ function AdminProjects() {
                       </div>
                     </div>
                   </div>
-                  <div className="flex gap-2 shrink-0">
+                  <div className="flex gap-2 shrink-0 self-end sm:self-start">
                     <Skeleton className="h-8 w-8 rounded-lg" />
                     <Skeleton className="h-8 w-8 rounded-lg" />
                   </div>
@@ -204,37 +205,37 @@ function AdminProjects() {
             sortedProjects.map((project) => (
               <div
                 key={project.slug}
-                className="bg-card border border-border rounded-xl p-6 flex items-start justify-between gap-4"
+                className="bg-card border border-border rounded-xl p-4 sm:p-6 flex flex-col sm:flex-row items-start justify-between gap-4"
               >
-                <div className="flex gap-4 min-w-0">
-                  <div className="flex items-center gap-2 shrink-0">
+                <div className="flex gap-3 sm:gap-4 min-w-0 w-full sm:w-auto">
+                  <div className="flex items-center gap-2 shrink-0 order-2 sm:order-1">
                     <GripVertical className="h-5 w-5 text-muted-foreground" />
                     <span className="text-sm font-semibold text-muted-foreground w-6">#{project.order ?? 0}</span>
                   </div>
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="w-20 h-20 rounded-lg object-cover shrink-0"
+                    className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg object-cover shrink-0 order-1 sm:order-2"
                   />
-                  <div className="min-w-0">
-                    <h3 className="font-semibold text-lg">{project.title}</h3>
-                    <p className="text-sm text-muted-foreground mb-2">{project.category}</p>
+                  <div className="min-w-0 flex-1 order-3">
+                    <h3 className="font-semibold text-base sm:text-lg">{project.title}</h3>
+                    <p className="text-xs sm:text-sm text-muted-foreground mb-2">{project.category}</p>
                     {project.showInHero && (
                       <span className="mb-2 inline-flex items-center gap-1 rounded-full bg-secondary/15 px-2.5 py-1 text-xs font-medium text-secondary">
                         <Sparkles className="h-3 w-3" />
                         Hero
                       </span>
                     )}
-                    <p className="text-sm">{project.short}</p>
+                    <p className="text-xs sm:text-sm line-clamp-2">{project.short}</p>
                     <div className="mt-2 flex items-center gap-2">
-                      <div className="h-2 w-32 bg-muted rounded-full overflow-hidden">
+                      <div className="h-2 w-24 sm:w-32 bg-muted rounded-full overflow-hidden">
                         <div className="h-full bg-primary rounded-full" style={{ width: `${project.progress}%` }} />
                       </div>
                       <span className="text-xs text-muted-foreground">{project.progress}%</span>
                     </div>
                   </div>
                 </div>
-                <div className="flex gap-2 shrink-0">
+                <div className="flex gap-2 shrink-0 self-end sm:self-start order-4">
                   <button
                     onClick={() => handleEdit(project)}
                     className="p-2 rounded-lg hover:bg-muted transition-colors"
@@ -292,19 +293,19 @@ function ProjectForm({
   };
 
   return (
-    <div className="bg-card border border-border rounded-xl p-6">
-      <h2 className="font-display text-xl font-semibold mb-4">
+    <div className="bg-card border border-border rounded-xl p-4 sm:p-6">
+      <h2 className="font-display text-lg sm:text-xl font-semibold mb-4">
         {project ? "Edit Project" : "Add New Project"}
       </h2>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium mb-2">Slug</label>
             <input
               type="text"
               value={formData.slug}
               onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
-              className="w-full px-3 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="w-full px-3 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm"
               required
             />
           </div>
@@ -313,7 +314,7 @@ function ProjectForm({
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="w-full px-3 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="w-full px-3 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm"
             >
               {PROJECT_CATEGORY_OPTIONS.map((category) => (
                 <option key={category} value={category}>
@@ -323,7 +324,7 @@ function ProjectForm({
               <option value={PROJECT_CUSTOM_CATEGORY_OPTION}>Other — write your own category</option>
             </select>
             <p className="mt-1 text-xs text-muted-foreground">
-              Pick a category above, or choose “Other” to add a new one.
+              Pick a category above, or choose "Other" to add a new one.
             </p>
           </div>
         </div>
@@ -336,7 +337,7 @@ function ProjectForm({
               value={customCategory}
               onChange={(e) => setCustomCategory(e.target.value)}
               placeholder="e.g. Health & Nutrition, Rural Development"
-              className="w-full px-3 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="w-full px-3 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm"
               required
             />
           </div>
@@ -348,7 +349,7 @@ function ProjectForm({
             type="text"
             value={formData.title}
             onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-            className="w-full px-3 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
+            className="w-full px-3 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm"
             required
           />
         </div>
@@ -358,7 +359,7 @@ function ProjectForm({
           <textarea
             value={formData.short}
             onChange={(e) => setFormData({ ...formData, short: e.target.value })}
-            className="w-full px-3 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
+            className="w-full px-3 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm"
             rows={3}
             required
           />
@@ -369,7 +370,7 @@ function ProjectForm({
           <textarea
             value={formData.fullStory || ''}
             onChange={(e) => setFormData({ ...formData, fullStory: e.target.value })}
-            className="w-full px-3 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
+            className="w-full px-3 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm"
             rows={6}
             placeholder="Add detailed information about the project, its impact, and story..."
           />
@@ -386,7 +387,7 @@ function ProjectForm({
           <label className="block text-sm font-medium mb-2">Project Gallery Images</label>
           <p className="text-xs text-muted-foreground mb-3">Add additional images to showcase in the project detail page gallery.</p>
           <div className="space-y-3">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {(formData.images || []).filter(img => img !== "").map((img, idx) => {
                 const originalIndex = (formData.images || []).indexOf(img);
                 return (
@@ -467,7 +468,7 @@ function ProjectForm({
             min="0"
             value={formData.order ?? 0}
             onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) || 0 })}
-            className="w-full px-3 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
+            className="w-full px-3 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm"
           />
           <p className="mt-1 text-xs text-muted-foreground">
             Lower numbers appear first. Projects with the same order are sorted by creation date.
@@ -478,7 +479,7 @@ function ProjectForm({
           <label className="block text-sm font-medium mb-2">Impact at a Glance</label>
           <div className="space-y-2">
             {(formData.stats || []).map((stat, index) => (
-              <div key={index} className="flex gap-2">
+              <div key={index} className="flex flex-col sm:flex-row gap-2">
                 <input
                   type="text"
                   value={stat.label}
@@ -499,7 +500,7 @@ function ProjectForm({
                     setFormData({ ...formData, stats: newStats });
                   }}
                   placeholder="e.g., 500+"
-                  className="w-24 px-3 py-2 rounded-lg border border-border bg-background text-sm"
+                  className="w-full sm:w-24 px-3 py-2 rounded-lg border border-border bg-background text-sm"
                 />
                 <button
                   type="button"
@@ -507,7 +508,7 @@ function ProjectForm({
                     const newStats = (formData.stats || []).filter((_, i) => i !== index);
                     setFormData({ ...formData, stats: newStats });
                   }}
-                  className="p-2 rounded-lg hover:bg-destructive/10 text-destructive transition-colors"
+                  className="p-2 rounded-lg hover:bg-destructive/10 text-destructive transition-colors self-start sm:self-center"
                 >
                   <X className="h-4 w-4" />
                 </button>
@@ -531,7 +532,7 @@ function ProjectForm({
           <button
             type="submit"
             disabled={saving}
-            className="px-4 py-2 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {saving ? "Saving…" : "Save"}
           </button>
@@ -539,7 +540,7 @@ function ProjectForm({
             type="button"
             onClick={onCancel}
             disabled={saving}
-            className="px-4 py-2 rounded-lg border border-border hover:bg-muted transition-colors disabled:opacity-50"
+            className="px-4 py-2 rounded-lg border border-border hover:bg-muted transition-colors disabled:opacity-50 text-sm"
           >
             Cancel
           </button>

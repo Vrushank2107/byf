@@ -94,35 +94,35 @@ function AdminDashboard() {
 
   return (
     <AdminLayout>
-      <div className="space-y-8">
+      <div className="space-y-6 sm:space-y-8">
         <div>
-          <h1 className="font-display text-2xl sm:text-3xl font-bold mb-2">Dashboard</h1>
-          <p className="text-muted-foreground">Welcome to the Baroda Youth Federation Admin Panel</p>
+          <h1 className="font-display text-xl sm:text-2xl lg:text-3xl font-bold mb-2">Dashboard</h1>
+          <p className="text-sm sm:text-base text-muted-foreground">Welcome to the Baroda Youth Federation Admin Panel</p>
         </div>
 
         {loading ? (
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-3 lg:grid-cols-5">
             {Array.from({ length: 10 }).map((_, i) => (
-              <Skeleton key={i} className="h-24 rounded-xl" />
+              <Skeleton key={i} className="h-20 sm:h-24 rounded-xl" />
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-3 lg:grid-cols-5">
             {stats.map((s) => (
-              <div key={s.label} className="bg-card border border-border rounded-xl p-5">
-                <div className="flex items-center justify-between mb-3">
-                  <s.icon className={`h-7 w-7 ${s.color}`} />
-                  <span className="text-2xl font-bold">{s.value}</span>
+              <div key={s.label} className="bg-card border border-border rounded-xl p-3 sm:p-5">
+                <div className="flex items-center justify-between mb-2 sm:mb-3">
+                  <s.icon className={`h-5 w-5 sm:h-7 sm:w-7 ${s.color}`} />
+                  <span className="text-xl sm:text-2xl font-bold">{s.value}</span>
                 </div>
-                <p className="text-xs font-medium">{s.label}</p>
+                <p className="text-[10px] sm:text-xs font-medium">{s.label}</p>
               </div>
             ))}
           </div>
         )}
 
         <div>
-          <h2 className="font-display text-xl font-semibold mb-4">Quick Actions</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <h2 className="font-display text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Quick Actions</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
             <QuickLink to="/admin/projects" icon={FolderKanban} title="Manage Projects" desc="Create and manage projects" />
             <QuickLink to="/admin/gallery" icon={ImageIcon} title="Gallery" desc="Upload and organize images" />
             <QuickLink to="/admin/events" icon={Calendar} title="Events" desc={`${events.length} event${events.length === 1 ? "" : "s"}`} />
@@ -140,29 +140,29 @@ function AdminDashboard() {
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-card border border-border rounded-xl p-6 hover:border-green-500 transition-colors"
+              className="bg-card border border-border rounded-xl p-4 sm:p-6 hover:border-green-500 transition-colors"
             >
-              <MessageCircle className="h-6 w-6 text-green-500 mb-3" />
-              <h3 className="font-semibold mb-1">WhatsApp Update</h3>
-              <p className="text-sm text-muted-foreground">Message {settings.whatsappName}</p>
+              <MessageCircle className="h-5 w-5 sm:h-6 sm:w-6 text-green-500 mb-2 sm:mb-3" />
+              <h3 className="font-semibold text-sm sm:text-base mb-1">WhatsApp Update</h3>
+              <p className="text-xs sm:text-sm text-muted-foreground">Message {settings.whatsappName}</p>
             </a>
           </div>
         </div>
 
         {settings.founderPortfolioUrl && (
-          <div className="bg-gradient-to-r from-primary/10 to-secondary/10 border border-border rounded-xl p-6">
-            <div className="flex items-center justify-between gap-4 flex-wrap">
+          <div className="bg-gradient-to-r from-primary/10 to-secondary/10 border border-border rounded-xl p-4 sm:p-6">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
               <div>
-                <h3 className="font-semibold mb-1">Founder Portfolio</h3>
-                <p className="text-sm text-muted-foreground">View Rukmil Shah&apos;s personal portfolio</p>
+                <h3 className="font-semibold text-sm sm:text-base mb-1">Founder Portfolio</h3>
+                <p className="text-xs sm:text-sm text-muted-foreground">View Rukmil Shah&apos;s personal portfolio</p>
               </div>
               <a
                 href={settings.founderPortfolioUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
+                className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors"
               >
-                <ExternalLink className="h-4 w-4" />
+                <ExternalLink className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                 Visit Portfolio
               </a>
             </div>

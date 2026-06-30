@@ -104,28 +104,29 @@ function AdminEvents() {
   return (
     <AdminLayout>
       {dialog}
-      <div className="space-y-6">
-        <div className="flex flex-wrap items-center justify-between gap-4">
+      <div className="space-y-4 sm:space-y-6">
+        <div className="flex flex-wrap items-center justify-between gap-3 sm:gap-4">
           <div>
-            <h1 className="font-display text-2xl sm:text-3xl font-bold mb-2">Events</h1>
-            <p className="text-muted-foreground">Manage your events</p>
+            <h1 className="font-display text-xl sm:text-2xl lg:text-3xl font-bold mb-2">Events</h1>
+            <p className="text-sm sm:text-base text-muted-foreground">Manage your events</p>
           </div>
           <button
             onClick={() => {
               setEditingEvent(null);
               setShowAddForm(true);
             }}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
+            className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors"
           >
             <Plus className="h-4 w-4" />
-            Add Event
+            <span className="hidden sm:inline">Add Event</span>
+            <span className="sm:hidden">Add</span>
           </button>
         </div>
 
         {showAddForm && (
-          <div ref={formRef} className="bg-card border border-border rounded-xl p-6">
+          <div ref={formRef} className="bg-card border border-border rounded-xl p-4 sm:p-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="font-display text-xl font-semibold">
+              <h2 className="font-display text-lg sm:text-xl font-semibold">
                 {editingEvent ? "Edit Event" : "Add New Event"}
               </h2>
               <button
@@ -151,20 +152,20 @@ function AdminEvents() {
           </div>
         )}
 
-        <div className="grid gap-4">
+        <div className="grid gap-3 sm:gap-4">
           {loading ? (
             <>
               {[1, 2, 3, 4, 5].map((i) => (
-                <div key={i} className="bg-card border border-border rounded-xl p-6 flex items-start justify-between gap-4">
-                  <div className="flex gap-4 min-w-0">
-                    <Skeleton className="w-20 h-20 rounded-lg shrink-0" />
+                <div key={i} className="bg-card border border-border rounded-xl p-4 sm:p-6 flex flex-col sm:flex-row items-start justify-between gap-4">
+                  <div className="flex gap-3 sm:gap-4 min-w-0 w-full sm:w-auto">
+                    <Skeleton className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg shrink-0" />
                     <div className="min-w-0 flex-1">
-                      <Skeleton className="h-6 w-3/4 mb-2" />
+                      <Skeleton className="h-5 w-3/4 mb-2" />
                       <Skeleton className="h-4 w-1/2 mb-2" />
                       <Skeleton className="h-4 w-full" />
                     </div>
                   </div>
-                  <div className="flex gap-2 shrink-0">
+                  <div className="flex gap-2 shrink-0 self-end sm:self-start">
                     <Skeleton className="h-8 w-8 rounded-lg" />
                     <Skeleton className="h-8 w-8 rounded-lg" />
                   </div>
@@ -172,21 +173,21 @@ function AdminEvents() {
               ))}
             </>
           ) : events.length === 0 ? (
-            <div className="bg-card border border-border rounded-xl p-12 text-center">
-              <Calendar className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-              <h3 className="font-semibold text-lg mb-2">No events yet</h3>
-              <p className="text-muted-foreground">Create your first event to get started</p>
+            <div className="bg-card border border-border rounded-xl p-8 sm:p-12 text-center">
+              <Calendar className="h-10 sm:h-12 w-10 sm:w-12 mx-auto text-muted-foreground mb-4" />
+              <h3 className="font-semibold text-base sm:text-lg mb-2">No events yet</h3>
+              <p className="text-sm sm:text-base text-muted-foreground">Create your first event to get started</p>
             </div>
           ) : (
             events.map((event) => (
               <div
                 key={event.id}
-                className="bg-card border border-border rounded-xl p-6 flex items-start justify-between gap-4"
+                className="bg-card border border-border rounded-xl p-4 sm:p-6 flex flex-col sm:flex-row items-start justify-between gap-4"
               >
-                <div className="flex gap-4 min-w-0">
-                  <img src={event.image} alt={event.title} className="w-20 h-20 rounded-lg object-cover shrink-0" />
+                <div className="flex gap-3 sm:gap-4 min-w-0 w-full sm:w-auto">
+                  <img src={event.image} alt={event.title} className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg object-cover shrink-0" />
                   <div className="min-w-0 flex-1">
-                    <h3 className="font-semibold text-foreground">{event.title}</h3>
+                    <h3 className="font-semibold text-base sm:text-lg text-foreground">{event.title}</h3>
                     <div className="flex items-center gap-1.5 text-xs text-muted-foreground mt-1">
                       <Calendar className="h-3.5 w-3.5" />
                       {event.date}
@@ -195,10 +196,10 @@ function AdminEvents() {
                       <MapPin className="h-3.5 w-3.5" />
                       {event.location}
                     </div>
-                    <p className="text-sm text-muted-foreground mt-2 line-clamp-2">{event.description}</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground mt-2 line-clamp-2">{event.description}</p>
                   </div>
                 </div>
-                <div className="flex gap-2 shrink-0">
+                <div className="flex gap-2 shrink-0 self-end sm:self-start">
                   <button
                     onClick={() => handleEdit(event)}
                     className="p-2 rounded-lg hover:bg-muted transition-colors"
@@ -206,7 +207,7 @@ function AdminEvents() {
                     <Edit className="h-4 w-4" />
                   </button>
                   <button
-                    onClick={() => handleDelete(event.id || '')}
+                    onClick={() => event.id && handleDelete(event.id)}
                     className="p-2 rounded-lg hover:bg-destructive hover:text-destructive-foreground transition-colors"
                   >
                     <Trash2 className="h-4 w-4" />
@@ -280,7 +281,7 @@ function EventForm({
             required
           />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="text-sm font-semibold">Date</label>
             <input
@@ -323,7 +324,7 @@ function EventForm({
           <button
             type="submit"
             disabled={saving}
-            className="px-4 py-2 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {saving ? "Saving…" : "Save"}
           </button>
@@ -331,7 +332,7 @@ function EventForm({
             type="button"
             onClick={onCancel}
             disabled={saving}
-            className="px-4 py-2 rounded-lg border border-border hover:bg-muted transition-colors disabled:opacity-50"
+            className="px-4 py-2 rounded-lg border border-border hover:bg-muted transition-colors disabled:opacity-50 text-sm"
           >
             Cancel
           </button>

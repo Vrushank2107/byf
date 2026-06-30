@@ -124,10 +124,10 @@ export function AdminLayout({ children }: { children?: ReactNode }) {
         </div>
       </nav>
 
-      <div className="container-page py-6 sm:py-8">
-        <div className="flex gap-8">
-          <aside className="w-64 shrink-0 hidden lg:block">
-            <nav className="sticky top-24 space-y-1">
+      <div className="container-page py-4 sm:py-6 lg:py-8">
+        <div className="flex flex-col lg:flex-row gap-4 lg:gap-8">
+          <aside className="w-full lg:w-64 shrink-0 hidden lg:block">
+            <nav className="sticky top-20 lg:top-24 space-y-1">
               <AdminNavLinks />
             </nav>
           </aside>
