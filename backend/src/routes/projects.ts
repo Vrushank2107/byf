@@ -16,12 +16,13 @@ const projectSchema = z.object({
   stats: z.array(z.object({ value: z.string(), label: z.string() })),
   progress: z.number().min(0).max(100),
   showInHero: z.boolean().default(false),
+  order: z.number().default(0),
 })
 
 // GET all projects
 app.get('/', async (c) => {
   const data = await prisma.project.findMany({
-    orderBy: { createdAt: 'desc' },
+    orderBy: { order: 'asc' },
   })
   return c.json(data)
 })
@@ -30,7 +31,7 @@ app.get('/', async (c) => {
 app.get('/hero', async (c) => {
   const data = await prisma.project.findMany({
     where: { showInHero: true },
-    orderBy: { createdAt: 'desc' },
+    orderBy: { order: 'asc' },
   })
   return c.json(data)
 })

@@ -4,7 +4,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, Heart, HandHeart, Sparkles } from "lucide-react";
 import { IMG, ORG, type Project } from "@/lib/site-data";
 import { api } from "@/lib/api";
-import { imageUrl } from "@/lib/image-url";
 
 const SLIDES = [
   {
@@ -53,19 +52,7 @@ export function Hero() {
       });
   }, []);
 
-  const carouselImages = siteSettings?.heroCarouselImages && siteSettings.heroCarouselImages.length > 0
-    ? siteSettings.heroCarouselImages
-    : null;
-
-  const slides = carouselImages
-    ? carouselImages.map((image: string) => ({
-        image: imageUrl(image),
-        eyebrow: "",
-        title: "",
-        titleAccent: "",
-        desc: "",
-      }))
-    : heroProjects.length > 0
+  const slides = heroProjects.length > 0
     ? heroProjects.map((project) => ({
         image: project.image,
         eyebrow: project.category,

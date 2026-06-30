@@ -25,17 +25,7 @@ const settingsSchema = z.object({
   twitter: z.string(),
   youtube: z.string(),
   founderPortfolioUrl: z.string().optional(),
-  homeHeroImage: z.string().optional(),
-  aboutHeroImage: z.string().optional(),
-  projectsHeroImage: z.string().optional(),
-  eventsHeroImage: z.string().optional(),
-  galleryHeroImage: z.string().optional(),
-  blogHeroImage: z.string().optional(),
-  contactHeroImage: z.string().optional(),
-  volunteerHeroImage: z.string().optional(),
-  donateHeroImage: z.string().optional(),
   donationFunds: z.array(donationFundSchema).optional().default([]),
-  heroCarouselImages: z.array(z.string()).optional().default([]),
 })
 
 // GET site settings

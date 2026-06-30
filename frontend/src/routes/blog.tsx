@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Clock, ArrowUpRight } from "lucide-react";
 import { PageHero } from "@/components/ui/PageHero";
+import { Skeleton } from "@/components/ui/skeleton";
 import { IMG } from "@/lib/site-data";
 import { api } from "@/lib/api";
 import { imageUrl } from "@/lib/image-url";
@@ -53,6 +54,58 @@ function BlogPage() {
   const rest = list.slice(1);
   const heroImage = settings?.blogHeroImage ? imageUrl(settings.blogHeroImage) : IMG.pSanitary;
 
+  if (loading) {
+    return (
+      <>
+        <PageHero
+          eyebrow="Blog"
+          title={<>Stories from <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">the ground.</span></>}
+          description="The work, the wins, the failures and the people behind them — written by our team and volunteers."
+          image={heroImage}
+        />
+        <section className="section-y">
+          <div className="container-page">
+            <div className="flex flex-wrap justify-center gap-2 mb-12">
+              {CATS.map((c) => (
+                <Skeleton key={c} className="h-10 w-24 rounded-full" />
+              ))}
+            </div>
+            <div className="grid overflow-hidden rounded-3xl border border-border bg-card shadow-soft md:grid-cols-2">
+              <Skeleton className="aspect-[16/11] w-full" />
+              <div className="flex flex-col justify-center p-7 md:p-12">
+                <Skeleton className="h-4 w-32 mb-4" />
+                <Skeleton className="h-8 w-3/4 mb-4" />
+                <Skeleton className="h-4 w-full mb-2" />
+                <Skeleton className="h-4 w-2/3 mb-6" />
+                <div className="flex items-center gap-4">
+                  <Skeleton className="h-4 w-24" />
+                  <Skeleton className="h-4 w-20" />
+                </div>
+              </div>
+            </div>
+            <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <div key={i} className="flex flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-soft">
+                  <Skeleton className="aspect-[16/10] w-full" />
+                  <div className="flex flex-1 flex-col p-6">
+                    <Skeleton className="h-3 w-24 mb-2" />
+                    <Skeleton className="h-6 w-3/4 mb-2" />
+                    <Skeleton className="h-4 w-full mb-2" />
+                    <Skeleton className="h-4 w-2/3 mb-4" />
+                    <div className="mt-auto flex items-center justify-between border-t border-border pt-4">
+                      <Skeleton className="h-3 w-20" />
+                      <Skeleton className="h-3 w-16" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      </>
+    );
+  }
+
   return (
     <>
       <PageHero
@@ -80,9 +133,7 @@ function BlogPage() {
             ))}
           </div>
 
-          {loading ? (
-            <div className="mt-12 text-center text-muted-foreground">Loading blog posts...</div>
-          ) : list.length === 0 ? (
+          {list.length === 0 ? (
             <div className="mt-12 text-center text-muted-foreground">No blog posts found.</div>
           ) : (
             <>

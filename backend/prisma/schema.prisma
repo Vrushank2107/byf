@@ -16,6 +16,7 @@ model Project {
   image      String
   stats      Json            @default("[]")
   progress   Int             @default(0) @db.SmallInt
+  order      Int             @default(0)
   createdAt  DateTime        @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt  DateTime        @default(now()) @map("updated_at") @db.Timestamptz(6)
   fullStory  String?         @map("full_story")
@@ -24,6 +25,7 @@ model Project {
 
   @@index([category])
   @@index([showInHero])
+  @@index([order])
   @@map("projects")
 }
 
@@ -114,17 +116,7 @@ model SiteSettings {
   youtube             String
   founderPortfolioUrl String   @default("") @map("founder_portfolio_url")
   updatedAt           DateTime @default(now()) @map("updated_at") @db.Timestamptz(6)
-  homeHeroImage       String   @default("") @map("home_hero_image")
-  aboutHeroImage      String   @default("") @map("about_hero_image")
-  projectsHeroImage   String   @default("") @map("projects_hero_image")
-  eventsHeroImage     String   @default("") @map("events_hero_image")
-  galleryHeroImage    String   @default("") @map("gallery_hero_image")
-  blogHeroImage       String   @default("") @map("blog_hero_image")
-  contactHeroImage    String   @default("") @map("contact_hero_image")
-  volunteerHeroImage  String   @default("") @map("volunteer_hero_image")
-  donateHeroImage     String   @default("") @map("donate_hero_image")
   donationFunds       Json     @default("[]")
-  heroCarouselImages  Json     @default("[]") @map("hero_carousel_images")
 
   @@map("site_settings")
 }

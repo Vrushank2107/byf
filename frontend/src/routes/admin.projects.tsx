@@ -8,7 +8,7 @@ import { useProjectsStore } from "@/lib/admin-store";
 import { api } from "@/lib/api";
 import { imageUrl } from "@/lib/image-url";
 import { useState, useEffect } from "react";
-import { Plus, Edit, Trash2, Sparkles, X } from "lucide-react";
+import { Plus, Edit, Trash2, Sparkles, X, GripVertical } from "lucide-react";
 import { toast } from "sonner";
 import { ImageInput } from "@/components/admin/ImageInput";
 import { useConfirmDialog } from "@/hooks/use-confirm-dialog";
@@ -31,6 +31,7 @@ function emptyProject(): Project {
     stats: [],
     progress: 0,
     showInHero: false,
+    order: 0,
   };
 }
 
@@ -42,10 +43,11 @@ function toProjectPayload(project: Project) {
     short: project.short.trim(),
     fullStory: project.fullStory?.trim() || undefined,
     image: project.image.trim(),
-    images: [],
+    images: project.images ?? [],
     stats: project.stats ?? [],
     progress: Number(project.progress),
     showInHero: Boolean(project.showInHero),
+    order: Number(project.order) ?? 0,
   };
 }
 
@@ -193,6 +195,10 @@ function AdminProjects() {
                 className="bg-card border border-border rounded-xl p-6 flex items-start justify-between gap-4"
               >
                 <div className="flex gap-4 min-w-0">
+                  <div className="flex items-center gap-2 shrink-0">
+                    <GripVertical className="h-5 w-5 text-muted-foreground" />
+                    <span className="text-sm font-semibold text-muted-foreground w-6">#{project.order ?? 0}</span>
+                  </div>
                   <img
                     src={project.image}
                     alt={project.title}
@@ -252,13 +258,13 @@ function ProjectForm({
   onSave: (project: Project) => void;
   onCancel: () => void;
 }) {
-  const [formData, setFormData] = useState<Project>(project ? { ...project, stats: project.stats ?? [], images: [], showInHero: Boolean(project.showInHero) } : emptyProject());
+  const [formData, setFormData] = useState<Project>(project ? { ...project, stats: project.stats ?? [], images: project.images ?? [], showInHero: Boolean(project.showInHero) } : emptyProject());
   const [selectedCategory, setSelectedCategory] = useState<string>(PROJECT_CATEGORY_OPTIONS[0]);
   const [customCategory, setCustomCategory] = useState("");
   const isCustomCategory = selectedCategory === PROJECT_CUSTOM_CATEGORY_OPTION;
 
   useEffect(() => {
-    setFormData(project ? { ...project, stats: project.stats ?? [], images: [], showInHero: Boolean(project.showInHero) } : emptyProject());
+    setFormData(project ? { ...project, stats: project.stats ?? [], images: project.images ?? [], showInHero: Boolean(project.showInHero) } : emptyProject());
     const isPresetCategory = project?.category && PROJECT_CATEGORY_OPTIONS.includes(project.category as (typeof PROJECT_CATEGORY_OPTIONS)[number]);
     setSelectedCategory(isPresetCategory ? (project?.category as string) : PROJECT_CUSTOM_CATEGORY_OPTION);
     setCustomCategory(project?.category && !isPresetCategory ? project.category : "");
@@ -362,6 +368,72 @@ function ProjectForm({
           folder="projects"
         />
 
+        <div>
+          <label className="block text-sm font-medium mb-2">Project Gallery Images</label>
+          <p className="text-xs text-muted-foreground mb-3">Add additional images to showcase in the project detail page gallery.</p>
+          <div className="space-y-3">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              {(formData.images || []).filter(img => img !== "").map((img, idx) => {
+                const originalIndex = (formData.images || []).indexOf(img);
+                return (
+                  <div key={originalIndex} className="relative group">
+                    <img
+                      src={img}
+                      alt={`Gallery image ${originalIndex + 1}`}
+                      className="w-full aspect-square object-cover rounded-lg border border-border"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const newImages = (formData.images || []).filter((_, i) => i !== originalIndex);
+                        setFormData({ ...formData, images: newImages });
+                      }}
+                      className="absolute top-1 right-1 p-1 rounded-md bg-destructive text-destructive-foreground opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                setFormData({ ...formData, images: [...(formData.images || []), ""] });
+              }}
+              className="flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-colors"
+            >
+              <Plus className="h-4 w-4" />
+              Add Gallery Image
+            </button>
+            {(formData.images || []).map((img, idx) => (
+              img === "" && (
+                <div key={idx} className="border border-border rounded-lg p-3">
+                  <ImageInput
+                    value={img}
+                    onChange={(val) => {
+                      const newImages = [...(formData.images || [])];
+                      newImages[idx] = val;
+                      setFormData({ ...formData, images: newImages });
+                    }}
+                    folder="projects"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const newImages = (formData.images || []).filter((_, i) => i !== idx);
+                      setFormData({ ...formData, images: newImages });
+                    }}
+                    className="mt-2 text-sm text-destructive hover:text-destructive/80 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              )
+            ))}
+          </div>
+        </div>
+
         <label className="flex items-start gap-3 rounded-lg border border-border bg-background p-4">
           <input
             type="checkbox"
@@ -387,6 +459,20 @@ function ProjectForm({
             onChange={(e) => setFormData({ ...formData, progress: parseInt(e.target.value) })}
             className="w-full"
           />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-2">Display Order</label>
+          <input
+            type="number"
+            min="0"
+            value={formData.order ?? 0}
+            onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) || 0 })}
+            className="w-full px-3 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
+          />
+          <p className="mt-1 text-xs text-muted-foreground">
+            Lower numbers appear first. Projects with the same order are sorted by creation date.
+          </p>
         </div>
 
         <div>
