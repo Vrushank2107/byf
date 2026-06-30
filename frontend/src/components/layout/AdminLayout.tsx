@@ -91,11 +91,11 @@ export function AdminLayout({ children }: { children?: ReactNode }) {
                     <Menu className="h-5 w-5" />
                   </button>
                 </SheetTrigger>
-                <SheetContent side="left" className="w-[min(100vw-2rem,20rem)] p-0">
-                  <SheetHeader className="border-b border-border px-6 py-5 text-left">
+                <SheetContent side="left" className="w-[min(100vw-2rem,20rem)] p-0 flex flex-col">
+                  <SheetHeader className="border-b border-border px-6 py-5 text-left shrink-0">
                     <SheetTitle className="font-display text-lg">Baroda Youth Federation Admin</SheetTitle>
                   </SheetHeader>
-                  <nav className="space-y-1 overflow-y-auto p-4">
+                  <nav className="space-y-1 overflow-y-auto flex-1 p-4">
                     <AdminNavLinks onNavigate={() => setMobileNavOpen(false)} />
                   </nav>
                 </SheetContent>
