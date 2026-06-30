@@ -62,7 +62,17 @@ function StatsGrid({ stats }: { stats: any[] }) {
 export function ImpactStats({ overlap = true }: { overlap?: boolean }) {
   const [stats, setStats] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [isInView, setIsInView] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setHasScrolled(true);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     api
@@ -107,12 +117,11 @@ export function ImpactStats({ overlap = true }: { overlap?: boolean }) {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          onViewportEnter={() => setIsInView(true)}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className={cn(
             "rounded-3xl bg-card p-6 shadow-glow md:p-10",
-            isInView && "border border-border"
+            hasScrolled && "border border-border"
           )}
         >
           <StatsGrid stats={stats} />
