@@ -28,6 +28,7 @@ const IMAGE_FIELDS = [
 function AdminImages() {
   const [settings, setSettings] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
   const [formData, setFormData] = useState<Record<string, string>>({});
 
   useEffect(() => {
@@ -48,6 +49,20 @@ function AdminImages() {
       toast.error('Failed to load settings');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      await api.updateSettings(formData);
+      toast.success('Site images updated successfully');
+      await loadSettings();
+    } catch (error) {
+      console.error('Failed to save settings:', error);
+      toast.error('Failed to save settings');
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -77,9 +92,18 @@ function AdminImages() {
   return (
     <AdminLayout>
       <div className="space-y-6">
-        <div>
-          <h1 className="font-display text-2xl sm:text-3xl font-bold mb-2">Site Images</h1>
-          <p className="text-muted-foreground">Manage images used throughout the website</p>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h1 className="font-display text-2xl sm:text-3xl font-bold mb-2">Site Images</h1>
+            <p className="text-muted-foreground">Manage images used throughout the website</p>
+          </div>
+          <button
+            onClick={handleSave}
+            disabled={saving}
+            className="inline-flex items-center justify-center px-6 py-2.5 bg-primary text-primary-foreground font-medium rounded-lg hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            {saving ? 'Saving...' : 'Save Changes'}
+          </button>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
