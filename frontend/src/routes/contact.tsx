@@ -150,16 +150,6 @@ function ContactPage() {
               }
               accent="accent"
             />
-
-            <div className="overflow-hidden rounded-3xl border border-border bg-card shadow-soft">
-              <iframe
-                title="Baroda Youth Federation Office Location"
-                src="https://www.google.com/maps?q=Vadodara,Gujarat,India&output=embed"
-                className="h-56 w-full sm:h-72"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-            </div>
           </div>
         </div>
       </section>
