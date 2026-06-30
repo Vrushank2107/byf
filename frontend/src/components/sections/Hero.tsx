@@ -53,7 +53,19 @@ export function Hero() {
       });
   }, []);
 
-  const slides = heroProjects.length > 0
+  const carouselImages = siteSettings?.heroCarouselImages && siteSettings.heroCarouselImages.length > 0
+    ? siteSettings.heroCarouselImages
+    : null;
+
+  const slides = carouselImages
+    ? carouselImages.map((image: string) => ({
+        image: imageUrl(image),
+        eyebrow: "",
+        title: "",
+        titleAccent: "",
+        desc: "",
+      }))
+    : heroProjects.length > 0
     ? heroProjects.map((project) => ({
         image: project.image,
         eyebrow: project.category,
@@ -73,7 +85,7 @@ export function Hero() {
   }, [slides.length]);
 
   const slide = slides[i] ?? slides[0];
-  const heroImage = siteSettings?.homeHeroImage ? imageUrl(siteSettings.homeHeroImage) : slide.image;
+  const heroImage = slide.image;
 
   return (
     <section className="relative isolate min-h-[85vh] md:min-h-[100svh] overflow-hidden bg-foreground text-background">
@@ -156,7 +168,7 @@ export function Hero() {
           </motion.div>
 
           <div className="mt-12 flex items-center gap-3">
-            {slides.map((_, k) => (
+            {slides.map((_: any, k: number) => (
               <button
                 key={k}
                 aria-label={`Slide ${k + 1}`}

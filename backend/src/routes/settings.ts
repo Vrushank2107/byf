@@ -35,6 +35,7 @@ const settingsSchema = z.object({
   volunteerHeroImage: z.string().optional(),
   donateHeroImage: z.string().optional(),
   donationFunds: z.array(donationFundSchema).optional().default([]),
+  heroCarouselImages: z.array(z.string()).optional().default([]),
 })
 
 // GET site settings

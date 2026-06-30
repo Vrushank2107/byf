@@ -5,7 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useSettingsStore, DEFAULT_SETTINGS, type SiteSettings } from "@/lib/admin-store";
 import { api } from "@/lib/api";
 import { useState, useEffect } from "react";
-import { Save, RotateCcw, Check } from "lucide-react";
+import { Save, RotateCcw, Check, Plus, X } from "lucide-react";
 import { useConfirmDialog } from "@/hooks/use-confirm-dialog";
 import { ImageInput } from "@/components/admin/ImageInput";
 
@@ -137,6 +137,50 @@ function AdminSettings() {
                 <ImageInput label="Contact page hero" value={draft.contactHeroImage} onChange={(v) => update("contactHeroImage", v)} folder="site-settings" />
                 <ImageInput label="Volunteer page hero" value={draft.volunteerHeroImage} onChange={(v) => update("volunteerHeroImage", v)} folder="site-settings" />
                 <ImageInput label="Donate page hero" value={draft.donateHeroImage} onChange={(v) => update("donateHeroImage", v)} folder="site-settings" />
+              </div>
+            </Section>
+
+            <Section title="Homepage Hero Carousel Images">
+              <p className="mb-4 text-sm text-muted-foreground">
+                Add images for the homepage hero carousel. These images will rotate automatically on the homepage.
+              </p>
+              <div className="space-y-4">
+                {(draft.heroCarouselImages || []).map((image, index) => (
+                  <div key={index} className="flex gap-2">
+                    <div className="flex-1">
+                      <ImageInput
+                        label={`Image ${index + 1}`}
+                        value={image}
+                        onChange={(v) => {
+                          const newImages = [...(draft.heroCarouselImages || [])];
+                          newImages[index] = v;
+                          setDraft({ ...draft, heroCarouselImages: newImages });
+                        }}
+                        folder="hero-carousel"
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const newImages = (draft.heroCarouselImages || []).filter((_, i) => i !== index);
+                        setDraft({ ...draft, heroCarouselImages: newImages });
+                      }}
+                      className="mt-6 p-2 rounded-lg hover:bg-destructive/10 text-destructive transition-colors"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setDraft({ ...draft, heroCarouselImages: [...(draft.heroCarouselImages || []), ""] });
+                  }}
+                  className="flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-colors"
+                >
+                  <Plus className="h-4 w-4" />
+                  Add Carousel Image
+                </button>
               </div>
             </Section>
 

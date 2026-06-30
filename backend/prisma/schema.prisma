@@ -124,6 +124,7 @@ model SiteSettings {
   volunteerHeroImage  String   @default("") @map("volunteer_hero_image")
   donateHeroImage     String   @default("") @map("donate_hero_image")
   donationFunds       Json     @default("[]")
+  heroCarouselImages  Json     @default("[]") @map("hero_carousel_images")
 
   @@map("site_settings")
 }

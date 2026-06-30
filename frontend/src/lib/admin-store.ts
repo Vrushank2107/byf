@@ -124,6 +124,7 @@ export type SiteSettings = {
   volunteerHeroImage: string;
   donateHeroImage: string;
   donationFunds: DonationFund[];
+  heroCarouselImages: string[];
   updatedAt: string;
 };
 
@@ -149,6 +150,7 @@ export const DEFAULT_SETTINGS: SiteSettings = {
   volunteerHeroImage: '',
   donateHeroImage: '',
   donationFunds: DONATION_FUNDS,
+  heroCarouselImages: [],
   updatedAt: new Date().toISOString(),
 };
 
