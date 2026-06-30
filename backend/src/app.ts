@@ -2,6 +2,7 @@ import { Hono } from 'hono'
 import { ZodError } from 'zod'
 import { prisma } from './lib/prisma'
 import { validateEnv } from './lib/env'
+import { getAllowedOrigins, resolveCorsOrigin } from './lib/cors'
 import projects from './routes/projects'
 import gallery from './routes/gallery'
 import events from './routes/events'
@@ -20,11 +21,25 @@ import donations from './routes/donations'
 
 validateEnv()
 
+const allowedOrigins = getAllowedOrigins()
+
 const app = new Hono()
 
-// Handle OPTIONS requests for CORS
-app.options('*', (c) => {
-  return c.text('', 200)
+// CORS middleware
+app.use('*', async (c, next) => {
+  const requestOrigin = c.req.header('origin')
+  const resolvedOrigin = resolveCorsOrigin(requestOrigin, allowedOrigins)
+  
+  // Set CORS headers
+  c.header('Access-Control-Allow-Origin', resolvedOrigin || '*')
+  c.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+  c.header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+  
+  if (c.req.method === 'OPTIONS') {
+    return c.text('', 200)
+  }
+  
+  await next()
 })
 
 app.get('/', (c) => {
