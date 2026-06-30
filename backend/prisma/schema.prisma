@@ -137,10 +137,12 @@ model SiteSettings {
   joycation1          String?
   donateHeroImage     String?  @map("donate_hero_image")
   aboutHeroImage      String?  @map("about_hero_image")
+  aboutSectionImage   String?  @map("about_section_image")
   contactHeroImage    String?  @map("contact_hero_image")
   eventsHeroImage     String?  @map("events_hero_image")
   blogHeroImage       String?  @map("blog_hero_image")
   volunteerHeroImage  String?  @map("volunteer_hero_image")
+  volunteerFormImage  String?  @map("volunteer_form_image")
   galleryHeroImage    String?  @map("gallery_hero_image")
   projectsHeroImage   String?  @map("projects_hero_image")
 

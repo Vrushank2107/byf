@@ -46,10 +46,12 @@ const settingsSchema = z.object({
   joycation1: z.string().optional(),
   donateHeroImage: z.string().optional(),
   aboutHeroImage: z.string().optional(),
+  aboutSectionImage: z.string().optional(),
   contactHeroImage: z.string().optional(),
   eventsHeroImage: z.string().optional(),
   blogHeroImage: z.string().optional(),
   volunteerHeroImage: z.string().optional(),
+  volunteerFormImage: z.string().optional(),
   galleryHeroImage: z.string().optional(),
   projectsHeroImage: z.string().optional(),
 })

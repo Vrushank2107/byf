@@ -37,6 +37,7 @@ const VALUES = [
 function AboutPage() {
   const [leaders, setLeaders] = useState<any[]>([]);
   const [heroImage, setHeroImage] = useState(IMG.heroEducation);
+  const [sectionImage, setSectionImage] = useState(IMG.flag);
   const [loadingLeaders, setLoadingLeaders] = useState(true);
   const [siteSettings, setSiteSettings] = useState<any>(null);
 
@@ -45,6 +46,9 @@ function AboutPage() {
       setSiteSettings(data);
       if (data.aboutHeroImage) {
         setHeroImage(imageUrl(data.aboutHeroImage));
+      }
+      if (data.aboutSectionImage) {
+        setSectionImage(imageUrl(data.aboutSectionImage));
       }
     }).catch((error) => {
       console.error('Failed to fetch site settings:', error);
@@ -85,7 +89,7 @@ function AboutPage() {
             transition={{ duration: 0.6 }}
             className="relative aspect-[4/5] overflow-hidden rounded-3xl shadow-glow"
           >
-            <img src={IMG.flag} alt="Baroda Youth Federation volunteers with students" className="h-full w-full object-cover" />
+            <img src={sectionImage} alt="Baroda Youth Federation volunteers with students" className="h-full w-full object-cover" />
           </motion.div>
           <div>
             <SectionHeader

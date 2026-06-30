@@ -35,11 +35,15 @@ function VolunteerPage() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [heroImage, setHeroImage] = useState(IMG.joycation1);
+  const [formImage, setFormImage] = useState(IMG.holi2);
 
   useEffect(() => {
     api.getSettings().then((data) => {
       if (data.volunteerHeroImage) {
         setHeroImage(imageUrl(data.volunteerHeroImage));
+      }
+      if (data.volunteerFormImage) {
+        setFormImage(imageUrl(data.volunteerFormImage));
       }
     }).catch((error) => {
       console.error('Failed to fetch site settings:', error);
@@ -117,7 +121,7 @@ function VolunteerPage() {
       <section className="section-y">
         <div className="container-page grid gap-12 lg:grid-cols-[1fr_1.2fr]">
           <div className="relative overflow-hidden rounded-3xl shadow-glow">
-            <img src={IMG.holi2} alt="Volunteers at Holi event" className="h-full w-full object-cover" />
+            <img src={formImage} alt="Volunteers at event" className="h-full w-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-primary/70 via-transparent to-transparent" />
             <div className="absolute inset-x-6 bottom-6 text-white">
               <p className="font-display text-2xl font-bold leading-tight">"This is the most honest team I've ever worked with."</p>

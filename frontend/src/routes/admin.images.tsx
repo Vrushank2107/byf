@@ -13,30 +13,14 @@ export const Route = createFileRoute("/admin/images")({
 });
 
 const IMAGE_FIELDS = [
-  { key: "heroEducation", label: "Hero - Education", description: "Main hero image for education section" },
-  { key: "heroBlankets", label: "Hero - Blankets", description: "Main hero image for blanket drive" },
-  { key: "heroFlood", label: "Hero - Flood Relief", description: "Main hero image for flood relief" },
-  { key: "heroWomen", label: "Hero - Women Empowerment", description: "Main hero image for women empowerment" },
-  { key: "pNotebooks", label: "Project - Notebooks", description: "Project Sankalp notebook distribution image" },
-  { key: "pSanitary", label: "Project - Sanitary Pads", description: "Sanitary pad distribution image" },
-  { key: "pRotibank", label: "Project - Roti Bank", description: "Roti Bank food distribution image" },
-  { key: "pJoycation", label: "Project - JoyCation", description: "JoyCation outing image" },
-  { key: "blanket", label: "Gallery - Blanket", description: "Blanket distribution gallery image" },
-  { key: "chappal", label: "Gallery - Footwear", description: "Footwear distribution image" },
-  { key: "diwali", label: "Gallery - Diwali 1", description: "Diwali celebration image 1" },
-  { key: "diwali2", label: "Gallery - Diwali 2", description: "Diwali celebration image 2" },
-  { key: "diwali3", label: "Gallery - Diwali 3", description: "Diwali celebration image 3" },
-  { key: "flag", label: "Gallery - Flag", description: "Flag distribution image" },
-  { key: "holi", label: "Gallery - Holi 1", description: "Holi celebration image 1" },
-  { key: "holi2", label: "Gallery - Holi 2", description: "Holi celebration image 2" },
-  { key: "holi3", label: "Gallery - Holi 3", description: "Holi celebration image 3" },
-  { key: "joycation1", label: "Gallery - JoyCation", description: "JoyCation gallery image" },
   { key: "donateHeroImage", label: "Page Hero - Donate", description: "Background image for Donate page hero section" },
   { key: "aboutHeroImage", label: "Page Hero - About", description: "Background image for About page hero section" },
+  { key: "aboutSectionImage", label: "About Section Image", description: "Image shown in About page leadership section" },
   { key: "contactHeroImage", label: "Page Hero - Contact", description: "Background image for Contact page hero section" },
   { key: "eventsHeroImage", label: "Page Hero - Events", description: "Background image for Events page hero section" },
   { key: "blogHeroImage", label: "Page Hero - Blog", description: "Background image for Blog page hero section" },
   { key: "volunteerHeroImage", label: "Page Hero - Volunteer", description: "Background image for Volunteer page hero section" },
+  { key: "volunteerFormImage", label: "Volunteer Form Side Image", description: "Image shown beside volunteer registration form" },
   { key: "galleryHeroImage", label: "Page Hero - Gallery", description: "Background image for Gallery page hero section" },
   { key: "projectsHeroImage", label: "Page Hero - Projects", description: "Background image for Projects page hero section" },
 ] as const;
@@ -44,7 +28,6 @@ const IMAGE_FIELDS = [
 function AdminImages() {
   const [settings, setSettings] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
   const [formData, setFormData] = useState<Record<string, string>>({});
 
   useEffect(() => {
@@ -68,22 +51,6 @@ function AdminImages() {
     }
   };
 
-  const handleSave = async () => {
-    setSaving(true);
-    try {
-      await api.updateSettings({
-        ...settings,
-        ...formData,
-      });
-      toast.success('Images updated successfully');
-      await loadSettings();
-    } catch (error) {
-      console.error('Failed to save images:', error);
-      toast.error('Failed to save images');
-    } finally {
-      setSaving(false);
-    }
-  };
 
   if (loading) {
     return (
@@ -110,18 +77,9 @@ function AdminImages() {
   return (
     <AdminLayout>
       <div className="space-y-6">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div>
-            <h1 className="font-display text-2xl sm:text-3xl font-bold mb-2">Site Images</h1>
-            <p className="text-muted-foreground">Manage images used throughout the website</p>
-          </div>
-          <button
-            onClick={handleSave}
-            disabled={saving}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {saving ? 'Saving...' : 'Save Changes'}
-          </button>
+        <div>
+          <h1 className="font-display text-2xl sm:text-3xl font-bold mb-2">Site Images</h1>
+          <p className="text-muted-foreground">Manage images used throughout the website</p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
