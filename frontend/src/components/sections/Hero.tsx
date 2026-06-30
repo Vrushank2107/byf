@@ -52,7 +52,31 @@ export function Hero() {
       });
   }, []);
 
-  const slides = heroProjects.length > 0
+  const heroSlides = siteSettings?.homeHeroImage1 
+    ? [
+        siteSettings.homeHeroImage1 && {
+          image: siteSettings.homeHeroImage1,
+          eyebrow: "Our Impact",
+          title: "Making a difference,",
+          titleAccent: "one community at a time.",
+          desc: "Join us in creating positive change across Vadodara and beyond.",
+        },
+        siteSettings.homeHeroImage2 && {
+          image: siteSettings.homeHeroImage2,
+          eyebrow: "Our Mission",
+          title: "Empowering youth,",
+          titleAccent: "building tomorrow's leaders.",
+          desc: "Education, relief, and community service since 2017.",
+        },
+        siteSettings.homeHeroImage3 && {
+          image: siteSettings.homeHeroImage3,
+          eyebrow: "Get Involved",
+          title: "Your support matters,",
+          titleAccent: "every contribution counts.",
+          desc: "Volunteer, donate, or partner with us to make an impact.",
+        },
+      ].filter(Boolean)
+    : heroProjects.length > 0
     ? heroProjects.map((project) => ({
         image: project.image,
         eyebrow: project.category,
@@ -61,6 +85,8 @@ export function Hero() {
         desc: project.short,
       }))
     : SLIDES;
+
+  const slides = heroSlides;
 
   useEffect(() => {
     const t = setInterval(() => setI((v) => (v + 1) % slides.length), 6000);

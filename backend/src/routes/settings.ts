@@ -36,6 +36,9 @@ const settingsSchema = z.object({
   volunteerFormImage: z.string().nullable().optional(),
   galleryHeroImage: z.string().nullable().optional(),
   projectsHeroImage: z.string().nullable().optional(),
+  homeHeroImage1: z.string().nullable().optional(),
+  homeHeroImage2: z.string().nullable().optional(),
+  homeHeroImage3: z.string().nullable().optional(),
 })
 
 // GET site settings

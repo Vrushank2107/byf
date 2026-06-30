@@ -13,6 +13,9 @@ export const Route = createFileRoute("/admin/images")({
 });
 
 const IMAGE_FIELDS = [
+  { key: "homeHeroImage1", label: "Home Hero - Image 1", description: "First hero carousel image for home page" },
+  { key: "homeHeroImage2", label: "Home Hero - Image 2", description: "Second hero carousel image for home page" },
+  { key: "homeHeroImage3", label: "Home Hero - Image 3", description: "Third hero carousel image for home page" },
   { key: "donateHeroImage", label: "Page Hero - Donate", description: "Background image for Donate page hero section" },
   { key: "aboutHeroImage", label: "Page Hero - About", description: "Background image for About page hero section" },
   { key: "aboutSectionImage", label: "About Section Image", description: "Image shown in About page leadership section" },
