@@ -7,7 +7,7 @@ import { PROJECT_CATEGORY_OPTIONS, PROJECT_CUSTOM_CATEGORY_OPTION } from "@/lib/
 import { useProjectsStore } from "@/lib/admin-store";
 import { api } from "@/lib/api";
 import { imageUrl } from "@/lib/image-url";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Plus, Edit, Trash2, Sparkles, X, GripVertical } from "lucide-react";
 import { toast } from "sonner";
 import { ImageInput } from "@/components/admin/ImageInput";
@@ -58,6 +58,13 @@ function AdminProjects() {
   const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [saving, setSaving] = useState(false);
   const { confirm, dialog } = useConfirmDialog();
+  const formRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (showAddForm && formRef.current) {
+      formRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [showAddForm]);
 
   const handleDelete = async (id: string) => {
     const ok = await confirm({
@@ -81,6 +88,8 @@ function AdminProjects() {
 
   const handleSave = async (project: Project) => {
     const payload = toProjectPayload(project);
+    console.log('Saving project with order:', payload.order);
+    console.log('Full payload:', payload);
 
     if (!payload.image) {
       await confirm({
@@ -154,15 +163,17 @@ function AdminProjects() {
         </div>
 
         {showAddForm && (
-          <ProjectForm
-            project={editingProject}
-            saving={saving}
-            onSave={handleSave}
-            onCancel={() => {
-              setShowAddForm(false);
-              setEditingProject(null);
-            }}
-          />
+          <div ref={formRef}>
+            <ProjectForm
+              project={editingProject}
+              saving={saving}
+              onSave={handleSave}
+              onCancel={() => {
+                setShowAddForm(false);
+                setEditingProject(null);
+              }}
+            />
+          </div>
         )}
 
         <div className="grid gap-4">
@@ -275,6 +286,8 @@ function ProjectForm({
     e.preventDefault();
     const category = isCustomCategory ? customCategory.trim() : selectedCategory;
     if (!formData.slug || !formData.title || !formData.short || !category) return;
+    console.log('Submitting form with order:', formData.order);
+    console.log('Form data:', formData);
     onSave({ ...formData, category: category as Project["category"], order: formData.order ?? 0 });
   };
 

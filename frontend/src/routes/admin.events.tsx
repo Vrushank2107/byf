@@ -2,7 +2,7 @@
 import { requireAdminAuth } from "@/lib/admin-auth";
 import { AdminLayout } from "@/components/layout/AdminLayout";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Plus, Edit, Trash2, Calendar, MapPin, X } from "lucide-react";
 import { toast } from "sonner";
 import { ImageInput } from "@/components/admin/ImageInput";
@@ -22,6 +22,13 @@ function AdminEvents() {
   const [editingEvent, setEditingEvent] = useState<EventItem | null>(null);
   const [saving, setSaving] = useState(false);
   const { confirm, dialog } = useConfirmDialog();
+  const formRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (showAddForm && formRef.current) {
+      formRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [showAddForm]);
 
   const handleDelete = async (id: string) => {
     const ok = await confirm({
@@ -116,7 +123,7 @@ function AdminEvents() {
         </div>
 
         {showAddForm && (
-          <div className="bg-card border border-border rounded-xl p-6">
+          <div ref={formRef} className="bg-card border border-border rounded-xl p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="font-display text-xl font-semibold">
                 {editingEvent ? "Edit Event" : "Add New Event"}

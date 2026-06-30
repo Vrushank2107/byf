@@ -31,6 +31,7 @@ import { Route as AdminPartnersRouteImport } from './routes/admin.partners'
 import { Route as AdminMessagesRouteImport } from './routes/admin.messages'
 import { Route as AdminLeadersRouteImport } from './routes/admin.leaders'
 import { Route as AdminImpactStatsRouteImport } from './routes/admin.impact-stats'
+import { Route as AdminImagesRouteImport } from './routes/admin.images'
 import { Route as AdminGalleryRouteImport } from './routes/admin.gallery'
 import { Route as AdminEventsRouteImport } from './routes/admin.events'
 import { Route as AdminDonationsRouteImport } from './routes/admin.donations'
@@ -148,6 +149,11 @@ const AdminImpactStatsRoute = AdminImpactStatsRouteImport.update({
   path: '/impact-stats',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminImagesRoute = AdminImagesRouteImport.update({
+  id: '/images',
+  path: '/images',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminGalleryRoute = AdminGalleryRouteImport.update({
   id: '/gallery',
   path: '/gallery',
@@ -198,6 +204,7 @@ export interface FileRoutesByFullPath {
   '/admin/donations': typeof AdminDonationsRoute
   '/admin/events': typeof AdminEventsRoute
   '/admin/gallery': typeof AdminGalleryRoute
+  '/admin/images': typeof AdminImagesRoute
   '/admin/impact-stats': typeof AdminImpactStatsRoute
   '/admin/leaders': typeof AdminLeadersRoute
   '/admin/messages': typeof AdminMessagesRoute
@@ -227,6 +234,7 @@ export interface FileRoutesByTo {
   '/admin/donations': typeof AdminDonationsRoute
   '/admin/events': typeof AdminEventsRoute
   '/admin/gallery': typeof AdminGalleryRoute
+  '/admin/images': typeof AdminImagesRoute
   '/admin/impact-stats': typeof AdminImpactStatsRoute
   '/admin/leaders': typeof AdminLeadersRoute
   '/admin/messages': typeof AdminMessagesRoute
@@ -258,6 +266,7 @@ export interface FileRoutesById {
   '/admin/donations': typeof AdminDonationsRoute
   '/admin/events': typeof AdminEventsRoute
   '/admin/gallery': typeof AdminGalleryRoute
+  '/admin/images': typeof AdminImagesRoute
   '/admin/impact-stats': typeof AdminImpactStatsRoute
   '/admin/leaders': typeof AdminLeadersRoute
   '/admin/messages': typeof AdminMessagesRoute
@@ -290,6 +299,7 @@ export interface FileRouteTypes {
     | '/admin/donations'
     | '/admin/events'
     | '/admin/gallery'
+    | '/admin/images'
     | '/admin/impact-stats'
     | '/admin/leaders'
     | '/admin/messages'
@@ -319,6 +329,7 @@ export interface FileRouteTypes {
     | '/admin/donations'
     | '/admin/events'
     | '/admin/gallery'
+    | '/admin/images'
     | '/admin/impact-stats'
     | '/admin/leaders'
     | '/admin/messages'
@@ -349,6 +360,7 @@ export interface FileRouteTypes {
     | '/admin/donations'
     | '/admin/events'
     | '/admin/gallery'
+    | '/admin/images'
     | '/admin/impact-stats'
     | '/admin/leaders'
     | '/admin/messages'
@@ -533,6 +545,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminImpactStatsRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/images': {
+      id: '/admin/images'
+      path: '/images'
+      fullPath: '/admin/images'
+      preLoaderRoute: typeof AdminImagesRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/gallery': {
       id: '/admin/gallery'
       path: '/gallery'
@@ -585,6 +604,7 @@ interface AdminRouteChildren {
   AdminDonationsRoute: typeof AdminDonationsRoute
   AdminEventsRoute: typeof AdminEventsRoute
   AdminGalleryRoute: typeof AdminGalleryRoute
+  AdminImagesRoute: typeof AdminImagesRoute
   AdminImpactStatsRoute: typeof AdminImpactStatsRoute
   AdminLeadersRoute: typeof AdminLeadersRoute
   AdminMessagesRoute: typeof AdminMessagesRoute
@@ -603,6 +623,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminDonationsRoute: AdminDonationsRoute,
   AdminEventsRoute: AdminEventsRoute,
   AdminGalleryRoute: AdminGalleryRoute,
+  AdminImagesRoute: AdminImagesRoute,
   AdminImpactStatsRoute: AdminImpactStatsRoute,
   AdminLeadersRoute: AdminLeadersRoute,
   AdminMessagesRoute: AdminMessagesRoute,

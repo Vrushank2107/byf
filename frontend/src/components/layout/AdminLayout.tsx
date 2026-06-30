@@ -43,6 +43,7 @@ export const ADMIN_NAV = [
   { to: "/admin/donations", label: "Donations", icon: Heart },
   { to: "/admin/messages", label: "Messages", icon: MessageSquare },
   { to: "/admin/volunteers", label: "Volunteers", icon: Users },
+  { to: "/admin/images", label: "Site Images", icon: ImageIcon },
   { to: "/admin/settings", label: "Settings", icon: Settings },
 ] as const;
 

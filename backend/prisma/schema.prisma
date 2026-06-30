@@ -117,6 +117,24 @@ model SiteSettings {
   founderPortfolioUrl String   @default("") @map("founder_portfolio_url")
   updatedAt           DateTime @default(now()) @map("updated_at") @db.Timestamptz(6)
   donationFunds       Json     @default("[]")
+  heroEducation       String?  @map("hero_education")
+  heroBlankets        String?  @map("hero_blankets")
+  heroFlood           String?  @map("hero_flood")
+  heroWomen           String?  @map("hero_women")
+  pNotebooks          String?  @map("p_notebooks")
+  pSanitary           String?  @map("p_sanitary")
+  pRotibank           String?  @map("p_rotibank")
+  pJoycation          String?  @map("p_joycation")
+  blanket             String?
+  chappal             String?
+  diwali              String?
+  diwali2             String?
+  diwali3             String?
+  flag                String?
+  holi                String?
+  holi2               String?
+  holi3               String?
+  joycation1          String?
 
   @@map("site_settings")
 }

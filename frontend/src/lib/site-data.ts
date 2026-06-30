@@ -18,7 +18,8 @@ import pSanitary from "@/assets/project-sanitary.jpg";
 import pRotibank from "@/assets/project-rotibank.jpg";
 import pJoycation from "@/assets/project-joycation.jpg";
 
-export const IMG = {
+// Default fallback images
+const DEFAULT_IMG = {
   blanket,
   chappal,
   diwali,
@@ -38,6 +39,38 @@ export const IMG = {
   pRotibank,
   pJoycation,
 };
+
+// Dynamic images from settings (will be populated by API)
+let dynamicImages: Partial<typeof DEFAULT_IMG> = {};
+
+export function setDynamicImages(settings: any) {
+  dynamicImages = {
+    heroEducation: settings.heroEducation,
+    heroBlankets: settings.heroBlankets,
+    heroFlood: settings.heroFlood,
+    heroWomen: settings.heroWomen,
+    pNotebooks: settings.pNotebooks,
+    pSanitary: settings.pSanitary,
+    pRotibank: settings.pRotibank,
+    pJoycation: settings.pJoycation,
+    blanket: settings.blanket,
+    chappal: settings.chappal,
+    diwali: settings.diwali,
+    diwali2: settings.diwali2,
+    diwali3: settings.diwali3,
+    flag: settings.flag,
+    holi: settings.holi,
+    holi2: settings.holi2,
+    holi3: settings.holi3,
+    joycation1: settings.joycation1,
+  };
+}
+
+export const IMG = new Proxy(DEFAULT_IMG, {
+  get(target, prop: string) {
+    return (dynamicImages as any)[prop] || (target as any)[prop];
+  }
+}) as typeof DEFAULT_IMG;
 
 export const ORG = {
   name: "Baroda Youth Federation",
