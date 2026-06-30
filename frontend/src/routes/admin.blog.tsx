@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { requireAdminAuth } from "@/lib/admin-auth";
 import { AdminLayout } from "@/components/layout/AdminLayout";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Plus, Edit, Trash2, Calendar, User, X } from "lucide-react";
 import { toast } from "sonner";
 import { ImageInput } from "@/components/admin/ImageInput";
@@ -238,10 +238,30 @@ function BlogForm({
     }
   );
 
+  useEffect(() => {
+    if (post) {
+      // Convert ISO date to yyyy-MM-dd format for date input
+      const dateForInput = post.date ? post.date.split('T')[0] : '';
+      setFormData({ ...post, date: dateForInput });
+    } else {
+      setFormData({
+        slug: "",
+        title: "",
+        excerpt: "",
+        category: "",
+        date: "",
+        image: "",
+        read: "5 min read",
+      });
+    }
+  }, [post]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.title || !formData.slug || !formData.excerpt) return;
-    onSave(formData);
+    // Convert yyyy-MM-dd to ISO format for backend
+    const isoDate = new Date(formData.date).toISOString();
+    onSave({ ...formData, date: isoDate, content: formData.content || undefined });
   };
 
   return (

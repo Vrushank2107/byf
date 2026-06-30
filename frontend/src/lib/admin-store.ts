@@ -24,6 +24,7 @@ export type BlogItem = {
   date: string;
   image: string;
   read: string;
+  content?: string;
 };
 export type VolunteerSubmission = {
   id: string;
