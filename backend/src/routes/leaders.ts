@@ -25,11 +25,23 @@ app.post('/', authMiddleware, async (c) => {
 app.put('/:id', authMiddleware, async (c) => {
   const id = c.req.param('id')
   const body = await c.req.json()
-  const leader = await prisma.leader.update({
-    where: { id },
-    data: body
-  })
-  return c.json(leader)
+  
+  // Extract only the fields that exist in the schema
+  const { image, ...data } = body
+  
+  try {
+    const leader = await prisma.leader.update({
+      where: { id },
+      data: {
+        ...data,
+        ...(image !== undefined && { image })
+      }
+    })
+    return c.json(leader)
+  } catch (error) {
+    console.error('Failed to update leader:', error)
+    return c.json({ error: 'Failed to update leader' }, 500)
+  }
 })
 
 // DELETE leader (admin only)
