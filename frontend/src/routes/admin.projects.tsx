@@ -8,7 +8,7 @@ import { useProjectsStore } from "@/lib/admin-store";
 import { api } from "@/lib/api";
 import { imageUrl } from "@/lib/image-url";
 import { useState, useEffect } from "react";
-import { Plus, Edit, Trash2, Sparkles } from "lucide-react";
+import { Plus, Edit, Trash2, Sparkles, X } from "lucide-react";
 import { toast } from "sonner";
 import { ImageInput } from "@/components/admin/ImageInput";
 import { useConfirmDialog } from "@/hooks/use-confirm-dialog";
@@ -387,6 +387,59 @@ function ProjectForm({
             onChange={(e) => setFormData({ ...formData, progress: parseInt(e.target.value) })}
             className="w-full"
           />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-2">Impact at a Glance</label>
+          <div className="space-y-2">
+            {(formData.stats || []).map((stat, index) => (
+              <div key={index} className="flex gap-2">
+                <input
+                  type="text"
+                  value={stat.label}
+                  onChange={(e) => {
+                    const newStats = [...(formData.stats || [])];
+                    newStats[index] = { ...newStats[index], label: e.target.value };
+                    setFormData({ ...formData, stats: newStats });
+                  }}
+                  placeholder="e.g., Children participated"
+                  className="flex-1 px-3 py-2 rounded-lg border border-border bg-background text-sm"
+                />
+                <input
+                  type="text"
+                  value={stat.value}
+                  onChange={(e) => {
+                    const newStats = [...(formData.stats || [])];
+                    newStats[index] = { ...newStats[index], value: e.target.value };
+                    setFormData({ ...formData, stats: newStats });
+                  }}
+                  placeholder="e.g., 500+"
+                  className="w-24 px-3 py-2 rounded-lg border border-border bg-background text-sm"
+                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    const newStats = (formData.stats || []).filter((_, i) => i !== index);
+                    setFormData({ ...formData, stats: newStats });
+                  }}
+                  className="p-2 rounded-lg hover:bg-destructive/10 text-destructive transition-colors"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={() => {
+                setFormData({ ...formData, stats: [...(formData.stats || []), { label: "", value: "" }] });
+              }}
+              className="flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-colors"
+            >
+              <Plus className="h-4 w-4" />
+              Add Stat
+            </button>
+          </div>
+          <p className="mt-1 text-xs text-muted-foreground">Add key impact metrics like "Children participated: 500+"</p>
         </div>
 
         <div className="flex gap-2">
