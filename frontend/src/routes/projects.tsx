@@ -95,25 +95,23 @@ function ProjectsPage() {
                 <Skeleton key={c} className="h-10 w-24 rounded-full" />
               ))}
             </div>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {[1, 2, 3, 4, 5, 6].map((i) => (
-                <div key={i} className="flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-soft">
-                  <Skeleton className="aspect-[4/3] w-full" />
-                  <div className="flex flex-1 flex-col p-6">
-                    <Skeleton className="h-4 w-3/4 mb-4" />
-                    <Skeleton className="h-3 w-full mb-2" />
-                    <Skeleton className="h-3 w-2/3 mb-4" />
-                    <div className="grid grid-cols-2 gap-4 border-t border-border pt-4">
+            <div className="space-y-12">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className={`flex h-full flex-col md:flex-row overflow-hidden rounded-3xl border border-border bg-card shadow-soft ${i % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
+                  <Skeleton className="md:w-1/2 aspect-[4/3] md:aspect-auto w-full" />
+                  <div className="md:w-1/2 flex flex-1 flex-col p-6 md:p-10 justify-center">
+                    <Skeleton className="h-4 w-3/4 mb-6" />
+                    <div className="grid grid-cols-2 gap-4 border-t border-border pt-6">
                       <div>
-                        <Skeleton className="h-6 w-16 mb-2" />
+                        <Skeleton className="h-8 w-20 mb-2" />
                         <Skeleton className="h-3 w-12" />
                       </div>
                       <div>
-                        <Skeleton className="h-6 w-16 mb-2" />
+                        <Skeleton className="h-8 w-20 mb-2" />
                         <Skeleton className="h-3 w-12" />
                       </div>
                     </div>
-                    <div className="mt-5">
+                    <div className="mt-6">
                       <Skeleton className="h-3 w-12 mb-2" />
                       <Skeleton className="h-1.5 w-full rounded-full" />
                     </div>
@@ -154,7 +152,7 @@ function ProjectsPage() {
             ))}
           </div>
 
-          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-12 space-y-12">
             {visible.map((p, idx) => (
               <Link
                 key={p.slug}
@@ -166,10 +164,10 @@ function ProjectsPage() {
                   layout
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: idx * 0.04, duration: 0.45 }}
-                  className="group flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-soft transition-all hover:-translate-y-1 hover:shadow-glow cursor-pointer"
+                  transition={{ delay: idx * 0.08, duration: 0.45 }}
+                  className={`group flex h-full flex-col md:flex-row overflow-hidden rounded-3xl border border-border bg-card shadow-soft transition-all hover:-translate-y-1 hover:shadow-glow cursor-pointer ${idx % 2 === 1 ? 'md:flex-row-reverse' : ''}`}
                 >
-                  <div className="relative aspect-[4/3] overflow-hidden">
+                  <div className="relative md:w-1/2 aspect-[4/3] md:aspect-auto overflow-hidden">
                     <img src={imageUrl(p.image)} alt={p.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
                     <span className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-primary">
@@ -177,17 +175,17 @@ function ProjectsPage() {
                     </span>
                     <h3 className="absolute inset-x-4 bottom-4 font-display text-xl font-bold text-white">{p.title}</h3>
                   </div>
-                  <div className="flex flex-1 flex-col p-6">
-                    <p className="text-sm leading-relaxed text-muted-foreground">{p.short}</p>
-                    <div className="mt-5 grid grid-cols-2 gap-4 border-t border-border pt-4">
+                  <div className="md:w-1/2 flex flex-1 flex-col p-6 md:p-10 justify-center">
+                    <p className="text-base leading-relaxed text-muted-foreground">{p.short}</p>
+                    <div className="mt-6 grid grid-cols-2 gap-4 border-t border-border pt-6">
                       {p.stats.map((s: any) => (
                         <div key={s.label}>
-                          <div className="font-display text-lg font-bold text-foreground">{s.value}</div>
+                          <div className="font-display text-2xl font-bold text-foreground">{s.value}</div>
                           <div className="text-xs text-muted-foreground">{s.label}</div>
                         </div>
                       ))}
                     </div>
-                    <div className="mt-5">
+                    <div className="mt-6">
                       <div className="flex items-center justify-between text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
                         <span>Progress</span>
                         <span className="text-primary">{p.progress}%</span>
@@ -197,7 +195,7 @@ function ProjectsPage() {
                       </div>
                     </div>
                     {p.fullStory && (
-                      <div className="mt-6 inline-flex w-fit items-center gap-1.5 self-start text-sm font-semibold text-primary transition-transform group-hover:translate-x-0.5">
+                      <div className="mt-8 inline-flex w-fit items-center gap-1.5 self-start text-sm font-semibold text-primary transition-transform group-hover:translate-x-0.5">
                         Read full story
                         <ArrowUpRight className="h-4 w-4" />
                       </div>
