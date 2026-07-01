@@ -11,6 +11,7 @@ export function Hero() {
   const [isLoading, setIsLoading] = useState(true);
   const [imagesLoaded, setImagesLoaded] = useState<Record<string, boolean>>({});
   const loadedImagesRef = useRef<Record<string, boolean>>({});
+  const [loadingDelayComplete, setLoadingDelayComplete] = useState(false);
 
   // Preload images
   const preloadImage = (url: string) => {
@@ -24,6 +25,18 @@ export function Hero() {
   };
 
   useEffect(() => {
+    let dataLoaded = false;
+    let delayPassed = false;
+    
+    // Show loading state for at least 1.5 seconds
+    const delayTimer = setTimeout(() => {
+      delayPassed = true;
+      if (dataLoaded) {
+        setIsLoading(false);
+      }
+      setLoadingDelayComplete(true);
+    }, 1500);
+
     api.getSettings()
       .then((settings) => {
         setSiteSettings(settings);
@@ -36,8 +49,13 @@ export function Hero() {
         console.error("Failed to fetch site settings:", error);
       })
       .finally(() => {
-        setIsLoading(false);
+        dataLoaded = true;
+        if (delayPassed) {
+          setIsLoading(false);
+        }
       });
+
+    return () => clearTimeout(delayTimer);
   }, []);
 
   const heroSlides = [
@@ -82,9 +100,12 @@ export function Hero() {
   const slide = slides[i] ?? slides[0];
   const heroImage = slide?.image;
   const isCurrentImageLoaded = heroImage ? imagesLoaded[heroImage] : false;
-
+  
+  // Loading state - wait for data, images, and minimum delay
+  const isActuallyLoading = isLoading || !loadingDelayComplete || (slides.length > 0 && !isCurrentImageLoaded);
+  
   // Loading state
-  if (isLoading || (slides.length > 0 && !isCurrentImageLoaded)) {
+  if (isActuallyLoading) {
     return (
       <section className="relative isolate min-h-[85vh] md:min-h-[100svh] overflow-hidden bg-foreground text-background flex items-center justify-center">
         <div className="absolute inset-0 bg-gradient-to-b from-foreground/85 via-foreground/55 to-foreground/90" />
@@ -122,7 +143,7 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="mt-6 max-w-xl text-base leading-relaxed text-white/85 md:text-lg mx-auto"
           >
-            Loading...
+            Building better communities together, one step at a time.
           </motion.p>
         </div>
       </section>
