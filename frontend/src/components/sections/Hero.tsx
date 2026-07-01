@@ -158,7 +158,7 @@ export function Hero() {
 
   return (
     <section className="relative isolate min-h-[85vh] md:min-h-[100svh] overflow-hidden bg-foreground text-background">
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="sync">
         <motion.div
           key={i}
           initial={{ opacity: 0, scale: 1.05 }}
