@@ -62,12 +62,12 @@ function StatsGrid({ stats }: { stats: any[] }) {
 export function ImpactStats({ overlap = true }: { overlap?: boolean }) {
   const [stats, setStats] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [hasScrolled, setHasScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setHasScrolled(true);
+      if (window.scrollY > 100) { // Require a bit more scroll before showing
+        setIsVisible(true);
       }
     };
     window.addEventListener('scroll', handleScroll);
@@ -88,8 +88,9 @@ export function ImpactStats({ overlap = true }: { overlap?: boolean }) {
   }, []);
 
   const sectionClass = cn(
-    "relative",
+    "relative transition-all duration-700",
     overlap ? "-mt-14 z-20" : "z-10 pt-10",
+    !isVisible && "opacity-0 translate-y-8 pointer-events-none"
   );
 
   if (loading) {
@@ -119,10 +120,7 @@ export function ImpactStats({ overlap = true }: { overlap?: boolean }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className={cn(
-            "rounded-3xl bg-card p-6 shadow-glow md:p-10",
-            hasScrolled && "border border-border"
-          )}
+          className="rounded-3xl bg-card p-6 shadow-glow md:p-10 border border-border"
         >
           <StatsGrid stats={stats} />
         </motion.div>
