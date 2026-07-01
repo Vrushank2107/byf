@@ -68,7 +68,7 @@ export function Hero() {
 
   useEffect(() => {
     if (slides.length > 0) {
-      const t = setInterval(() => setI((v) => (v + 1) % slides.length), 6000);
+      const t = setInterval(() => setI((v) => (v + 1) % slides.length), 4000);
       return () => clearInterval(t);
     }
   }, [slides.length]);
@@ -161,10 +161,10 @@ export function Hero() {
       <AnimatePresence mode="wait">
         <motion.div
           key={i}
-          initial={{ opacity: 0, scale: 1.1, x: 20 }}
-          animate={{ opacity: 1, scale: 1, x: 0 }}
-          exit={{ opacity: 0, scale: 0.95, x: -20 }}
-          transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
+          initial={{ opacity: 0, scale: 1.05 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.4, ease: "easeOut" }}
           className="absolute inset-0"
         >
           <img
@@ -185,10 +185,10 @@ export function Hero() {
           <AnimatePresence mode="wait">
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 30, skewY: 1 }}
-              animate={{ opacity: 1, y: 0, skewY: 0 }}
-              exit={{ opacity: 0, y: -30, skewY: -1 }}
-              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
             >
               <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-white backdrop-blur">
                 <Sparkles className="h-3.5 w-3.5 text-secondary" />
