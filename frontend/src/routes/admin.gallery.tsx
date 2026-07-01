@@ -9,6 +9,7 @@ import {
 } from "@/lib/site-data";
 import { useGalleryStore, type GalleryItem } from "@/lib/admin-store";
 import { api } from "@/lib/api";
+import { imageUrl } from "@/lib/image-url";
 import { useState } from "react";
 import { Plus, Trash2, X } from "lucide-react";
 import { toast } from "sonner";
@@ -119,19 +120,21 @@ function AdminGallery() {
             filteredGallery.map((item) => (
               <div key={item.id || item.src} className="relative group">
                 <img
-                  src={item.src}
+                  src={imageUrl(item.src)}
                   alt={item.alt}
                   className="w-full aspect-square object-cover rounded-xl border border-border"
                 />
-                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl flex items-center justify-center">
-                  <button
-                    onClick={() => handleDelete(item.id || '')}
-                    className="p-2 rounded-lg bg-destructive text-destructive-foreground hover:bg-destructive/90 transition-colors"
-                    aria-label="Delete"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </button>
-                </div>
+                {item.id && (
+                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl flex items-center justify-center">
+                    <button
+                      onClick={() => handleDelete(item.id)}
+                      className="p-2 rounded-lg bg-destructive text-destructive-foreground hover:bg-destructive/90 transition-colors"
+                      aria-label="Delete"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
+                )}
                 <div className="absolute bottom-2 left-2 right-2">
                   <span className="inline-block px-2 py-1 bg-black/70 text-white text-xs rounded-md">
                     {item.tag}

@@ -159,7 +159,7 @@ export function useProjectsStore() {
 }
 
 export function useGalleryStore() {
-  const [data, setData] = useState<GalleryItem[]>([...GALLERY]);
+  const [data, setData] = useState<GalleryItem[]>([]);
   const [loading, setLoading] = useState(false);
 
   const refresh = async () => {
