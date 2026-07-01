@@ -44,8 +44,11 @@ function ProjectDetailPage() {
   const loaderData = Route.useLoaderData() as { project: any } | undefined;
   const project = loaderData?.project;
 
+  const stats = project?.stats || [];
+
   console.log('Project data:', project);
   console.log('Images:', project?.images);
+  console.log('Stats:', stats);
 
   if (!project) {
     return (
@@ -192,7 +195,7 @@ function ProjectDetailPage() {
               >
                 <h3 className="font-display text-xl font-bold mb-6">Impact at a Glance</h3>
                 <div className="space-y-4">
-                  {project.stats.map((stat: any, idx: number) => (
+                  {stats.map((stat: any, idx: number) => (
                     <motion.div
                       key={stat.label}
                       initial={{ opacity: 0, x: -10 }}

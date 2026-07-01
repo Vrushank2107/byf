@@ -59,10 +59,25 @@ async function request<T>(
 
 export const api = {
   // Projects
-  getProjects: () => request<any[]>('/api/projects').then((data) => normalizeImageCollection(data, ['image', 'images'])),
-  getHeroProjects: () => request<any[]>('/api/projects/hero').then((data) => normalizeImageCollection(data, ['image', 'images'])),
+  getProjects: () => request<any[]>('/api/projects').then((data) => normalizeImageCollection(data, ['image', 'images']).map((p) => ({
+    ...p,
+    stats: Array.isArray(p.stats) ? p.stats : typeof p.stats === 'string' ? JSON.parse(p.stats) : [],
+    images: Array.isArray(p.images) ? p.images : typeof p.images === 'string' ? JSON.parse(p.images) : [],
+  }))),
+  getHeroProjects: () => request<any[]>('/api/projects/hero').then((data) => normalizeImageCollection(data, ['image', 'images']).map((p) => ({
+    ...p,
+    stats: Array.isArray(p.stats) ? p.stats : typeof p.stats === 'string' ? JSON.parse(p.stats) : [],
+    images: Array.isArray(p.images) ? p.images : typeof p.images === 'string' ? JSON.parse(p.images) : [],
+  }))),
   getProject: (slug: string) =>
-    request<any>(`/api/projects/${slug}`).then((data) => normalizeImageFields(data, ['image', 'images'])),
+    request<any>(`/api/projects/${slug}`).then((data) => {
+      const normalized = normalizeImageFields(data, ['image', 'images']);
+      return {
+        ...normalized,
+        stats: Array.isArray(normalized.stats) ? normalized.stats : typeof normalized.stats === 'string' ? JSON.parse(normalized.stats) : [],
+        images: Array.isArray(normalized.images) ? normalized.images : typeof normalized.images === 'string' ? JSON.parse(normalized.images) : [],
+      };
+    }),
   createProject: (data: any) => request<any>('/api/projects', {
     method: 'POST',
     body: JSON.stringify(data),
