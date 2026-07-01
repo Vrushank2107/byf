@@ -2,53 +2,48 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, Heart, HandHeart, Sparkles } from "lucide-react";
-import { IMG, ORG, type Project } from "@/lib/site-data";
+import { IMG, ORG } from "@/lib/site-data";
 import { api } from "@/lib/api";
 
-const SLIDES = [
+const DEFAULT_SLIDES = [
   {
     image: IMG.flag,
-    eyebrow: "Education",
-    title: "Every child deserves a notebook,",
-    titleAccent: "a teacher, and a chance.",
-    desc: "5,000+ first-generation learners are in school today because someone believed in them.",
+    eyebrow: "Our Impact",
+    title: "Making a difference,",
+    titleAccent: "one community at a time.",
+    desc: "Join us in creating positive change across Vadodara and beyond.",
   },
   {
     image: IMG.diwali,
-    eyebrow: "Disaster Relief",
-    title: "When the waters rose,",
-    titleAccent: "61,000 people had us by their side.",
-    desc: "28 days. 450 volunteers. Food, water and medicine to every family in need.",
+    eyebrow: "Our Mission",
+    title: "Empowering youth,",
+    titleAccent: "building tomorrow's leaders.",
+    desc: "Education, relief, and community service since 2017.",
   },
   {
     image: IMG.blanket,
-    eyebrow: "Winter Drive",
-    title: "Ten thousand blankets,",
-    titleAccent: "ten thousand warmer nights.",
-    desc: "Reaching the elderly, daily-wage workers and street families every winter since 2017.",
+    eyebrow: "Get Involved",
+    title: "Your support matters,",
+    titleAccent: "every contribution counts.",
+    desc: "Volunteer, donate, or partner with us to make an impact.",
   },
 ];
 
 export function Hero() {
   const [i, setI] = useState(0);
-  const [heroProjects, setHeroProjects] = useState<Project[]>([]);
   const [siteSettings, setSiteSettings] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    api.getHeroProjects()
-      .then((projects) => {
-        setHeroProjects(projects);
-      })
-      .catch((error) => {
-        console.error("Failed to fetch hero projects:", error);
-      });
-
     api.getSettings()
       .then((settings) => {
         setSiteSettings(settings);
       })
       .catch((error) => {
         console.error("Failed to fetch site settings:", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, []);
 
@@ -76,15 +71,7 @@ export function Hero() {
           desc: "Volunteer, donate, or partner with us to make an impact.",
         },
       ].filter(Boolean)
-    : heroProjects.length > 0
-    ? heroProjects.map((project) => ({
-        image: project.image,
-        eyebrow: project.category,
-        title: project.title,
-        titleAccent: "featured by Baroda Youth Federation.",
-        desc: project.short,
-      }))
-    : SLIDES;
+    : DEFAULT_SLIDES;
 
   const slides = heroSlides;
 
