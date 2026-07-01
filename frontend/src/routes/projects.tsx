@@ -133,7 +133,7 @@ function ProjectsPage() {
         eyebrow="Our Projects"
         title={<>Multiple programs, <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">one mission.</span></>}
         description="Filter by category to explore each project's scale, impact and progress."
-        image={IMG.flag}
+        image={heroImage}
       />
 
       <section className="section-y">

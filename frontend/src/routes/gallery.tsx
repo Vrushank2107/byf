@@ -100,7 +100,7 @@ function GalleryPage() {
         eyebrow="Gallery"
         title={<>Moments from <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">the ground.</span></>}
         description="Real photos from our events. Tap any image for fullscreen."
-        image={IMG.diwali}
+        image={heroImage}
       />
 
       <section className="section-y">
