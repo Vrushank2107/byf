@@ -8,7 +8,6 @@ import { getGalleryFilterTags } from "@/lib/site-data";
 import { api } from "@/lib/api";
 import { imageUrl } from "@/lib/image-url";
 import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
-import diwali from "@/assets/byf/diwali.jpg";
 
 export const Route = createFileRoute("/gallery")({
   head: () =>
@@ -30,7 +29,7 @@ function GalleryPage() {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
   const [gallery, setGallery] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [heroImage, setHeroImage] = useState(diwali);
+  const [heroImage, setHeroImage] = useState<string | null>(null);
 
   useEffect(() => {
     api.getGallery().then((data) => {

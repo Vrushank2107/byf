@@ -10,7 +10,6 @@ import { api } from "@/lib/api";
 import { imageUrl } from "@/lib/image-url";
 import { useState, useEffect } from "react";
 import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
-import flag from "@/assets/byf/flag.jpg";
 
 export const Route = createFileRoute("/about")({
   head: () =>
@@ -37,8 +36,8 @@ const VALUES = [
 
 function AboutPage() {
   const [leaders, setLeaders] = useState<any[]>([]);
-  const [heroImage, setHeroImage] = useState(flag);
-  const [sectionImage, setSectionImage] = useState(flag);
+  const [heroImage, setHeroImage] = useState<string | null>(null);
+  const [sectionImage, setSectionImage] = useState<string | null>(null);
   const [loadingLeaders, setLoadingLeaders] = useState(true);
   const [siteSettings, setSiteSettings] = useState<any>(null);
 

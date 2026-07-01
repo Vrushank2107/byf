@@ -8,7 +8,6 @@ import { type ProjectCategory, PROJECT_CATEGORY_OPTIONS, PROJECT_CUSTOM_CATEGORY
 import { api } from "@/lib/api";
 import { imageUrl } from "@/lib/image-url";
 import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
-import flag from "@/assets/byf/flag.jpg";
 
 const CATEGORIES: (ProjectCategory | "All")[] = [
   "All",
@@ -55,7 +54,7 @@ function ProjectsPage() {
   const [filter, setFilter] = useState<(ProjectCategory | "All")>("All");
   const [projects, setProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [heroImage, setHeroImage] = useState(flag);
+  const [heroImage, setHeroImage] = useState<string | null>(null);
 
   useEffect(() => {
     api.getProjects().then((data) => {

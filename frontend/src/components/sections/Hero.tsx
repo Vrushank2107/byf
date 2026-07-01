@@ -4,33 +4,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, Heart, HandHeart, Sparkles } from "lucide-react";
 import { ORG } from "@/lib/site-data";
 import { api } from "@/lib/api";
-import flag from "@/assets/byf/flag.jpg";
-import diwali from "@/assets/byf/diwali.jpg";
-import blanket from "@/assets/byf/blanket.jpg";
-
-const DEFAULT_SLIDES = [
-  {
-    image: flag,
-    eyebrow: "Our Impact",
-    title: "Making a difference,",
-    titleAccent: "one community at a time.",
-    desc: "Join us in creating positive change across Vadodara and beyond.",
-  },
-  {
-    image: diwali,
-    eyebrow: "Our Mission",
-    title: "Empowering youth,",
-    titleAccent: "building tomorrow's leaders.",
-    desc: "Education, relief, and community service since 2017.",
-  },
-  {
-    image: blanket,
-    eyebrow: "Get Involved",
-    title: "Your support matters,",
-    titleAccent: "every contribution counts.",
-    desc: "Volunteer, donate, or partner with us to make an impact.",
-  },
-];
 
 export function Hero() {
   const [i, setI] = useState(0);
@@ -50,45 +23,103 @@ export function Hero() {
       });
   }, []);
 
-  const heroSlides = siteSettings?.homeHeroImage1 
-    ? [
-        siteSettings.homeHeroImage1 && {
-          image: siteSettings.homeHeroImage1,
-          eyebrow: "Our Impact",
-          title: "Making a difference,",
-          titleAccent: "one community at a time.",
-          desc: "Join us in creating positive change across Vadodara and beyond.",
-        },
-        siteSettings.homeHeroImage2 && {
-          image: siteSettings.homeHeroImage2,
-          eyebrow: "Our Mission",
-          title: "Empowering youth,",
-          titleAccent: "building tomorrow's leaders.",
-          desc: "Education, relief, and community service since 2017.",
-        },
-        siteSettings.homeHeroImage3 && {
-          image: siteSettings.homeHeroImage3,
-          eyebrow: "Get Involved",
-          title: "Your support matters,",
-          titleAccent: "every contribution counts.",
-          desc: "Volunteer, donate, or partner with us to make an impact.",
-        },
-      ].filter(Boolean)
-    : DEFAULT_SLIDES;
+  const heroSlides = [
+    siteSettings?.homeHeroImage1 && {
+      image: siteSettings.homeHeroImage1,
+      eyebrow: "Our Impact",
+      title: "Making a difference,",
+      titleAccent: "one community at a time.",
+      desc: "Join us in creating positive change across Vadodara and beyond.",
+    },
+    siteSettings?.homeHeroImage2 && {
+      image: siteSettings.homeHeroImage2,
+      eyebrow: "Our Mission",
+      title: "Empowering youth,",
+      titleAccent: "building tomorrow's leaders.",
+      desc: "Education, relief, and community service since 2017.",
+    },
+    siteSettings?.homeHeroImage3 && {
+      image: siteSettings.homeHeroImage3,
+      eyebrow: "Get Involved",
+      title: "Your support matters,",
+      titleAccent: "every contribution counts.",
+      desc: "Volunteer, donate, or partner with us to make an impact.",
+    },
+  ].filter(Boolean);
 
   const slides = heroSlides;
 
   useEffect(() => {
-    const t = setInterval(() => setI((v) => (v + 1) % slides.length), 6000);
-    return () => clearInterval(t);
+    if (slides.length > 0) {
+      const t = setInterval(() => setI((v) => (v + 1) % slides.length), 6000);
+      return () => clearInterval(t);
+    }
   }, [slides.length]);
 
   useEffect(() => {
-    setI((current) => Math.min(current, slides.length - 1));
+    if (slides.length > 0) {
+      setI((current) => Math.min(current, slides.length - 1));
+    }
   }, [slides.length]);
 
   const slide = slides[i] ?? slides[0];
-  const heroImage = slide.image;
+  const heroImage = slide?.image;
+
+  if (slides.length === 0) {
+    return (
+      <section className="relative isolate min-h-[85vh] md:min-h-[100svh] overflow-hidden bg-foreground text-background flex items-center justify-center">
+        <div className="absolute inset-0 bg-gradient-to-b from-foreground/85 via-foreground/55 to-foreground/90" />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/40 via-transparent to-secondary/25 mix-blend-overlay" />
+        
+        <div className="container-page relative text-center py-20 md:py-32">
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-white backdrop-blur">
+            <Sparkles className="h-3.5 w-3.5 text-secondary" />
+            {ORG.tagline}
+          </span>
+
+          <h1 className="mt-6 font-display text-4xl font-bold leading-[1.05] text-white sm:text-5xl md:text-6xl lg:text-7xl">
+            Making a difference,{" "}
+            <span className="block bg-gradient-to-r from-secondary via-secondary to-accent bg-clip-text text-transparent">
+              one community at a time.
+            </span>
+          </h1>
+
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-white/85 md:text-lg mx-auto">
+            Join us in creating positive change across Vadodara and beyond.
+          </p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+            className="mt-9 flex flex-wrap gap-3 justify-center"
+          >
+            <Link
+              to="/donate"
+              className="inline-flex items-center gap-2 rounded-full gradient-warm px-6 py-3.5 font-display text-sm font-semibold text-white shadow-warm transition-transform hover:-translate-y-0.5"
+            >
+              <Heart className="h-4 w-4 fill-current" />
+              Donate Now
+            </Link>
+            <Link
+              to="/volunteer"
+              className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3.5 font-display text-sm font-semibold text-primary shadow-soft transition-transform hover:-translate-y-0.5"
+            >
+              <HandHeart className="h-4 w-4" />
+              Become a Volunteer
+            </Link>
+            <Link
+              to="/projects"
+              className="inline-flex items-center gap-2 rounded-full border border-white/40 px-6 py-3.5 font-display text-sm font-semibold text-white transition-colors hover:bg-white/10"
+            >
+              Explore Projects
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="relative isolate min-h-[85vh] md:min-h-[100svh] overflow-hidden bg-foreground text-background">

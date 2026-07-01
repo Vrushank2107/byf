@@ -6,7 +6,6 @@ import { PageHero } from "@/components/ui/PageHero";
 import { api } from "@/lib/api";
 import { imageUrl } from "@/lib/image-url";
 import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
-import diwali from "@/assets/byf/diwali.jpg";
 
 export const Route = createFileRoute("/events")({
   head: () =>
@@ -26,7 +25,7 @@ export const Route = createFileRoute("/events")({
 function EventsPage() {
   const [events, setEvents] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [heroImage, setHeroImage] = useState(diwali);
+  const [heroImage, setHeroImage] = useState<string | null>(null);
   
   useEffect(() => {
     Promise.all([

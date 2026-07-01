@@ -7,7 +7,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/lib/api";
 import { imageUrl } from "@/lib/image-url";
 import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
-import holi from "@/assets/byf/holi.jpg";
 
 const CATS = ["All", "Success Stories", "Activities", "Community Impact", "Volunteer Experiences"] as const;
 
@@ -31,7 +30,7 @@ function BlogPage() {
   const [cat, setCat] = useState<(typeof CATS)[number]>("All");
   const [blogPosts, setBlogPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [heroImage, setHeroImage] = useState(holi);
+  const [heroImage, setHeroImage] = useState<string | null>(null);
 
   useEffect(() => {
     api.getSettings().then((data) => {

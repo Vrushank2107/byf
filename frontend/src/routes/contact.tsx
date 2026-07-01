@@ -7,7 +7,6 @@ import { ORG } from "@/lib/site-data";
 import { api } from "@/lib/api";
 import { imageUrl } from "@/lib/image-url";
 import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
-import flag from "@/assets/byf/flag.jpg";
 
 export const Route = createFileRoute("/contact")({
   head: () =>
@@ -28,7 +27,7 @@ function ContactPage() {
   const [done, setDone] = useState(false);
   const [loading, setLoading] = useState(false);
   const [settings, setSettings] = useState<any>(null);
-  const [heroImage, setHeroImage] = useState(flag);
+  const [heroImage, setHeroImage] = useState<string | null>(null);
 
   useEffect(() => {
     api.getSettings().then((data) => {
