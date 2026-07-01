@@ -124,35 +124,6 @@ export function Hero() {
           >
             Join us in creating positive change across Vadodara and beyond.
           </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="mt-9 flex flex-wrap gap-3 justify-center"
-          >
-            <Link
-              to="/donate"
-              className="inline-flex items-center gap-2 rounded-full gradient-warm px-6 py-3.5 font-display text-sm font-semibold text-white shadow-warm transition-transform hover:-translate-y-0.5"
-            >
-              <Heart className="h-4 w-4 fill-current" />
-              Donate Now
-            </Link>
-            <Link
-              to="/volunteer"
-              className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3.5 font-display text-sm font-semibold text-primary shadow-soft transition-transform hover:-translate-y-0.5"
-            >
-              <HandHeart className="h-4 w-4" />
-              Become a Volunteer
-            </Link>
-            <Link
-              to="/projects"
-              className="inline-flex items-center gap-2 rounded-full border border-white/40 px-6 py-3.5 font-display text-sm font-semibold text-white transition-colors hover:bg-white/10"
-            >
-              Explore Projects
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          </motion.div>
         </div>
       </section>
     );
@@ -180,35 +151,6 @@ export function Hero() {
           <p className="mt-6 max-w-xl text-base leading-relaxed text-white/85 md:text-lg mx-auto">
             Join us in creating positive change across Vadodara and beyond.
           </p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            className="mt-9 flex flex-wrap gap-3 justify-center"
-          >
-            <Link
-              to="/donate"
-              className="inline-flex items-center gap-2 rounded-full gradient-warm px-6 py-3.5 font-display text-sm font-semibold text-white shadow-warm transition-transform hover:-translate-y-0.5"
-            >
-              <Heart className="h-4 w-4 fill-current" />
-              Donate Now
-            </Link>
-            <Link
-              to="/volunteer"
-              className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3.5 font-display text-sm font-semibold text-primary shadow-soft transition-transform hover:-translate-y-0.5"
-            >
-              <HandHeart className="h-4 w-4" />
-              Become a Volunteer
-            </Link>
-            <Link
-              to="/projects"
-              className="inline-flex items-center gap-2 rounded-full border border-white/40 px-6 py-3.5 font-display text-sm font-semibold text-white transition-colors hover:bg-white/10"
-            >
-              Explore Projects
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          </motion.div>
         </div>
       </section>
     );
