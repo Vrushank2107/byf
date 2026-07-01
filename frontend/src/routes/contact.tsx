@@ -3,10 +3,11 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, MessageCircle, CheckCircle2, Send } from "lucide-react";
 import { PageHero } from "@/components/ui/PageHero";
-import { ORG, IMG } from "@/lib/site-data";
+import { ORG } from "@/lib/site-data";
 import { api } from "@/lib/api";
 import { imageUrl } from "@/lib/image-url";
 import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
+import flag from "@/assets/byf/flag.jpg";
 
 export const Route = createFileRoute("/contact")({
   head: () =>
@@ -27,7 +28,7 @@ function ContactPage() {
   const [done, setDone] = useState(false);
   const [loading, setLoading] = useState(false);
   const [settings, setSettings] = useState<any>(null);
-  const [heroImage, setHeroImage] = useState(IMG.flag);
+  const [heroImage, setHeroImage] = useState(flag);
 
   useEffect(() => {
     api.getSettings().then((data) => {

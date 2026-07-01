@@ -2,26 +2,29 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, Heart, HandHeart, Sparkles } from "lucide-react";
-import { IMG, ORG } from "@/lib/site-data";
+import { ORG } from "@/lib/site-data";
 import { api } from "@/lib/api";
+import flag from "@/assets/byf/flag.jpg";
+import diwali from "@/assets/byf/diwali.jpg";
+import blanket from "@/assets/byf/blanket.jpg";
 
 const DEFAULT_SLIDES = [
   {
-    image: IMG.flag,
+    image: flag,
     eyebrow: "Our Impact",
     title: "Making a difference,",
     titleAccent: "one community at a time.",
     desc: "Join us in creating positive change across Vadodara and beyond.",
   },
   {
-    image: IMG.diwali,
+    image: diwali,
     eyebrow: "Our Mission",
     title: "Empowering youth,",
     titleAccent: "building tomorrow's leaders.",
     desc: "Education, relief, and community service since 2017.",
   },
   {
-    image: IMG.blanket,
+    image: blanket,
     eyebrow: "Get Involved",
     title: "Your support matters,",
     titleAccent: "every contribution counts.",

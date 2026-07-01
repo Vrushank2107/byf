@@ -4,10 +4,11 @@ import { motion } from "framer-motion";
 import { Award, Network, Sparkles, TrendingUp, Upload, CheckCircle2 } from "lucide-react";
 import { PageHero } from "@/components/ui/PageHero";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { IMG } from "@/lib/site-data";
 import { api } from "@/lib/api";
 import { imageUrl } from "@/lib/image-url";
 import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
+import joycation1 from "@/assets/byf/joycation1.jpg";
+import holi from "@/assets/byf/holi.jpg";
 
 export const Route = createFileRoute("/volunteer")({
   head: () =>
@@ -34,8 +35,8 @@ const BENEFITS = [
 function VolunteerPage() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [heroImage, setHeroImage] = useState(IMG.joycation1);
-  const [formImage, setFormImage] = useState(IMG.holi);
+  const [heroImage, setHeroImage] = useState(joycation1);
+  const [formImage, setFormImage] = useState(holi);
 
   useEffect(() => {
     api.getSettings().then((data) => {

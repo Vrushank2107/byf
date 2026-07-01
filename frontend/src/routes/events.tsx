@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Calendar, MapPin } from "lucide-react";
 import { PageHero } from "@/components/ui/PageHero";
-import { IMG } from "@/lib/site-data";
 import { api } from "@/lib/api";
 import { imageUrl } from "@/lib/image-url";
 import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
+import diwali from "@/assets/byf/diwali.jpg";
 
 export const Route = createFileRoute("/events")({
   head: () =>
@@ -26,7 +26,7 @@ export const Route = createFileRoute("/events")({
 function EventsPage() {
   const [events, setEvents] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [heroImage, setHeroImage] = useState(IMG.diwali);
+  const [heroImage, setHeroImage] = useState(diwali);
   
   useEffect(() => {
     Promise.all([

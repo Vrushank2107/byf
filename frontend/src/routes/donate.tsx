@@ -4,10 +4,10 @@ import { motion } from "framer-motion";
 import { Heart, Shield, FileCheck, Sparkles, Loader2 } from "lucide-react";
 import { PageHero } from "@/components/ui/PageHero";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { IMG } from "@/lib/site-data";
 import { api } from "@/lib/api";
 import { imageUrl } from "@/lib/image-url";
 import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
+import blanket from "@/assets/byf/blanket.jpg";
 
 export const Route = createFileRoute("/donate")({
   head: () => {
@@ -44,7 +44,7 @@ function DonatePage() {
   const [showReceipt, setShowReceipt] = useState(false);
   const [receiptData, setReceiptData] = useState<any>(null);
   const [settings, setSettings] = useState<{ donateHeroImage?: string } | null>(null);
-  const [heroImage, setHeroImage] = useState(IMG.blanket);
+  const [heroImage, setHeroImage] = useState(blanket);
   const [donorInfo, setDonorInfo] = useState({
     name: '',
     email: '',

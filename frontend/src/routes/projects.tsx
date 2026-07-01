@@ -4,10 +4,11 @@ import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { PageHero } from "@/components/ui/PageHero";
 import { Skeleton } from "@/components/ui/skeleton";
-import { type ProjectCategory, IMG, PROJECT_CATEGORY_OPTIONS, PROJECT_CUSTOM_CATEGORY_OPTION } from "@/lib/site-data";
+import { type ProjectCategory, PROJECT_CATEGORY_OPTIONS, PROJECT_CUSTOM_CATEGORY_OPTION } from "@/lib/site-data";
 import { api } from "@/lib/api";
 import { imageUrl } from "@/lib/image-url";
 import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
+import flag from "@/assets/byf/flag.jpg";
 
 const CATEGORIES: (ProjectCategory | "All")[] = [
   "All",
@@ -54,7 +55,7 @@ function ProjectsPage() {
   const [filter, setFilter] = useState<(ProjectCategory | "All")>("All");
   const [projects, setProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [heroImage, setHeroImage] = useState(IMG.flag);
+  const [heroImage, setHeroImage] = useState(flag);
 
   useEffect(() => {
     api.getProjects().then((data) => {

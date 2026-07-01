@@ -5,11 +5,12 @@ import { PageHero } from "@/components/ui/PageHero";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ImpactStats } from "@/components/sections/ImpactStats";
 import { Partners } from "@/components/sections/Partners";
-import { IMG, TIMELINE, ORG } from "@/lib/site-data";
+import { TIMELINE, ORG } from "@/lib/site-data";
 import { api } from "@/lib/api";
 import { imageUrl } from "@/lib/image-url";
 import { useState, useEffect } from "react";
 import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
+import flag from "@/assets/byf/flag.jpg";
 
 export const Route = createFileRoute("/about")({
   head: () =>
@@ -36,8 +37,8 @@ const VALUES = [
 
 function AboutPage() {
   const [leaders, setLeaders] = useState<any[]>([]);
-  const [heroImage, setHeroImage] = useState(IMG.flag);
-  const [sectionImage, setSectionImage] = useState(IMG.flag);
+  const [heroImage, setHeroImage] = useState(flag);
+  const [sectionImage, setSectionImage] = useState(flag);
   const [loadingLeaders, setLoadingLeaders] = useState(true);
   const [siteSettings, setSiteSettings] = useState<any>(null);
 

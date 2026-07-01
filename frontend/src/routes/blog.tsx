@@ -4,10 +4,10 @@ import { motion } from "framer-motion";
 import { Clock, ArrowUpRight } from "lucide-react";
 import { PageHero } from "@/components/ui/PageHero";
 import { Skeleton } from "@/components/ui/skeleton";
-import { IMG } from "@/lib/site-data";
 import { api } from "@/lib/api";
 import { imageUrl } from "@/lib/image-url";
 import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
+import holi from "@/assets/byf/holi.jpg";
 
 const CATS = ["All", "Success Stories", "Activities", "Community Impact", "Volunteer Experiences"] as const;
 
@@ -31,7 +31,7 @@ function BlogPage() {
   const [cat, setCat] = useState<(typeof CATS)[number]>("All");
   const [blogPosts, setBlogPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [heroImage, setHeroImage] = useState(IMG.holi);
+  const [heroImage, setHeroImage] = useState(holi);
 
   useEffect(() => {
     api.getSettings().then((data) => {

@@ -4,10 +4,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { PageHero } from "@/components/ui/PageHero";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getGalleryFilterTags, IMG } from "@/lib/site-data";
+import { getGalleryFilterTags } from "@/lib/site-data";
 import { api } from "@/lib/api";
 import { imageUrl } from "@/lib/image-url";
 import { breadcrumbJsonLd, createPageSeo } from "@/lib/seo";
+import diwali from "@/assets/byf/diwali.jpg";
 
 export const Route = createFileRoute("/gallery")({
   head: () =>
@@ -29,7 +30,7 @@ function GalleryPage() {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
   const [gallery, setGallery] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [heroImage, setHeroImage] = useState(IMG.diwali);
+  const [heroImage, setHeroImage] = useState(diwali);
 
   useEffect(() => {
     api.getGallery().then((data) => {
