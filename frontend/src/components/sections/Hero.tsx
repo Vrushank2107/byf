@@ -110,9 +110,9 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="mt-6 font-display text-4xl font-bold leading-[1.05] text-white sm:text-5xl md:text-6xl lg:text-7xl"
           >
-            Making a difference,{" "}
+            Welcome to{" "}
             <span className="block bg-gradient-to-r from-secondary via-secondary to-accent bg-clip-text text-transparent">
-              one community at a time.
+              Baroda Youth Federation
             </span>
           </motion.h1>
 
@@ -122,7 +122,7 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="mt-6 max-w-xl text-base leading-relaxed text-white/85 md:text-lg mx-auto"
           >
-            Join us in creating positive change across Vadodara and beyond.
+            Loading...
           </motion.p>
         </div>
       </section>
@@ -142,9 +142,9 @@ export function Hero() {
           </span>
 
           <h1 className="mt-6 font-display text-4xl font-bold leading-[1.05] text-white sm:text-5xl md:text-6xl lg:text-7xl">
-            Making a difference,{" "}
+            Welcome to{" "}
             <span className="block bg-gradient-to-r from-secondary via-secondary to-accent bg-clip-text text-transparent">
-              one community at a time.
+              Baroda Youth Federation
             </span>
           </h1>
 
